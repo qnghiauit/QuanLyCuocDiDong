@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">QuanLyCuocDiDong</string>
+
+
+
+    <string name="actionbar_title">Quản lý cước di động</string>
+    <string name="drawer_item_profile_network_provider">Nhà mạng: </string>
+    <string name="drawer_item_profile_package">Gói cước: </string>
+    <string name="drawer_item_home">Trang chủ</string>
+    <string name="drawer_item_report">Thống kê</string>
+    <string name="drawer_item_check_day">Tra theo ngày</string>
+    <string name="drawer_item_utility_section_header">Tiện ích</string>
+    <string name="drawer_item_utility_promotion">Khuyến mãi</string>
+    <string name="drawer_item_utility_cash">Ứng tiền</string>
+    <string name="drawer_item_utility_callback">Yêu cầu gọi lại</string>
+    <string name="drawer_item_utility_info_owner">Thông tin thuê bao</string>
+    <string name="drawer_item_utility_contacts">Sô điện thoại hữu ích</string>
+    <string name="drawer_item_setting">Cài đặt</string>
+    <string name="drawer_item_about_us">Giới thiệu</string>
+
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</string>
+</resources>
