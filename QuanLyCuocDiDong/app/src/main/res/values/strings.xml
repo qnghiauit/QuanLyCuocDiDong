@@ -19,8 +19,8 @@
     <string name="drawer_item_setting">Cài đặt</string>
     <string name="drawer_item_about_us">Giới thiệu</string>
 
-    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="activity_choosenetworkprovider_captiontop">Chọn nhà mạng bạn đang sử dụng</string>
+    <string name="activity_choosenetworkprovider_titlebar">Chọn mạng di động</string>
+    <string name="activity_choose_package_caption">Chọn gói cước</string>
 </resources>
