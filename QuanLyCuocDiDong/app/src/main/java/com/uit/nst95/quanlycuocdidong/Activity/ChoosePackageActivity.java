@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,7 +48,7 @@ import static com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant.VINAXTRA;
 import static com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant.VMAX;
 import static com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant.VMONE;
 
-public class ChoosePackageActivity extends Activity {
+public class ChoosePackageActivity extends AppCompatActivity {
 
     private String provider;
     private ListView lstViewPackage;
@@ -60,11 +61,17 @@ public class ChoosePackageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_package);
 
+        // Handle Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         getControl();
         getMobileNetwork();
-        editActionBar();
         addItemToListView();
         addEvents();
+
+        getSupportActionBar().setTitle(getString(R.string.title_activity_choose_package) + provider);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -191,15 +198,5 @@ public class ChoosePackageActivity extends Activity {
         adapter = new PackageNetworkArrayAdapter(this,R.layout.custom_listview_choose_package, arrayListPackage);
         lstViewPackage.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-    }
-    private void editActionBar()
-    {
-        ActionBar bar = getActionBar();
-        bar.setDisplayHomeAsUpEnabled(true);
-        bar.setDisplayShowHomeEnabled(false);
-        bar.setDisplayShowCustomEnabled(false);
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2196F3")));
-        bar.setTitle(Html.fromHtml("<font color='#FFFFFF'>" + "Nhà mạng: "
-                + provider + "</font>"));
     }
 }

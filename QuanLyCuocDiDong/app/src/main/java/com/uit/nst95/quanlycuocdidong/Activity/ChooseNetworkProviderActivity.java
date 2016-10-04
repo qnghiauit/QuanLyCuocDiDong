@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,7 +15,7 @@ import android.widget.ImageButton;
 import com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant;
 import com.uit.nst95.quanlycuocdidong.R;
 
-public class ChooseNetworkProviderActivity extends Activity {
+public class ChooseNetworkProviderActivity extends AppCompatActivity {
 
     private ImageButton imageBtnMobi;
     private ImageButton imageBtnVina;
@@ -24,7 +26,11 @@ public class ChooseNetworkProviderActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_network_provider);
-        editActionBar();
+        // Handle Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.title_activity_choose_network_provider);
+
         getControl();
         addEvents();
     }
@@ -74,17 +80,5 @@ public class ChooseNetworkProviderActivity extends Activity {
             startActivity(myIntent);
         }
 
-    }
-    private void editActionBar()
-    {
-        ActionBar bar = getActionBar();
-        if (bar != null) {
-            bar.setDisplayShowHomeEnabled(false);
-            bar.setDisplayShowCustomEnabled(false);
-            bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#2196F3")));
-            bar.setTitle(Html.fromHtml("<font color='#FFFFFF'>" +
-                                        getString(R.string.activity_choosenetworkprovider_titlebar)
-                                        + "</font>"));
-        }
     }
 }
