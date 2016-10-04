@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.uit.nst95.quanlycuocdidong.Activity.ChoosePackageActivity">
+    tools:context="com.uit.nst95.quanlycuocdidong.Activity.ChoosePackageActivity"
+    android:background="@android:color/white">
 
     <TextView
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
         android:layout_marginTop="25dp"
         android:gravity="center"
         android:textSize="20dp"
-        android:background="@color/background_material_light"
+        android:background="@android:color/white"
         android:textColor="#2196F3"
         android:layout_alignParentTop="true"
         android:singleLine="false"
@@ -48,7 +49,7 @@
         android:id="@+id/textViewTut"
         android:textColor="#2196F3"
         android:gravity="center"
-        android:background="@color/background_material_light"
+        android:background="@android:color/white"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"

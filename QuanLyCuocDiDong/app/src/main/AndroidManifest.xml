@@ -10,8 +10,8 @@
         android:theme="@style/MaterialDrawerTheme.TranslucentStatus">
         <activity
             android:name=".Activity.SplashActivity"
-            android:theme="@style/MaterialDrawerTheme.TranslucentStatus"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:theme="@style/MaterialDrawerTheme.TranslucentStatus">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,18 +20,13 @@
         </activity>
         <activity
             android:name=".Activity.MainActivity"
-            android:theme="@style/MaterialDrawerTheme.TranslucentStatus">
-        </activity>
+            android:theme="@style/CustomTheme" />
         <activity
             android:name=".Activity.ChooseNetworkProviderActivity"
-            android:theme="@android:style/Theme.Holo.Light">
-
-        </activity>
+            android:theme="@android:style/Theme.Holo.Light" />
         <activity
             android:name=".Activity.ChoosePackageActivity"
-            android:theme="@android:style/Theme.Holo.Light">
-
-        </activity>
+            android:theme="@android:style/Theme.Holo.Light" />
     </application>
 
 </manifest>
