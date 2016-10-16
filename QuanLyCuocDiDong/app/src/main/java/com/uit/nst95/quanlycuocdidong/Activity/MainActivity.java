@@ -1,7 +1,12 @@
 package com.uit.nst95.quanlycuocdidong.Activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -28,6 +33,8 @@ import com.uit.nst95.quanlycuocdidong.R;
 import static android.R.attr.fragment;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int PERMISSION_PHONE_GROUP_REQUEST = 1; // request code for PHONE group permission
 
     ////save our header or result
     private AccountHeader headerResult = null;
@@ -166,4 +173,50 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        /**
+         * The application need to read permission in dangerous permission group PHONE.
+         * So we need to check that if the current device's version is Android M or higher. If so, we need to request permission at runtime
+         */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+                // should we show an explanation
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CALL_LOG)) {
+                    // code to show an explanation here
+                    //
+                    // to code later
+                    //
+
+                } else {
+                    // no explanation needed , we can request permission
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALL_LOG}, PERMISSION_PHONE_GROUP_REQUEST);
+                }
+
+            }
+        }
+    }
+
+    /**
+     * Handle when user accept the pemission you request or not
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_PHONE_GROUP_REQUEST:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //
+                    // do some thing related to read phone state
+                    //
+                } else {
+                    Toast.makeText(this, R.string.permission_not_granted_message, Toast.LENGTH_LONG).show();
+                }
+        }
+    }
 }
