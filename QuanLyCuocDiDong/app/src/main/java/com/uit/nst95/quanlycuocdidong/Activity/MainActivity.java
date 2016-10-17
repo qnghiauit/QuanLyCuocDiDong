@@ -2,15 +2,13 @@ package com.uit.nst95.quanlycuocdidong.Activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -27,21 +25,25 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.mikepenz.materialdrawer.model.interfaces.Nameable;
+import com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant;
+import com.uit.nst95.quanlycuocdidong.Manager.PackageNetwork;
 import com.uit.nst95.quanlycuocdidong.R;
 
-import static android.R.attr.fragment;
+import static com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant.PERMISSION_PHONE_GROUP_REQUEST;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final int PERMISSION_PHONE_GROUP_REQUEST = 1; // request code for PHONE group permission
-
     ////save our header or result
     private AccountHeader headerResult = null;
     private Drawer result = null;
 
     //network provider
     private IProfile profile;
+
+    //Variable
+    private String _provider;
+    private String _package;
+    private int _id_logo_provider;
+    private int _id_logo_package;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +55,30 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.actionbar_title);
 
+        //Get information about provider and package of user
+        getUserInformation();
+
+        //Write your code here ahihi :))
+
+
+
+
+
         // Create a network provider info
-        profile = new ProfileDrawerItem().withName(getString(R.string.drawer_item_profile_network_provider))
-                .withEmail(getString(R.string.drawer_item_profile_package))
-                .withIcon(getResources().getDrawable(R.drawable.profile));
+        createProfile();
 
         // Create the AccountHeader with compact template
         buildHeader(true, savedInstanceState);
 
         //Create the drawer
+        createDrawer(toolbar,savedInstanceState);
+
+        //Set default Fragment - Home
+        HomeFragment homeFragment = HomeFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, homeFragment).commit();
+    }
+
+    private void createDrawer(Toolbar toolbar, Bundle savedInstanceState){
         result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
@@ -127,10 +144,12 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .withSavedInstance(savedInstanceState)
                 .build();
+    }
 
-        //Set default Fragment - Home
-        HomeFragment homeFragment = HomeFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, homeFragment).commit();
+    private void createProfile(){
+        profile = new ProfileDrawerItem().withName(getString(R.string.drawer_item_profile_network_provider).concat(_provider))
+                .withEmail(getString(R.string.drawer_item_profile_package).concat(_package))
+                .withIcon(getResources().getDrawable(_id_logo_provider));
     }
 
     /**
@@ -173,6 +192,47 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void saveSharedPreferences() {
+        SharedPreferences settings = getSharedPreferences(DefinedConstant.PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(DefinedConstant.KEY_PACKAGE, _package);
+        editor.putString(DefinedConstant.KEY_PROVIDER, _provider);
+        editor.putInt(DefinedConstant.KEY_ID_LOGO_PROVIDER,_id_logo_provider);
+        editor.putInt(DefinedConstant.KEY_ID_LOGO_PACKAGE, _id_logo_package);
+        // Commit the edits!
+        editor.commit();
+    }
+    public void getUserInformation() {
+        Intent callerIntent = getIntent();
+        Bundle packegeFromCaller = callerIntent.getBundleExtra(DefinedConstant.BUNDLE_NAME);
+        if (packegeFromCaller != null) {
+            PackageNetwork goicuoc = (PackageNetwork) packegeFromCaller.getSerializable(DefinedConstant.KEY_PACKAGE);
+            if (goicuoc != null) {
+                _provider = goicuoc.getProviderName();
+                _package = goicuoc.getPackageName();
+                if(_provider.equals(DefinedConstant.MOBIFONE)){
+                    _id_logo_provider = R.drawable.mf;
+                } else if (_provider.equals(DefinedConstant.VINAPHONE)){
+                    _id_logo_provider = R.drawable.vp;
+                } else if(_provider.equals(DefinedConstant.GMOBILE)){
+                    _id_logo_provider = R.drawable.gm;
+                } else if (_provider.equals(DefinedConstant.VIETTEL)){
+                    _id_logo_provider = R.drawable.vt;
+                } else if (_provider.equals(DefinedConstant.VIETNAMOBILE)){
+                    _id_logo_provider = R.drawable.vmb;
+                }
+                _id_logo_package = goicuoc.getIdImage();
+            }
+        } else {
+            // Restore preferences
+            SharedPreferences settings = getSharedPreferences(DefinedConstant.PREFS_NAME, MODE_PRIVATE);
+            _package = settings.getString(DefinedConstant.KEY_PACKAGE, DefinedConstant.VALUE_DEFAULT);
+            _provider = settings.getString(DefinedConstant.KEY_PROVIDER, DefinedConstant.VALUE_DEFAULT);
+            _id_logo_provider =  settings.getInt(DefinedConstant.KEY_ID_LOGO_PROVIDER,0);
+            _id_logo_package = settings.getInt(DefinedConstant.KEY_ID_LOGO_PACKAGE, 0);
+        }
+        saveSharedPreferences();
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -191,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
                     // no explanation needed , we can request permission
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALL_LOG}, PERMISSION_PHONE_GROUP_REQUEST);
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALL_LOG}, DefinedConstant.PERMISSION_PHONE_GROUP_REQUEST);
                 }
 
             }
@@ -208,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case PERMISSION_PHONE_GROUP_REQUEST:
+            case DefinedConstant.PERMISSION_PHONE_GROUP_REQUEST:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //

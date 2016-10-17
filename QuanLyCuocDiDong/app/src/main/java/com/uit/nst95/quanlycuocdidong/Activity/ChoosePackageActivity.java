@@ -1,14 +1,9 @@
 package com.uit.nst95.quanlycuocdidong.Activity;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -71,7 +66,7 @@ public class ChoosePackageActivity extends AppCompatActivity {
         addItemToListView();
         addEvents();
 
-        getSupportActionBar().setTitle(getString(R.string.title_activity_choose_package) + provider);
+        getSupportActionBar().setTitle(getString(R.string.title_activity_choose_package) + " " + provider);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -195,7 +190,7 @@ public class ChoosePackageActivity extends AppCompatActivity {
     }
     private void addItemToListView()
     {
-        adapter = new PackageNetworkArrayAdapter(this,R.layout.custom_listview_choose_package, arrayListPackage);
+        adapter = new PackageNetworkArrayAdapter(this,R.layout.custom_item_listview_choose_package, arrayListPackage);
         lstViewPackage.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

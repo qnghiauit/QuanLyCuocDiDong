@@ -17,9 +17,10 @@ public final class DefinedConstant {
 
     public static final String KEY_PACKAGE = "GoiCuoc";
     public static final String KEY_PROVIDER = "NhaMang";
+    public static final String KEY_ID_LOGO_PACKAGE = "IDLogoPackage";
+    public static final String KEY_ID_LOGO_PROVIDER = "IDLogoProvider";
     public static final String BUNDLE_NAME = "TTTB";
 
-    public static final String KEY_IDIMAGE = "IDImage";
     public static final String KEY_ALLOWPOPUP = "AllowPopup";
     public static final String KEY_UPDATE_STATE = "UpdateState";
     public static final String KEY_LAST_TIME_UPDATE_CALL = "LastUpdateCall";
@@ -28,7 +29,10 @@ public final class DefinedConstant {
     public static final String VALUE_DEFAULT = "Notfound";
     public static final long TIME_DEDAULT = 0;
 
-    //Networl Provider
+
+    public static final int PERMISSION_PHONE_GROUP_REQUEST = 1; // request code for PHONE group permission
+
+    //Network Provider
     public static final String MOBIFONE = "Mobifone";
     public static final String VINAPHONE = "VinaPhone";
     public static final String VIETTEL = "Viettel";
