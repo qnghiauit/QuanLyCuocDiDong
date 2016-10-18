@@ -215,6 +215,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 //            _phoneCallLog = new PhoneLogManager(_context, _myPackageFee);
             this.InitPackage();
             _isOutGoingCallEnd = false;
+            //Sua loi tao ra nhieu PhoneStateListener trong chuong trinh  gay trung Notify
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             if(customPhoneStateListener == null) {
                 customPhoneStateListener = new CustomPhoneStateListener(_context);//,_myPackageFee);
@@ -292,10 +293,12 @@ public class PhoneStateReceiver extends BroadcastReceiver {
              */
             if (_isOutGoingCallEnd == true && _isOutGoing == true) {
                 CallLog lastCall = getNewCallLog();
+                //Loi version cua log qua ky tu (Thang)
                // Log.d(TAG,"Last call");
                 if (lastCall == null) {
                     //Log.e(TAG,"Last call is null");
                 } else {
+                    //Loi version cua log qua ky tu (Thang)
                     //Log.d(TAG,"Last call is NOT null");
                     showLastCallInformationNotification(lastCall); // start to show notification
                     _isOutGoingCallEnd = false;
