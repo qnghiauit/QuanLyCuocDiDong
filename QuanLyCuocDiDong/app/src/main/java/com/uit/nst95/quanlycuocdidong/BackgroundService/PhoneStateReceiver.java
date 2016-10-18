@@ -48,14 +48,16 @@ public class PhoneStateReceiver extends BroadcastReceiver {
     Context _context;
     String _incomingNumber;
     private int _prev_state;
-    private boolean _isOutGoingCallEnd;
+    private static boolean _isOutGoingCallEnd = false;
     private boolean _isReceived;
+    private static boolean _isOutGoing = false;
     // private PhoneLogManager _phoneCallLog;
     DAO_CallLog _callAdapter;
     DAO_Statistic _statisticTableAdapter;
     private PackageFee _myPackageFee;
     private boolean _isAllowPopUp;
 
+    private static CustomPhoneStateListener customPhoneStateListener;
     public PhoneStateReceiver() {
         //_isReceived = false;
         _incomingNumber = "";
@@ -214,9 +216,11 @@ public class PhoneStateReceiver extends BroadcastReceiver {
             this.InitPackage();
             _isOutGoingCallEnd = false;
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            CustomPhoneStateListener customPhoneStateListener = new CustomPhoneStateListener(_context);//,_myPackageFee);
-            telephonyManager.listen(customPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
-            Toast.makeText(this._context, "Starts Receivers", Toast.LENGTH_LONG).show();
+            if(customPhoneStateListener == null) {
+                customPhoneStateListener = new CustomPhoneStateListener(_context);//,_myPackageFee);
+                telephonyManager.listen(customPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
+            }
+           // Toast.makeText(this._context, "Starts Receivers", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -247,7 +251,12 @@ public class PhoneStateReceiver extends BroadcastReceiver {
             if (incomingNumber != null && incomingNumber.length() > 0) {
                 _incomingNumber = incomingNumber;
             }
+            //Toast.makeText(_context, incomingNumber, Toast.LENGTH_SHORT).show();
             _isReceivingCall = false;
+           // if(incomingNumber == null || incomingNumber == "" || incomingNumber.isEmpty() )
+           // {
+            //    Toast.makeText(_context, "It's outgoing call!!!", Toast.LENGTH_SHORT).show();
+            //}
             switch (state) {
                 case TelephonyManager.CALL_STATE_RINGING: {
                     _prev_state = state;
@@ -255,6 +264,14 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                     break;
                 }
                 case TelephonyManager.CALL_STATE_OFFHOOK: {
+                    if(incomingNumber == null || incomingNumber.isEmpty() || incomingNumber.equals(""))
+                    {
+                        _isOutGoing = true;
+                    }
+                    else
+                    {
+                        _isOutGoing = false;
+                    }
                     _prev_state = state;
                     break;
                 }
@@ -273,14 +290,15 @@ public class PhoneStateReceiver extends BroadcastReceiver {
             /**
              * Khi 1 cuoi goi vua ket thua, show {@link android.app.Notification} de nguoi dung biet duoc thong tin goi goi cuoc cua cuoc goi do
              */
-            if (_isOutGoingCallEnd == true && _isReceivingCall == false) {
+            if (_isOutGoingCallEnd == true && _isOutGoing == true) {
                 CallLog lastCall = getNewCallLog();
-                Log.d(TAG, "Last call");
+               // Log.d(TAG,"Last call");
                 if (lastCall == null) {
-                    Log.e(TAG, "Last call is null");
+                    //Log.e(TAG,"Last call is null");
                 } else {
-                    Log.d(TAG, "Last call is NOT null");
+                    //Log.d(TAG,"Last call is NOT null");
                     showLastCallInformationNotification(lastCall); // start to show notification
+                    _isOutGoingCallEnd = false;
                 }
 
                 /** Dong if nay KHONG hoat dong duoc !!!!!!!!!!!!!!!!!!!! */
