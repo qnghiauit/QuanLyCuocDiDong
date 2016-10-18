@@ -22,6 +22,7 @@
     <string name="activity_choose_network_provider_caption_top">Chọn nhà mạng bạn đang sử dụng</string>
     <string name="title_activity_choose_package">Nhà mạng: </string>
     <string name="activity_choose_package_caption_top">Chọn gói cước</string>
+
     <string name="permission_not_granted_message">Bạn đã từ chối các quyển truy cập cho ứng dụng, có thể ứng dụng sẽ chạy lối. Mọi thắc mắc xin hãy liên hệ bên phía nhà phát triển.</string>
     <string name="call_duration">Thời gian cuộc gọi :</string>
     <string name="call_starts">Bắt đầu cuộc gọi</string>

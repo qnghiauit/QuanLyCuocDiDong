@@ -27,7 +27,7 @@
         </activity>
         <activity
             android:name=".Activity.MainActivity"
-            android:theme="@style/CustomTheme" />
+            android:theme="@style/MaterialDrawerTheme.Light.DarkToolbar" />
         <activity
             android:name=".Activity.ChooseNetworkProviderActivity"
             android:theme="@style/CustomTheme" />
@@ -42,7 +42,7 @@
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
         </receiver>
-        
+
     </application>
 
 </manifest>

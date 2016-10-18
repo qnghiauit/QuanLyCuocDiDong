@@ -4,13 +4,16 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.View;
 import android.widget.Toast;
 
@@ -25,6 +28,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant;
 import com.uit.nst95.quanlycuocdidong.Manager.PackageNetwork;
 import com.uit.nst95.quanlycuocdidong.R;
@@ -53,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.actionbar_title);
 
         //Get information about provider and package of user
         getUserInformation();
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         createDrawer(toolbar,savedInstanceState);
 
         //Set default Fragment - Home
+        setActionBarTitle(getString(R.string.drawer_item_home));
         HomeFragment homeFragment = HomeFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, homeFragment).commit();
     }
@@ -136,6 +140,10 @@ public class MainActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        //set ActionBar Title
+                        if (drawerItem instanceof Nameable) {
+                            setActionBarTitle(((Nameable) drawerItem).getName().getText(MainActivity.this));
+                        }
                         // Insert the fragment by replacing any existing fragment
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).commit();
                         //return true/false - remain/close drawer after select item
@@ -192,6 +200,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setActionBarTitle(String title){
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>"+ title +"</font>"));
+    }
     public void saveSharedPreferences() {
         SharedPreferences settings = getSharedPreferences(DefinedConstant.PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
