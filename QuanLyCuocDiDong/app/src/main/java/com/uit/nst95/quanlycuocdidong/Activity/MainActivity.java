@@ -270,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Handle when user accept the pemission you request or not
+     * Handle when user accept the permission you request or not
      *
      * @param requestCode
      * @param permissions
