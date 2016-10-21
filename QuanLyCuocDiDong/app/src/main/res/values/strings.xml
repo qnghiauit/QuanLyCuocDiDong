@@ -29,4 +29,38 @@
     <string name="call_date">Ngày giờ :</string>
     <string name="call_fee">Phí cuộc gọi :</string>
 
+    <string name="textYCGLMobi">Call me là dịch vụ giúp bạn gửi tin nhắn đề nghị gọi lại đến thuê bao nội mạng, ngoại mạng MobiFone.</string>
+    <string name="textYCGLVina">Dịch vụ Call Me Back là một tiện ích nhằm giúp các thuê bao VinaPhone trả trước, đặc biệt là các thuê bao VinaPhone trả trước không còn tiền trong tài khoản, thuê bao hết thời hạn sử dụng, thuê bao bị khóa 1 chiều có thể gửi đề nghị gọi lại cho thuê bao di động khác</string>
+    <string name="textYCGLViettel">Call me là dịch vụ giúp bạn gửi tin nhắn đề nghị gọi lại đến thuê bao nội mạng, ngoại mạng Viettel.</string>
+    <string name="textYCGLGmobi">Call me là dịch vụ giúp bạn gửi tin nhắn đề nghị gọi lại đến thuê bao nội mạng, ngoại mạng Gmobile.</string>
+    <string name="urlTTCTMobi">http://www.mobifone.vn/wps/portal/public/dich-vu/tien-ich/tien-ich-chi-tiet/call-me</string>
+    <string name="urlTTCTVina">http://vinaphone.com.vn/services/cmb</string>
+    <string name="urlTTCTViettel">http://vietteltelecom.vn/index.php/chi-tiet-gtgt/de-nghi-goi-lai-call-me-back</string>
+    <string name="urlTTCTGmobi">http://gmobile.vn/content/740</string>
+    <string name="textYCGL_HD">Trong đó: SDT là số điện thoại bạn muốn gửi đề nghị gọi lại.</string>
+    <string name="textHDMobi">- Bạn nhập: *105*SDT#OK\n</string>
+    <string name="textHDVina">- Bạn nhập: *110*SDT# rồi bấm OK\n</string>
+    <string name="textHDViettel">- Bạn soạn tin nhắn: SDT gửi 9119\n</string>
+    <string name="textHDGmobi">- Bạn nhập: *9119*SDT# rồi bấm OK\n</string>
+    <string name="textTitleBarUngTien"><![CDATA[<font color=\'#FFFFFF\'>Dịch vụ ứng tiền </font>]]></string>
+    <string name="textUngTienMobi">Ứng tiền là dịch vụ giúp thuê bao trả trước của MobiFone hết tiền trong tài khoản được ứng trước 3.000 đồng để tiếp tục sử dụng.</string>
+    <string name="textUngTienHDMobi">- Bước 1: soạn UT gửi 900. Hệ thống sẽ gửi tin nhắn yêu cầu xác nhận việc ứng tiền.\n- Bước 2: soạn CO gửi 900 trong vòng 10 phút kể từ khi bạn nhận được tin nhắn yêu cầu xác nhận ứng tiền từ hệ thống.</string>
+    <string name="urlUngTienMobi">http://www.mobifone.vn/wps/portal/public/dich-vu/dich-vu-khac/dich-vu-khac-chi-tiet/ung-tien</string>
+    <string name="textUngTienVina">Ứng tiền nhanh là dịch vụ ứng cho thuê bao trả trước của VinaPhone một số tiền nhất định khi tài khoản chính của thuê bao không còn nhiều tiền (bằng hoặc ít hơn 5.000 VNĐ) và thuê bao thỏa mãn các điều kiện sử dụng dịch vụ của theo quy định của VinaPhone.</string>
+    <string name="textUngTienHDVina">- Soạn tin: Y gửi 1576.</string>
+    <string name="urlUngTienVina">http://vinaphone.com.vn/services/ungtiennhanh#gioithieu-tab</string>
+    <string name="textUngTienViettel">Ứng tiền khi hết tài khoản là dịch vụ giúp thuê bao di động trả trước của Viettel có thể ứng trước 3.000đ vào tài khoản gốc để tiếp tục tiêu dùng khi tài khoản hết tiền mà chưa kịp nạp thẻ.</string>
+    <string name="textUngTienHDViettel">- Bước 1: Khách hàng bấm trực tiếp từ màn hình chính *911#.\n- Bước 2: Khách hàng nhấn phím OK hoặc nhấn phím gọi.</string>
+    <string name="urlUngTienViettel">http://vietteltelecom.vn/index.php/chi-tiet-gtgt/ung-tien-khi-het-tai-khoan</string>
+    <string name="textUngTienVNMobi">Ứng tiền là dịch vụ giúp thuê bao trả trước của Vietnamobile hết tiền trong tài khoản được ứng trước 3.000 đồng để tiếp tục sử dụng.</string>
+    <string name="textUngTienHDVNMobi">- Khách hàng bấm trực tiếp từ màn hình chính *911#OK</string>
+    <string name="urlUngTienVNMobi">http://www.vietnamobile.com.vn/layout1.php?pdid=66#</string>
+    <string name="textTitleBarTraCuuTTTB"><![CDATA[<font color=\'#FFFFFF\'>Kiểm tra thông tin thuê bao </font>]]></string>
+    <string name="urlTTCTTraCuuTTTB"><![CDATA["<a href=http://dichvudidong.vn/huong-dan-tra-cuu-thong-tin-thue-bao-cua-sim-tra-truoc.html> Để biết thêm thông tin chi tiết của tiện ích, bạn có thể truy cập ở đây "]]></string>
+    <string name="textTTCTpart1"><![CDATA["> Để biết thêm thông tin chi tiết của tiện ích, bạn có thể truy cập ở đây "]]></string>
+    <string name="textTTCTpart2"><![CDATA[<a href=]]></string>
+    <string name="textOK">OK</string>
+    <string name="textServiceNotFound">Xin lỗi, nhà mạng của bạn không có dịch vụ này</string>
+    <string name="textNeedFillPhoneNumber">Bạn phải nhập vào số diện thoại</string>
+
 </resources>
