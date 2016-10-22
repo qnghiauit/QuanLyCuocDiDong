@@ -59,7 +59,7 @@ public class SubscriberInforFragment extends Fragment {
         });
         textViewTTCT.setText(Html.fromHtml(getString(R.string.urlTTCTTraCuuTTTB)));
         textViewTTCT.setMovementMethod(LinkMovementMethod.getInstance());
-
+        buttonExcute.setText("Thực hiện");
         return view;
     }
 

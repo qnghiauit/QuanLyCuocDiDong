@@ -13,16 +13,37 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chọn tỉnh/Tp:"
-            android:id="@+id/textView2"/>
+        <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giới thiệu"
+                android:id="@+id/textView7"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tiện ích cung cấp các số điện thoại hữu ích như: Công An (113), Tư vấn giáo dục (19006869), Taxi VinaSun (0838272727),..."
+                android:id="@+id/textView15" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chọn tỉnh/Tp:"
+                android:id="@+id/textView2"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
             <Spinner
                 android:layout_width="match_parent"
@@ -31,11 +52,20 @@
 
         </LinearLayout>
 
-        <ExpandableListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/expandableListView"
-            android:layout_marginTop="10dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp">
+
+            <ExpandableListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/expandableListView"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

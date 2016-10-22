@@ -60,6 +60,6 @@
     <string name="textTTCTpart2"><![CDATA[<a href=]]></string>
     <string name="textOK">OK</string>
     <string name="textServiceNotFound">Xin lỗi, nhà mạng của bạn không có dịch vụ này</string>
-    <string name="textNeedFillPhoneNumber">Bạn phải nhập vào số diện thoại</string>
+    <string name="textNeedFillPhoneNumber">Bạn phải nhập vào số điện thoại</string>
 
 </resources>

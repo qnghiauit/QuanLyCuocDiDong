@@ -8,7 +8,10 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#e0e0e0">
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
 
         <LinearLayout
             android:orientation="vertical"
@@ -19,17 +22,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Giới thiệu"
-                android:id="@+id/textView16" />
+                android:id="@+id/textView16"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Tiện ích kiểm tra thông tin thuê bao bạn đang sử dụng"
-                android:id="@+id/textViewGioithieu"
-                android:textSize="15dp" />
+                android:id="@+id/textViewGioithieu" />
 
         </LinearLayout>
 
@@ -42,17 +43,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Hướng dẫn"
-                android:id="@+id/textView18" />
+                android:id="@+id/textView18"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Soạn tin TTTB gửi 1414"
-                android:id="@+id/textViewHuongDan"
-                android:textSize="15dp" />
+                android:id="@+id/textViewHuongDan" />
 
         </LinearLayout>
 
@@ -65,16 +64,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Phím tắt"
-                android:id="@+id/textView" />
+                android:id="@+id/textView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <Button
-                android:layout_width="100dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/buttonOk"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="0dp" />
+                android:textAlignment="center"
+                style="@style/Widget.AppCompat.Button.Colored"/>
 
         </LinearLayout>
 
@@ -87,17 +87,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Thông tin chi tiết"
-                android:id="@+id/textView20" />
+                android:id="@+id/textView20"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Để biết thêm thông tin chi tiết của tiện ích, bạn có thể truy cập ở đây"
-                android:id="@+id/textViewTTChiTiet"
-                android:textSize="15dp" />
+                android:id="@+id/textViewTTChiTiet" />
         </LinearLayout>
 
     </LinearLayout>

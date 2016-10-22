@@ -8,7 +8,10 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#e0e0e0">
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
 
         <LinearLayout
             android:orientation="vertical"
@@ -19,17 +22,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Giới thiệu"
-                android:id="@+id/textView16" />
+                android:id="@+id/textView16"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Tiện ích gọi lại cho tôi"
-                android:id="@+id/textViewGioithieu"
-                android:textSize="15dp" />
+                android:id="@+id/textViewGioithieu" />
 
         </LinearLayout>
 
@@ -42,17 +43,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Hướng dẫn"
-                android:id="@+id/textView18" />
+                android:id="@+id/textView18"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Hướng dẫn sử dụng bằng tin nhắn và USSD"
-                android:id="@+id/textViewHuongDan"
-                android:textSize="15dp" />
+                android:id="@+id/textViewHuongDan" />
 
         </LinearLayout>
 
@@ -65,25 +64,28 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Phím tắt"
-                android:id="@+id/textView" />
+                android:id="@+id/textView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:id="@+id/editTextSDT"
                 android:layout_gravity="center_horizontal"
                 android:hint="Nhập vào số điện thoại"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="11"
+                style="@style/Widget.AppCompat.EditText"
+                android:textAlignment="center"
+                android:textSize="14sp" />
 
             <Button
-                android:layout_width="100dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/buttonOk"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp" />
+                style="@style/Widget.AppCompat.Button.Colored" />
 
         </LinearLayout>
 
@@ -96,17 +98,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Thông tin chi tiết"
-                android:id="@+id/textView20" />
+                android:id="@+id/textView20"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Để biết thêm thông tin chi tiết của tiện ích, bạn có thể truy cập ở đây"
-                android:id="@+id/textViewTTChiTiet"
-                android:textSize="15dp" />
+                android:id="@+id/textViewTTChiTiet" />
         </LinearLayout>
 
     </LinearLayout>

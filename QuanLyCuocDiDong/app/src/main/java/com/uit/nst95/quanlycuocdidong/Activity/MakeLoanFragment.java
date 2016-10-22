@@ -54,7 +54,7 @@ public class MakeLoanFragment extends Fragment {
         String urlTTCT = null;
         switch (mangDiDong)
         {
-            case "Mobifone": {
+            case DefinedConstant.MOBIFONE: {
                 gioithieu = getString(R.string.textUngTienMobi);
                 huongdan = getString(R.string.textUngTienHDMobi);
                 urlTTCT = getString(R.string.urlUngTienMobi);
@@ -67,7 +67,7 @@ public class MakeLoanFragment extends Fragment {
                 });
                 break;
             }
-            case "VinaPhone": {
+            case DefinedConstant.VINAPHONE: {
                 gioithieu = getString(R.string.textUngTienVina);
                 huongdan = getString(R.string.textUngTienHDVina);
                 urlTTCT = getString(R.string.urlUngTienVina);
@@ -80,7 +80,7 @@ public class MakeLoanFragment extends Fragment {
                 });
                 break;
             }
-            case "Viettel": {
+            case DefinedConstant.VIETTEL: {
                 gioithieu = getString(R.string.textUngTienViettel);
                 huongdan = getString(R.string.textUngTienHDViettel);
                 urlTTCT = getString(R.string.urlUngTienViettel);
@@ -93,10 +93,10 @@ public class MakeLoanFragment extends Fragment {
                 });
                 break;
             }
-            case "GMobile": { //khong co dich vu nay
+            case DefinedConstant.GMOBILE: { //khong co dich vu nay
                 break;
             }
-            case "VietNamMobile": {
+            case DefinedConstant.VIETNAMOBILE: {
                 gioithieu = getString(R.string.textUngTienVNMobi);
                 huongdan = getString(R.string.textUngTienHDVNMobi);
                 urlTTCT = getString(R.string.urlUngTienVNMobi);
@@ -112,15 +112,7 @@ public class MakeLoanFragment extends Fragment {
         }
         if (gioithieu == null)
         {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-            dialog.setMessage(R.string.textServiceNotFound);
-            dialog.setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    getActivity().finish();
-                }
-            });
-            dialog.create().show();
+            view = inflater.inflate(R.layout.fragment_not_found, container, false);
         }
         else
         {
@@ -129,7 +121,7 @@ public class MakeLoanFragment extends Fragment {
             textViewTTCT.setText(Html.fromHtml(getString(R.string.textTTCTpart2) + urlTTCT + getString(R.string.textTTCTpart1)));
             textViewTTCT.setMovementMethod(LinkMovementMethod.getInstance());
         }
-
+        buttonExcute.setText("Thực hiện");
         return view;
     }
     private void sendSmS(String address, String sms_body)

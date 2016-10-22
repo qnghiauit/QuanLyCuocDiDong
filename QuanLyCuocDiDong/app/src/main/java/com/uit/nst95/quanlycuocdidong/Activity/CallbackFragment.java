@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant;
 import com.uit.nst95.quanlycuocdidong.R;
-
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -57,7 +56,7 @@ public class CallbackFragment extends Fragment {
 
         switch (mangDiDong)
         {
-            case "Mobifone": {
+            case DefinedConstant.MOBIFONE: {
                 gioithieu = getString(R.string.textYCGLMobi);
                 huongdan = getString(R.string.textHDMobi) +
                         getString(R.string.textYCGL_HD);
@@ -71,7 +70,7 @@ public class CallbackFragment extends Fragment {
                 });
                 break;
             }
-            case "VinaPhone": {
+            case DefinedConstant.VINAPHONE: {
                 gioithieu = getString(R.string.textYCGLVina);
                 huongdan = getString(R.string.textHDVina) +
                         getString(R.string.textYCGL_HD);
@@ -85,7 +84,7 @@ public class CallbackFragment extends Fragment {
                 });
                 break;
             }
-            case "Viettel": {
+            case DefinedConstant.VIETTEL: {
                 gioithieu = getString(R.string.textYCGLViettel);
                 huongdan = getString(R.string.textHDViettel) +
                         getString(R.string.textYCGL_HD);
@@ -94,16 +93,18 @@ public class CallbackFragment extends Fragment {
                 buttonExcute.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                        smsIntent.setType("vnd.android-dir/mms-sms");
-                        smsIntent.putExtra("address", "9119");
-                        smsIntent.putExtra("sms_body",editTextSDT.getText().toString());
-                        startActivity(smsIntent);
+                        if(checkEditTextSDT()) {
+                            Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                            smsIntent.setType("vnd.android-dir/mms-sms");
+                            smsIntent.putExtra("address", "9119");
+                            smsIntent.putExtra("sms_body", editTextSDT.getText().toString());
+                            startActivity(smsIntent);
+                        }
                     }
                 });
                 break;
             }
-            case "GMobile": {
+            case DefinedConstant.GMOBILE: {
                 gioithieu = getString(R.string.textYCGLGmobi);
                 huongdan = getString(R.string.textHDGmobi) +
                         getString(R.string.textYCGL_HD);
@@ -117,21 +118,13 @@ public class CallbackFragment extends Fragment {
                 });
                 break;
             }
-            case "VietNamMobile": {
+            case DefinedConstant.VIETNAMOBILE: {
                 break;
             }
         }
         if (gioithieu == null)
         {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-            dialog.setMessage(R.string.textServiceNotFound);
-            dialog.setPositiveButton(R.string.textOK, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    getActivity().finish();
-                }
-            });
-            dialog.create().show();
+            view = inflater.inflate(R.layout.fragment_not_found, container, false);
         }
         else
         {
@@ -140,7 +133,7 @@ public class CallbackFragment extends Fragment {
             textViewTTCT.setText(Html.fromHtml(getString(R.string.textTTCTpart2) + urlTTCT + getString(R.string.textTTCTpart1)));
             textViewTTCT.setMovementMethod(LinkMovementMethod.getInstance());
         }
-
+        buttonExcute.setText("Thực hiện");
         return view;
     }
     private boolean checkEditTextSDT()
