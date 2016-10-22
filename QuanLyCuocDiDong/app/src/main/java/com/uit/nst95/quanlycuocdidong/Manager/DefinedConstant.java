@@ -1,11 +1,8 @@
 package com.uit.nst95.quanlycuocdidong.Manager;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
-
-import static android.R.attr.fragment;
 
 /**
  * Created by QNghia on 28/09/2016.
@@ -31,6 +28,7 @@ public final class DefinedConstant {
 
 
     public static final int PERMISSION_PHONE_GROUP_REQUEST = 1; // request code for PHONE group permission
+
 
     //Network Provider
     public static final String MOBIFONE = "Mobifone";
@@ -60,29 +58,28 @@ public final class DefinedConstant {
     public static final String BIGSAVE = "Big Save";
     public static final String BIGKOOL = "Big & Kool";
     public static final String TIPHU2 = "Tỉ phú 2";
-    public static final String TIPHU3 ="Tỉ phú 3";
+    public static final String TIPHU3 = "Tỉ phú 3";
     public static final String TIPHU5 = "Tỉ phú 5";
     public static final String VMONE = "VM One";
     public static final String VMAX = "VMax";
     public static final String SV2014 = "SV 2014";
 
     //Mutual Func
-    public static void sendSmS(Activity activity, String address, String sms_body)
-    {
+    public static void sendSmS(Activity activity, String address, String sms_body) {
         Intent smsIntent = new Intent(Intent.ACTION_VIEW);
         smsIntent.setType("vnd.android-dir/mms-sms");
         smsIntent.putExtra("address", address);
         smsIntent.putExtra("sms_body", sms_body);
         activity.startActivity(smsIntent);
     }
-    public static void callUSSD(Activity activity, String ussd)
-    {
-        String uriString = "";
-        if(!ussd.startsWith("tel:"))
-            uriString += "tel:";
-        for(char c : ussd.toCharArray()) {
 
-            if(c == '#')
+    public static void callUSSD(Activity activity, String ussd) {
+        String uriString = "";
+        if (!ussd.startsWith("tel:"))
+            uriString += "tel:";
+        for (char c : ussd.toCharArray()) {
+
+            if (c == '#')
                 uriString += Uri.encode("#");
             else
                 uriString += c;

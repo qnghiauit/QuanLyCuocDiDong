@@ -1,31 +1,23 @@
 package com.uit.nst95.quanlycuocdidong.BackgroundService;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.uit.nst95.quanlycuocdidong.Activity.MainActivity;
 import com.uit.nst95.quanlycuocdidong.DB.CallLog;
@@ -59,6 +51,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
     private boolean _isAllowPopUp;
 
     private static CustomPhoneStateListener customPhoneStateListener;
+
     public PhoneStateReceiver() {
         //_isReceived = false;
         _incomingNumber = "";
@@ -218,11 +211,11 @@ public class PhoneStateReceiver extends BroadcastReceiver {
             _isOutGoingCallEnd = false;
             //Sua loi tao ra nhieu PhoneStateListener trong chuong trinh  gay trung Notify
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            if(customPhoneStateListener == null) {
+            if (customPhoneStateListener == null) {
                 customPhoneStateListener = new CustomPhoneStateListener(_context);//,_myPackageFee);
                 telephonyManager.listen(customPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
             }
-           // Toast.makeText(this._context, "Starts Receivers", Toast.LENGTH_LONG).show();
+            // Toast.makeText(this._context, "Starts Receivers", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -255,8 +248,8 @@ public class PhoneStateReceiver extends BroadcastReceiver {
             }
             //Toast.makeText(_context, incomingNumber, Toast.LENGTH_SHORT).show();
             _isReceivingCall = false;
-           // if(incomingNumber == null || incomingNumber == "" || incomingNumber.isEmpty() )
-           // {
+            // if(incomingNumber == null || incomingNumber == "" || incomingNumber.isEmpty() )
+            // {
             //    Toast.makeText(_context, "It's outgoing call!!!", Toast.LENGTH_SHORT).show();
             //}
             switch (state) {
@@ -266,12 +259,9 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                     break;
                 }
                 case TelephonyManager.CALL_STATE_OFFHOOK: {
-                    if(incomingNumber == null || incomingNumber.isEmpty() || incomingNumber.equals(""))
-                    {
+                    if (incomingNumber == null || incomingNumber.isEmpty() || incomingNumber.equals("")) {
                         _isOutGoing = true;
-                    }
-                    else
-                    {
+                    } else {
                         _isOutGoing = false;
                     }
                     _prev_state = state;
@@ -295,8 +285,8 @@ public class PhoneStateReceiver extends BroadcastReceiver {
             if (_isOutGoingCallEnd == true && _isOutGoing == true) {
                 CallLog lastCall = getNewCallLog();
                 //Loi version cua log qua ky tu (Thang)
-               // Log.d(TAG,"Last call");
-                if (lastCall == null || lastCall.get_callDuration() ==0) {
+                // Log.d(TAG,"Last call");
+                if (lastCall == null || lastCall.get_callDuration() == 0) {
                     //Log.e(TAG,"Last call is null");
                 } else {
                     //Loi version cua log qua ky tu (Thang)
@@ -355,15 +345,14 @@ public class PhoneStateReceiver extends BroadcastReceiver {
     /**
      * Method to get information of the last call of the device.
      * Note : when the code run android 6 and higher, we need to gain permission from runtime for all dangerous permissions which include READ_CALL_LOG.
-     * See
      *
-     * @return
+     * @return : {@link CallLog} of the last call
      */
     public CallLog getNewCallLog() {
         CallLog _newCall = new CallLog();
         // check version at runtime to check whether version is 6 , higher or not
         if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                ActivityCompat.checkSelfPermission(_context, Manifest.permission_group.PHONE) == PackageManager.PERMISSION_GRANTED)
+                ActivityCompat.checkSelfPermission(_context, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED)
                 || Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             Cursor cursor = this._context.getContentResolver().query(android.provider.CallLog.Calls.CONTENT_URI, null, null,
                     null, android.provider.CallLog.Calls.DATE + " DESC");
@@ -409,6 +398,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 
     /**
      * Method to show notification that present the last call information of current device.
+     * See : See : https://developer.android.com/guide/topics/ui/notifiers/notifications.html#CreateNotification for Android notification guide
      *
      * @param lastCallLog : {@link CallLog} information of the last call
      */
@@ -430,8 +420,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                     callLogStrings) {
                 inboxStyle.addLine(line);
             }
-            notificationBuilder.setPriority(Notification.PRIORITY_MAX);
-            notificationBuilder.setStyle(inboxStyle);
+            notificationBuilder.setStyle(inboxStyle); // set style
 
         } else { // otherwise, if the version is lower
             String content = this._context.getString(R.string.call_duration) + lastCallLog.get_callDuration() + " giây" + "\n" +
@@ -440,10 +429,13 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 
             notificationBuilder.setContentText(content);
         }
-
+        notificationBuilder.setPriority(Notification.PRIORITY_MAX); // priority for notification
         // sound for notification
         Uri notificationSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         notificationBuilder.setSound(notificationSoundUri);
+        // vibrate when notify
+        long[] vibrateSteps = {0, 500, 100, 200, 100, 200};
+        notificationBuilder.setVibrate(vibrateSteps);
 
         // create dismiss the notification to auto
         notificationBuilder.setAutoCancel(true);

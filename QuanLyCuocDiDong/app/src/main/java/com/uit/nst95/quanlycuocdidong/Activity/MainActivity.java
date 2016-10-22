@@ -266,6 +266,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             }
+            // Read phone state
         }
     }
 
@@ -288,6 +289,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, R.string.permission_not_granted_message, Toast.LENGTH_LONG).show();
                 }
+
         }
     }
 }
