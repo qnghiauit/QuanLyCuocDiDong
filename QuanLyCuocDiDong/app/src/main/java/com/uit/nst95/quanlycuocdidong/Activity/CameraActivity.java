@@ -3,6 +3,7 @@ package com.uit.nst95.quanlycuocdidong.Activity;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -12,6 +13,7 @@ import android.widget.Button;
 
 import com.uit.nst95.quanlycuocdidong.R;
 import com.uit.nst95.quanlycuocdidong.customview.FocusBoxView;
+import com.uit.nst95.quanlycuocdidong.tesstwo.TesstwoRecognizeAsync;
 import com.uit.nst95.quanlycuocdidong.tools.BitmapTool;
 import com.uit.nst95.quanlycuocdidong.tools.CameraEngine;
 
@@ -120,14 +122,19 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
             return;
         }
 
+        /**
+         * Get {@link Bitmap} in {@link FocusBoxView} area
+         */
         Bitmap bmp = BitmapTool.getFocusedBitmap(this, camera, data, focusBox.getBox());
 
         Log.d(TAG, "Got bitmap");
 
         Log.d(TAG, "Initialization of TessBaseApi");
 
-       // new TessAsyncEngine().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, this, bmp);
-
+        // new task to recognize bitmap running in background
+        // after the recognition completes, a simple dialog will show the result
+        TesstwoRecognizeAsync tesstwoRecognizeAsync = new TesstwoRecognizeAsync();
+        tesstwoRecognizeAsync.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, this, bmp);
     }
 
     @Override

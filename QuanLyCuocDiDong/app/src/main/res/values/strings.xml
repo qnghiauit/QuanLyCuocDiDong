@@ -63,5 +63,6 @@
     <string name="textNeedFillPhoneNumber">Bạn phải nhập vào số điện thoại</string>
 
     <string name="launch_camera_activity">Nạp bằng Camera</string>
+    <string name="image_dialog_description">Kết quả nhận diện</string>
 
 </resources>

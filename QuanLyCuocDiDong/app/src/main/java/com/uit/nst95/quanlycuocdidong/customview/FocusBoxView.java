@@ -31,12 +31,12 @@ public class FocusBoxView extends View {
         super(context, attrs);
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        Resources resources = getResources();
+        // get resource manager
+        Resources resources = this.getResources();
 
         maskColor = resources.getColor(R.color.focus_box_mask);
         frameColor = resources.getColor(R.color.focus_box_frame);
         cornerColor = resources.getColor(R.color.focus_box_corner);
-
         this.setOnTouchListener(getTouchListener());
     }
 
