@@ -62,4 +62,6 @@
     <string name="textServiceNotFound">Xin lỗi, nhà mạng của bạn không có dịch vụ này</string>
     <string name="textNeedFillPhoneNumber">Bạn phải nhập vào số điện thoại</string>
 
+    <string name="launch_camera_activity">Nạp bằng Camera</string>
+
 </resources>

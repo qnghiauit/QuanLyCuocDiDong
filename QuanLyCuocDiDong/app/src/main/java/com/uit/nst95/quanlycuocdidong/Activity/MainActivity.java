@@ -4,13 +4,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -32,8 +30,6 @@ import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant;
 import com.uit.nst95.quanlycuocdidong.Manager.PackageNetwork;
 import com.uit.nst95.quanlycuocdidong.R;
-
-import static com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant.PERMISSION_PHONE_GROUP_REQUEST;
 
 public class MainActivity extends AppCompatActivity {
     ////save our header or result
@@ -64,9 +60,6 @@ public class MainActivity extends AppCompatActivity {
         //Write your code here ahihi :))
 
 
-
-
-
         // Create a network provider info
         createProfile();
 
@@ -74,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         buildHeader(true, savedInstanceState);
 
         //Create the drawer
-        createDrawer(toolbar,savedInstanceState);
+        createDrawer(toolbar, savedInstanceState);
 
         //Set default Fragment - Home
         setActionBarTitle(getString(R.string.drawer_item_home));
@@ -82,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, homeFragment).commit();
     }
 
-    private void createDrawer(Toolbar toolbar, Bundle savedInstanceState){
+    private void createDrawer(Toolbar toolbar, Bundle savedInstanceState) {
         result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
@@ -91,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIdentifier(1).withIcon(FontAwesome.Icon.faw_home),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_report).withIdentifier(2).withIcon(FontAwesome.Icon.faw_bar_chart),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_check_day).withIdentifier(3).withIcon(FontAwesome.Icon.faw_search),
+                        new PrimaryDrawerItem().withName(R.string.launch_camera_activity).withIdentifier(13).withIcon(FontAwesome.Icon.faw_camera), // to launch camera activity
                         new SectionDrawerItem().withName(R.string.drawer_item_utility_section_header),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_utility_promotion).withIdentifier(4).withIcon(FontAwesome.Icon.faw_cart_plus),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_utility_cash).withIdentifier(5).withIcon(FontAwesome.Icon.faw_money),
@@ -134,6 +128,10 @@ public class MainActivity extends AppCompatActivity {
                             fragmentClass = SettingFragment.class;
                         } else if (idDrawerItem == 12) {
                             fragmentClass = AboutFragment.class;
+                        } else if (idDrawerItem == 13) {
+                            // launch the camera activity
+                            Intent cameraIntent = new Intent(MainActivity.this, CameraActivity.class);
+                            startActivity(cameraIntent);
                         }
                         try {
                             fragment = (Fragment) fragmentClass.newInstance();
@@ -145,7 +143,9 @@ public class MainActivity extends AppCompatActivity {
                             setActionBarTitle(((Nameable) drawerItem).getName().getText(MainActivity.this));
                         }
                         // Insert the fragment by replacing any existing fragment
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).commit();
+                        if (idDrawerItem != 13) {
+                            getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).commit();
+                        }
                         //return true/false - remain/close drawer after select item
                         return false;
                     }
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
     }
 
-    private void createProfile(){
+    private void createProfile() {
         profile = new ProfileDrawerItem().withName(getString(R.string.drawer_item_profile_network_provider).concat(_provider))
                 .withEmail(getString(R.string.drawer_item_profile_package).concat(_package))
                 .withIcon(getResources().getDrawable(_id_logo_provider));
@@ -200,19 +200,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setActionBarTitle(String title){
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>"+ title +"</font>"));
+    private void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>" + title + "</font>"));
     }
+
     public void saveSharedPreferences() {
         SharedPreferences settings = getSharedPreferences(DefinedConstant.PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(DefinedConstant.KEY_PACKAGE, _package);
         editor.putString(DefinedConstant.KEY_PROVIDER, _provider);
-        editor.putInt(DefinedConstant.KEY_ID_LOGO_PROVIDER,_id_logo_provider);
+        editor.putInt(DefinedConstant.KEY_ID_LOGO_PROVIDER, _id_logo_provider);
         editor.putInt(DefinedConstant.KEY_ID_LOGO_PACKAGE, _id_logo_package);
         // Commit the edits!
         editor.commit();
     }
+
     public void getUserInformation() {
         Intent callerIntent = getIntent();
         Bundle packegeFromCaller = callerIntent.getBundleExtra(DefinedConstant.BUNDLE_NAME);
@@ -221,15 +223,15 @@ public class MainActivity extends AppCompatActivity {
             if (goicuoc != null) {
                 _provider = goicuoc.getProviderName();
                 _package = goicuoc.getPackageName();
-                if(_provider.equals(DefinedConstant.MOBIFONE)){
+                if (_provider.equals(DefinedConstant.MOBIFONE)) {
                     _id_logo_provider = R.drawable.mf;
-                } else if (_provider.equals(DefinedConstant.VINAPHONE)){
+                } else if (_provider.equals(DefinedConstant.VINAPHONE)) {
                     _id_logo_provider = R.drawable.vp;
-                } else if(_provider.equals(DefinedConstant.GMOBILE)){
+                } else if (_provider.equals(DefinedConstant.GMOBILE)) {
                     _id_logo_provider = R.drawable.gm;
-                } else if (_provider.equals(DefinedConstant.VIETTEL)){
+                } else if (_provider.equals(DefinedConstant.VIETTEL)) {
                     _id_logo_provider = R.drawable.vt;
-                } else if (_provider.equals(DefinedConstant.VIETNAMOBILE)){
+                } else if (_provider.equals(DefinedConstant.VIETNAMOBILE)) {
                     _id_logo_provider = R.drawable.vmb;
                 }
                 _id_logo_package = goicuoc.getIdImage();
@@ -239,11 +241,12 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences settings = getSharedPreferences(DefinedConstant.PREFS_NAME, MODE_PRIVATE);
             _package = settings.getString(DefinedConstant.KEY_PACKAGE, DefinedConstant.VALUE_DEFAULT);
             _provider = settings.getString(DefinedConstant.KEY_PROVIDER, DefinedConstant.VALUE_DEFAULT);
-            _id_logo_provider =  settings.getInt(DefinedConstant.KEY_ID_LOGO_PROVIDER,0);
+            _id_logo_provider = settings.getInt(DefinedConstant.KEY_ID_LOGO_PROVIDER, 0);
             _id_logo_package = settings.getInt(DefinedConstant.KEY_ID_LOGO_PACKAGE, 0);
         }
         saveSharedPreferences();
     }
+
     @Override
     protected void onStart() {
         super.onStart();
