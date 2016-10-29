@@ -64,5 +64,9 @@
 
     <string name="launch_camera_activity">Nạp bằng Camera</string>
     <string name="image_dialog_description">Kết quả nhận diện</string>
+    <string name="camera_request_permission">Ứng dụng cần quyền cung cấp sử dụng Máy ảnh từ bạn</string>
+    <string name="read_calllog_request_permission">Ứng dụng cần quyền đọc lịch sử cuộc gọi từ bạn</string>
+    <string name="read_phone_state_request_permission">Ứng dụng cần quyền đọc trạng thái cuộc gọi từ bạn</string>
+
 
 </resources>

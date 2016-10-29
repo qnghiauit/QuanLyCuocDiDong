@@ -18,6 +18,7 @@
 
 
     <FrameLayout
+        android:id="@+id/camera_controller_container"
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:layout_gravity="bottom"

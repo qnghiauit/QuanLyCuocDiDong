@@ -27,7 +27,6 @@ public class BitmapTool {
     }
 
     /**
-     *
      * @param source
      * @param angle
      * @return
@@ -49,7 +48,6 @@ public class BitmapTool {
     }
 
     /**
-     *
      * @param srcWidth
      * @param srcHeight
      * @param dstWidth
@@ -81,7 +79,6 @@ public class BitmapTool {
     }
 
     /**
-     *
      * @param bytes
      * @param dstWidth
      * @param dstHeight
@@ -102,7 +99,6 @@ public class BitmapTool {
     }
 
     /**
-     *
      * @param srcWidth
      * @param srcHeight
      * @param dstWidth
@@ -131,7 +127,6 @@ public class BitmapTool {
     }
 
     /**
-     *
      * @param srcWidth
      * @param srcHeight
      * @param dstWidth
@@ -170,7 +165,6 @@ public class BitmapTool {
     }
 
     /**
-     *
      * @param context
      * @param camera
      * @param data

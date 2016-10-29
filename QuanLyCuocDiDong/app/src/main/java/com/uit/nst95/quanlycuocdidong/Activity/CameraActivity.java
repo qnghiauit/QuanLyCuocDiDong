@@ -34,6 +34,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera_activity);
+        this.findViewById(R.id.camera_controller_container).getBackground().setAlpha(75); // set opacity 50%
     }
 
     @Override

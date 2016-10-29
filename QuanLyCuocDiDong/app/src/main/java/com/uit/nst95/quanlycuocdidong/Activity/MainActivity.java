@@ -1,13 +1,18 @@
 package com.uit.nst95.quanlycuocdidong.Activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,6 +37,10 @@ import com.uit.nst95.quanlycuocdidong.Manager.PackageNetwork;
 import com.uit.nst95.quanlycuocdidong.R;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getSimpleName(); // tag
+    // permission request codes
+    private static final int READ_PHONESTATE_PERMISSON_REQUEST_CODE = 1;
+    private static final int READ_CALLLOG_PERMISSON_REQUEST_CODE = 2;
     ////save our header or result
     private AccountHeader headerResult = null;
     private Drawer result = null;
@@ -57,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         //Get information about provider and package of user
         getUserInformation();
 
-        //Write your code here ahihi :))
+        //Write your code here ahihi :)) -> con cu
 
 
         // Create a network provider info
@@ -84,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIdentifier(1).withIcon(FontAwesome.Icon.faw_home),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_report).withIdentifier(2).withIcon(FontAwesome.Icon.faw_bar_chart),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_check_day).withIdentifier(3).withIcon(FontAwesome.Icon.faw_search),
-                        new PrimaryDrawerItem().withName(R.string.launch_camera_activity).withIdentifier(13).withIcon(FontAwesome.Icon.faw_camera), // to launch camera activity
+                        // to launch camera activity
+                        new PrimaryDrawerItem().withName(R.string.launch_camera_activity).withIdentifier(13).withIcon(FontAwesome.Icon.faw_camera),
                         new SectionDrawerItem().withName(R.string.drawer_item_utility_section_header),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_utility_promotion).withIdentifier(4).withIcon(FontAwesome.Icon.faw_cart_plus),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_utility_cash).withIdentifier(5).withIcon(FontAwesome.Icon.faw_money),
@@ -130,8 +140,9 @@ public class MainActivity extends AppCompatActivity {
                             fragmentClass = AboutFragment.class;
                         } else if (idDrawerItem == 13) {
                             // launch the camera activity
-                            Intent cameraIntent = new Intent(MainActivity.this, CameraActivity.class);
-                            startActivity(cameraIntent);
+                            //Intent cameraIntent = new Intent(MainActivity.this, CameraActivity.class);
+                            // startActivity(cameraIntent);
+                            fragmentClass = CameraFragment.class;
                         }
                         try {
                             fragment = (Fragment) fragmentClass.newInstance();
@@ -143,9 +154,9 @@ public class MainActivity extends AppCompatActivity {
                             setActionBarTitle(((Nameable) drawerItem).getName().getText(MainActivity.this));
                         }
                         // Insert the fragment by replacing any existing fragment
-                        if (idDrawerItem != 13) {
-                            getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).commit();
-                        }
+                        // if (idDrawerItem != 13) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).commit();
+                        // }
                         //return true/false - remain/close drawer after select item
                         return false;
                     }
@@ -255,21 +266,33 @@ public class MainActivity extends AppCompatActivity {
          * So we need to check that if the current device's version is Android M or higher. If so, we need to request permission at runtime
          */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+
+            // request read phone state
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                // should we show an explanation
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE)) {
+                    // code to show an explanation here
+                    new ReadPhoneStatePermissionConfirmDialog().show(this.getSupportFragmentManager(), TAG);
+                } else {
+                    // no explanation needed , we can request permission
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, READ_PHONESTATE_PERMISSON_REQUEST_CODE);
+                }
+
+            }
+            // request read call log permission
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
                 // should we show an explanation
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CALL_LOG)) {
                     // code to show an explanation here
-                    //
-                    // to code later
-                    //
-
+                    new ReadCallLogPermissionConfirmDialog().show(this.getSupportFragmentManager(), TAG);
                 } else {
                     // no explanation needed , we can request permission
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALL_LOG}, DefinedConstant.PERMISSION_PHONE_GROUP_REQUEST);
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALL_LOG}, READ_CALLLOG_PERMISSON_REQUEST_CODE);
                 }
 
             }
-            // Read phone state
+
         }
     }
 
@@ -283,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case DefinedConstant.PERMISSION_PHONE_GROUP_REQUEST:
+            case READ_CALLLOG_PERMISSON_REQUEST_CODE:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //
@@ -292,7 +315,84 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, R.string.permission_not_granted_message, Toast.LENGTH_LONG).show();
                 }
+                break;
 
+            case READ_PHONESTATE_PERMISSON_REQUEST_CODE:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //
+                    // do some thing related to read phone state
+                    //
+                } else {
+                    Toast.makeText(this, R.string.permission_not_granted_message, Toast.LENGTH_LONG).show();
+                }
+                break;
+            default:
+                break;
+
+        }
+    }
+
+
+    /**
+     * Dialog for explaining read call log permission
+     */
+    public static class ReadCallLogPermissionConfirmDialog extends DialogFragment {
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Fragment parent = getParentFragment();
+            return new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.read_calllog_request_permission)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            requestPermissions(
+                                    new String[]{Manifest.permission.READ_CALL_LOG},
+                                    READ_CALLLOG_PERMISSON_REQUEST_CODE);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // finish activity if user deny permission
+
+                                }
+                            })
+                    .create();
+        }
+    }
+
+    /**
+     * Dialog for explaining read call log permission
+     */
+    public static class ReadPhoneStatePermissionConfirmDialog extends DialogFragment {
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Fragment parent = getParentFragment();
+            return new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.read_phone_state_request_permission)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            requestPermissions(
+                                    new String[]{Manifest.permission.READ_PHONE_STATE},
+                                    READ_PHONESTATE_PERMISSON_REQUEST_CODE);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // finish activity if user deny permission
+
+                                }
+                            })
+                    .create();
         }
     }
 }

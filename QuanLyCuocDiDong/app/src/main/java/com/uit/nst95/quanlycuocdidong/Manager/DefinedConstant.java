@@ -26,10 +26,6 @@ public final class DefinedConstant {
     public static final String VALUE_DEFAULT = "Notfound";
     public static final long TIME_DEDAULT = 0;
 
-
-    public static final int PERMISSION_PHONE_GROUP_REQUEST = 1; // request code for PHONE group permission
-
-
     //Network Provider
     public static final String MOBIFONE = "Mobifone";
     public static final String VINAPHONE = "VinaPhone";

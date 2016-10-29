@@ -38,6 +38,7 @@ import java.util.Date;
 public class PhoneStateReceiver extends BroadcastReceiver {
     private static final String TAG = "PhoneStateReceiver";
     private static final int CALL_LOG_NOTIFICATION_ID = 1; // id of the notification
+
     Context _context;
     String _incomingNumber;
     private int _prev_state;
@@ -351,47 +352,49 @@ public class PhoneStateReceiver extends BroadcastReceiver {
     public CallLog getNewCallLog() {
         CallLog _newCall = new CallLog();
         // check version at runtime to check whether version is 6 , higher or not
-        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                ActivityCompat.checkSelfPermission(_context, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED)
-                || Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            Cursor cursor = this._context.getContentResolver().query(android.provider.CallLog.Calls.CONTENT_URI, null, null,
-                    null, android.provider.CallLog.Calls.DATE + " DESC");
-            if (cursor != null && cursor.getCount() > 0) {
-                if (cursor.moveToFirst()) {
-                    // get all column index
-                    // int callIdIndex = cursor.getColumnIndex(android.provider.CallLog.Calls._ID);
-                    int number = cursor.getColumnIndex(android.provider.CallLog.Calls.NUMBER);
-                    int callType = cursor.getColumnIndex(android.provider.CallLog.Calls.TYPE);
-                    int date = cursor.getColumnIndex(android.provider.CallLog.Calls.DATE);
-                    int duration = cursor.getColumnIndex(android.provider.CallLog.Calls.DURATION);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(this._context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+                // user deny permission for reading call log, return null to disable notification after a call
+                return null;
+            }
+        }
+        Cursor cursor = this._context.getContentResolver().query(android.provider.CallLog.Calls.CONTENT_URI, null, null,
+                null, android.provider.CallLog.Calls.DATE + " DESC");
+        if (cursor != null && cursor.getCount() > 0) {
+            if (cursor.moveToFirst()) {
+                // get all column index
+                // int callIdIndex = cursor.getColumnIndex(android.provider.CallLog.Calls._ID);
+                int number = cursor.getColumnIndex(android.provider.CallLog.Calls.NUMBER);
+                int callType = cursor.getColumnIndex(android.provider.CallLog.Calls.TYPE);
+                int date = cursor.getColumnIndex(android.provider.CallLog.Calls.DATE);
+                int duration = cursor.getColumnIndex(android.provider.CallLog.Calls.DURATION);
 
-                    String _callType = cursor.getString(callType);
-                    int dircode = Integer.parseInt(_callType);
-                    // we only care about out going call type
-                    if (dircode == android.provider.CallLog.Calls.OUTGOING_TYPE) {
-                        _isOutGoingCallEnd = true;
-                        String _number = cursor.getString(number);
-                        if (_number.length() < 10)
-                            return null;
-                        String _callDate = cursor.getString(date);
-                        Date _callDayTime = new Date(Long.valueOf(_callDate));
-                        int _callDuration = cursor.getInt(duration);
+                String _callType = cursor.getString(callType);
+                int dircode = Integer.parseInt(_callType);
+                // we only care about out going call type
+                if (dircode == android.provider.CallLog.Calls.OUTGOING_TYPE) {
+                    _isOutGoingCallEnd = true;
+                    String _number = cursor.getString(number);
+                    if (_number.length() < 10)
+                        return null;
+                    String _callDate = cursor.getString(date);
+                    Date _callDayTime = new Date(Long.valueOf(_callDate));
+                    int _callDuration = cursor.getInt(duration);
 
 
-                        _myPackageFee.set_callDuration(_callDuration);
-                        _myPackageFee.set_callTime(DateTimeManager.get_instance().convertToHm(_callDayTime.toString()));
-                        _myPackageFee.set_outGoingPhoneNumber(_number);
-                        int fee = _myPackageFee.CalculateCallFee();
-                        _newCall.set_callDuration(_callDuration);
-                        _newCall.set_callFee(fee);
-                        return _newCall;
-                    }
+                    _myPackageFee.set_callDuration(_callDuration);
+                    _myPackageFee.set_callTime(DateTimeManager.get_instance().convertToHm(_callDayTime.toString()));
+                    _myPackageFee.set_outGoingPhoneNumber(_number);
+                    int fee = _myPackageFee.CalculateCallFee();
+                    _newCall.set_callDuration(_callDuration);
+                    _newCall.set_callFee(fee);
+                    return _newCall;
                 }
             }
-            // close the cursor after using
-            if (cursor != null) {
-                cursor.close();
-            }
+        }
+        // close the cursor after using
+        if (cursor != null) {
+            cursor.close();
         }
         return null; // if error occurs, return null
     }
