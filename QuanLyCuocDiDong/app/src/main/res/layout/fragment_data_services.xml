@@ -4,10 +4,60 @@
     android:layout_height="match_parent"
     tools:context="com.uit.nst95.quanlycuocdidong.Activity.DataServicesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="DataServicesFragment" />
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giới thiệu"
+                android:id="@+id/textView7"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tiện ích cung cấp cú pháp đăng kí các gói cưới dịch vụ dữ liệu (3G) với thời hạn sử dụng từ 1 cho tới 30 ngày."
+                android:id="@+id/textView15" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Danh sách các gói cước"
+                android:id="@+id/textView17"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView3GData"
+                android:layout_below="@+id/textView001"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:layout_above="@+id/textViewTut"
+                android:layout_marginBottom="5dp"
+                android:choiceMode="singleChoice"
+                android:listSelector="@android:color/transparent"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>
