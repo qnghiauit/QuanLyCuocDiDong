@@ -1,6 +1,7 @@
 package com.uit.nst95.quanlycuocdidong.Manager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,11 +56,20 @@ public class Data3GArrayAdapter extends ArrayAdapter<Data3GPackage> {
             final Data3GPackage data3g = myArrayData3G.get(position);
             txtTenGoi.setText(data3g.getId_3gpackage());
             txtGiaCuoc.setText(data3g.getFee());
-            txtData.setText(data3g.getData_highspeed());
-            txtVuotLL.setText(data3g.getCharges_arise());
-            txtHSD.setText(data3g.getExpiry_date());
-            txtCuPhapDK.setText(data3g.getSyntax_reg());
-            //btnDK.setText(data3g.getId_3gpackage());
+            txtData.setText("Data tốc độ cao: " + data3g.getData_highspeed());
+            txtVuotLL.setText("Cước vượt lưu lượng: " + data3g.getCharges_arise());
+            txtHSD.setText("Thời hạn sử dụng: " + data3g.getExpiry_date());
+            txtCuPhapDK.setText("Soạn " + data3g.getSyntax_reg() + " gửi " + data3g.getNumber_receive());
+            btnDK.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                    smsIntent.setType("vnd.android-dir/mms-sms");
+                    smsIntent.putExtra("address", data3g.getNumber_receive());
+                    smsIntent.putExtra("sms_body",data3g.getSyntax_reg());
+                    getContext().startActivity(smsIntent);
+                }
+            });
         }
         return convertView;
     }
