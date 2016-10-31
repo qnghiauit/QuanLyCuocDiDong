@@ -68,5 +68,9 @@
     <string name="read_calllog_request_permission">Ứng dụng cần quyền đọc lịch sử cuộc gọi từ bạn</string>
     <string name="read_phone_state_request_permission">Ứng dụng cần quyền đọc trạng thái cuộc gọi từ bạn</string>
 
+    <string name="accept_recharge">Nạp</string>
+    <string name="cancel">Hủy</string>
+    <string name="dialog_number_recognition_title">Kết quả nhận diện</string>
+
 
 </resources>

@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -139,9 +138,7 @@ public class MainActivity extends AppCompatActivity {
                         } else if (idDrawerItem == 12) {
                             fragmentClass = AboutFragment.class;
                         } else if (idDrawerItem == 13) {
-                            // launch the camera activity
-                            //Intent cameraIntent = new Intent(MainActivity.this, CameraActivity.class);
-                            // startActivity(cameraIntent);
+                            // add credit via camera with number recognition
                             fragmentClass = CameraFragment.class;
                         }
                         try {
@@ -223,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt(DefinedConstant.KEY_ID_LOGO_PROVIDER, _id_logo_provider);
         editor.putInt(DefinedConstant.KEY_ID_LOGO_PACKAGE, _id_logo_package);
         // Commit the edits!
-        editor.commit();
+        editor.apply();
     }
 
     public void getUserInformation() {
@@ -389,7 +386,7 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     // finish activity if user deny permission
-
+                                    dialog.dismiss();
                                 }
                             })
                     .create();
