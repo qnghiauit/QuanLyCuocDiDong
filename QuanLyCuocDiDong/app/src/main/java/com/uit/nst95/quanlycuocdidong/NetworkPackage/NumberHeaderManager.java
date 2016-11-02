@@ -65,9 +65,23 @@ public class NumberHeaderManager implements Serializable {
             return true;
         return false;
     }
+    private  String NormalizePhoneNumber(String number)
+    {
+        String result = number;
+        result = result.trim();
+        if(number.contains("-"))
+        {
+            result = number.replaceAll("-","");
+        }
+        if(number.substring(0,3).equals("+84") == true)
+        {
+            result = number.replace("+84","0");
+        }
+        return  result;
+    }
     public String getHeadNumber(String phoneNumber)
     {
-
+        phoneNumber= NormalizePhoneNumber(phoneNumber);
         if(this.isOldNumber(phoneNumber))
             return phoneNumber.substring(0,3);
         else
