@@ -9,7 +9,10 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp" />
-
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar" />
     <FrameLayout
         android:layout_below="@id/toolbar"
         android:id="@+id/frame_container"
