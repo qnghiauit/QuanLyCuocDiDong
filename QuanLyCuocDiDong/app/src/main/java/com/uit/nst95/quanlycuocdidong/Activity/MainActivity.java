@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
@@ -31,11 +33,15 @@ import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
+import com.uit.nst95.quanlycuocdidong.Manager.DateTimeManager;
 import com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant;
 import com.uit.nst95.quanlycuocdidong.Manager.PackageNetwork;
 import com.uit.nst95.quanlycuocdidong.NetworkPackage.PackageFee;
 import com.uit.nst95.quanlycuocdidong.R;
-
+import com.uit.nst95.quanlycuocdidong.Manager.*;
+import java.util.List;
+import com.uit.nst95.quanlycuocdidong.DB.*;
+import com.uit.nst95.quanlycuocdidong.NetworkPackage.*;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName(); // tag
     // permission request codes
@@ -54,11 +60,26 @@ public class MainActivity extends AppCompatActivity {
     private int _id_logo_provider;
     private int _id_logo_package;
     private PackageFee _myPackageFee;
+    private PhoneLogManager _logManager;
+    private DAO_CallLog _callLogTableAdapter;
+    private DAO_MessageLog _messageLogTableAdapter;
+    private DAO_Statistic _statisticTableAdapter;
+    private DateTimeManager _dateTimeManager;
+    private long _lastCallUpdate;
+    private long _lastMessageUpdate;
+    private ProgressBar _progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        _dateTimeManager = DateTimeManager.get_instance();
+        this._callLogTableAdapter = new DAO_CallLog(this);
+        this._statisticTableAdapter = new DAO_Statistic(this);
+        this._messageLogTableAdapter = new DAO_MessageLog(this);
+        this._callLogTableAdapter.Open();
+        this._messageLogTableAdapter.Open();
+        this._statisticTableAdapter.Open();
 
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -83,8 +104,24 @@ public class MainActivity extends AppCompatActivity {
         setActionBarTitle(getString(R.string.drawer_item_home));
         HomeFragment homeFragment = HomeFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, homeFragment).commit();
+        //Them progress bar + cho chay Asynctask
+        _progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        new DatabaseExecuteTask(_lastCallUpdate,_lastMessageUpdate).execute();
     }
+    @Override
+    protected void onDestroy() {
 
+        saveSharedPreferences();
+        super.onDestroy();
+    }
+    @Override
+    protected void onStop() {
+        // We need an Editor object to make preference changes.
+        // All objects are from android.context.Context
+        saveSharedPreferences();
+        super.onStop();
+
+    }
     private void createDrawer(Toolbar toolbar, Bundle savedInstanceState) {
         result = new DrawerBuilder()
                 .withActivity(this)
@@ -248,6 +285,11 @@ public class MainActivity extends AppCompatActivity {
                     _id_logo_provider = R.drawable.vmb;
                 }
                 _id_logo_package = goicuoc.getIdImage();
+                SharedPreferences settings = getSharedPreferences(DefinedConstant.PREFS_NAME, MODE_PRIVATE);
+                _lastCallUpdate = settings.getLong(DefinedConstant.KEY_LAST_TIME_UPDATE_CALL, DefinedConstant.TIME_DEDAULT);
+                _lastMessageUpdate = settings.getLong(DefinedConstant.KEY_LAST_TIME_UPDATE_MESSAGE, DefinedConstant.TIME_DEDAULT);
+                this.InitPackage(_package);
+                this._logManager = PhoneLogManager.get_instance(this, _myPackageFee);
             }
         } else {
             // Restore preferences
@@ -256,6 +298,10 @@ public class MainActivity extends AppCompatActivity {
             _provider = settings.getString(DefinedConstant.KEY_PROVIDER, DefinedConstant.VALUE_DEFAULT);
             _id_logo_provider = settings.getInt(DefinedConstant.KEY_ID_LOGO_PROVIDER, 0);
             _id_logo_package = settings.getInt(DefinedConstant.KEY_ID_LOGO_PACKAGE, 0);
+            _lastCallUpdate = settings.getLong(DefinedConstant.KEY_LAST_TIME_UPDATE_CALL, DefinedConstant.TIME_DEDAULT);
+            _lastMessageUpdate = settings.getLong(DefinedConstant.KEY_LAST_TIME_UPDATE_MESSAGE, DefinedConstant.TIME_DEDAULT);
+            this.InitPackage(this._package);
+            this._logManager = PhoneLogManager.get_instance(this, _myPackageFee);
         }
         saveSharedPreferences();
     }
@@ -395,6 +441,317 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             })
                     .create();
+        }
+    }
+    public void RenewCallData(long time)
+    {
+
+        List<CallLog> _listCall = _logManager.LoadCallLogAfterTimeSpan(time);
+        if(_listCall.isEmpty())
+            return;
+        for(CallLog i : _listCall)
+        {
+            if(i.get_callNumber().length() >=10) {
+                _callLogTableAdapter.CreateCallLogRow(i);
+                String callDate = _dateTimeManager.convertToDMYHms(i.get_callDate());
+                int callFee = i.get_callFee();
+                int callDuration = i.get_callDuration();
+                if (_statisticTableAdapter.FindStatisticByMonthYear(_dateTimeManager.getMonth(callDate), _dateTimeManager.getYear(callDate)) == null) {
+                    _statisticTableAdapter.CreateStatisticRow(_dateTimeManager.getMonth(callDate), _dateTimeManager.getYear(callDate));
+
+                }
+                if (i.get_callType() == 0) {
+                    _statisticTableAdapter.UpdateInnerCallInfo(_dateTimeManager.getMonth(callDate),
+                            _dateTimeManager.getYear(callDate), callFee, callDuration);
+
+
+                } else if (i.get_callType() == 1) {
+                    _statisticTableAdapter.UpdateOuterCallInfo(_dateTimeManager.getMonth(callDate),
+                            _dateTimeManager.getYear(callDate), callFee, callDuration);
+
+                }
+            }
+        }
+
+        _listCall.clear();
+        _lastCallUpdate = _logManager.GetLastedCallTime();
+        saveSharedPreferences();
+
+    }
+    public void RenewMessageData(long time)
+    {
+
+        List<MessageLog> _listMessage = _logManager.LoadMessageLogAfterTimeSpan(time);
+        if(_listMessage.isEmpty())
+            return;
+        for(MessageLog i : _listMessage)
+        {
+            if(i.get_receiverNumber().length() >=10) {
+                _messageLogTableAdapter.CreateMessageLogRow(i);
+                String messageDate = _dateTimeManager.convertToDMYHms(i.get_messageDate());
+                int messageFee = i.get_messageFee();
+                if (_statisticTableAdapter.FindStatisticByMonthYear(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate)) == null) {
+                    _statisticTableAdapter.CreateStatisticRow(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate));
+
+                }
+                if (i.get_messageType() == 0) {
+                    _statisticTableAdapter.UpdateInnerMessageInfo(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate), messageFee);
+                } else if (i.get_messageType() == 1) {
+                    _statisticTableAdapter.UpdateOuterMessageInfo(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate), messageFee);
+                }
+            }
+        }
+        _listMessage.clear();
+
+        _lastMessageUpdate = _logManager.GetLastedMessageTime();
+        saveSharedPreferences();
+
+    }
+    public void FirstInitCallLog()
+    {
+
+        List<CallLog> _listCall = _logManager.LoadCallLogFromPhone();
+        if(_listCall.isEmpty())
+            return;
+        for (CallLog i : _listCall)
+        {
+            // CallLog temp = i;
+            if(i.get_callNumber().length() >=10) {
+                _callLogTableAdapter.CreateCallLogRow(i);
+                String callDate = _dateTimeManager.convertToDMYHms(i.get_callDate());
+                int callFee = i.get_callFee();
+                int callDuration = i.get_callDuration();
+                if (_statisticTableAdapter.FindStatisticByMonthYear(_dateTimeManager.getMonth(callDate), _dateTimeManager.getYear(callDate)) == null) {
+                    _statisticTableAdapter.CreateStatisticRow(_dateTimeManager.getMonth(callDate), _dateTimeManager.getYear(callDate));
+
+                }
+                if (i.get_callType() == 0) {
+                    _statisticTableAdapter.UpdateInnerCallInfo(_dateTimeManager.getMonth(callDate),
+                            _dateTimeManager.getYear(callDate), callFee, callDuration);
+
+
+                } else if (i.get_callType() == 1) {
+                    _statisticTableAdapter.UpdateOuterCallInfo(_dateTimeManager.getMonth(callDate),
+                            _dateTimeManager.getYear(callDate), callFee, callDuration);
+
+                }
+            }
+        }
+
+        _listCall.clear();
+        _lastCallUpdate = _logManager.GetLastedCallTime();
+        saveSharedPreferences();
+    }
+    public void FirstInitMessageLog()
+    {
+
+        List<MessageLog> _listMessage = _logManager.LoadMessageLogFromPhone();
+        if(_listMessage.isEmpty())
+            return;
+        for(MessageLog i: _listMessage)
+        {
+            if(i.get_receiverNumber().length() >= 10) {
+                _messageLogTableAdapter.CreateMessageLogRow(i);
+                String messageDate = _dateTimeManager.convertToDMYHms(i.get_messageDate());
+                int messageFee = i.get_messageFee();
+                if (_statisticTableAdapter.FindStatisticByMonthYear(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate)) == null) {
+                    _statisticTableAdapter.CreateStatisticRow(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate));
+
+                }
+                if (i.get_messageType() == 0) {
+                    _statisticTableAdapter.UpdateInnerMessageInfo(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate), messageFee);
+                } else if (i.get_messageType() == 1) {
+
+                    _statisticTableAdapter.UpdateOuterMessageInfo(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate), messageFee);
+                }
+            }
+        }
+
+        _listMessage.clear();
+        _lastMessageUpdate = _logManager.GetLastedMessageTime();
+        saveSharedPreferences();
+
+    }
+    public void InitPackage(String _package) {
+        switch (_package) {
+            case DefinedConstant.MOBICARD: {
+                _myPackageFee = new MobiCard();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+                break;
+            }
+            case DefinedConstant.MOBIGOLD: {
+                _myPackageFee = new MobiGold();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+                break;
+            }
+            case DefinedConstant.MOBIQ: {
+                _myPackageFee = new MobiQ();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+                break;
+            }
+            case DefinedConstant.QSTUDENT: {
+                _myPackageFee = new QStudent();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+                break;
+            }
+            case DefinedConstant.QTEEN: {
+                _myPackageFee = new QTeen();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+                break;
+            }
+            case DefinedConstant.QKIDS: {
+                _myPackageFee = new Qkids();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+                break;
+            }
+            case DefinedConstant.VINACARD: {
+                _myPackageFee = new VinaCard();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
+                break;
+            }
+            case DefinedConstant.VINAXTRA: {
+                _myPackageFee = new VinaXtra();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
+                break;
+            }
+            case DefinedConstant.TALKSTUDENT:
+            {
+                _myPackageFee = new TalkStudent();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
+                break;
+            }
+            case DefinedConstant.TALKTEEN:
+            {
+                _myPackageFee = new TalkTeen();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
+                break;
+            }
+            case DefinedConstant.ECONOMY: {
+                _myPackageFee = new Economy();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+                break;
+            }
+            case DefinedConstant.TOMATO: {
+                _myPackageFee = new Tomato();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+                break;
+            }
+            case DefinedConstant.STUDENT: {
+                _myPackageFee = new Student();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+                break;
+            }
+            case DefinedConstant.SEA: {
+                _myPackageFee = new SeaPlus();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+                break;
+            }
+            case DefinedConstant.HISCHOOL: {
+                _myPackageFee = new HiSchool();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+                break;
+            }
+            case DefinedConstant.SEVENCOLOR: {
+                _myPackageFee = new SevenColor();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+                break;
+            }
+            case DefinedConstant.BUONLANG: {
+                _myPackageFee = new TomatoBL();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+                break;
+            }
+            case DefinedConstant.BIGSAVE: {
+                _myPackageFee = new BigSave();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+                break;
+            }
+            case DefinedConstant.BIGKOOL: {
+                _myPackageFee = new BigKool();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+                break;
+            }
+            case DefinedConstant.TIPHU2: {
+                _myPackageFee = new BillionareTwo();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+                break;
+            }
+            case DefinedConstant.TIPHU3: {
+                _myPackageFee = new BillionareThree();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+                break;
+            }
+            case DefinedConstant.TIPHU5: {
+                _myPackageFee = new BillionareFive();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+                break;
+            }
+            case DefinedConstant.VMONE: {
+                _myPackageFee = new VMOne();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
+                break;
+            }
+            case DefinedConstant.VMAX: {
+                _myPackageFee = new VMax();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
+                break;
+            }
+            case DefinedConstant.SV2014: {
+                _myPackageFee = new SV2014();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
+                break;
+            }
+
+        }
+
+    }
+
+    private class DatabaseExecuteTask extends AsyncTask<Void,Integer,Void>
+    {
+        long lastCallTime;
+        long lastMessageTime;
+        public  DatabaseExecuteTask(long calltime, long messagetime)
+        {
+            lastCallTime = calltime;
+            lastMessageTime = messagetime;
+        }
+        @Override
+        protected  Void doInBackground(Void...params)
+        {
+
+            if(_lastCallUpdate == 0) {
+                _callLogTableAdapter.DeleteAllData();
+                _statisticTableAdapter.ResetCallData();
+                FirstInitCallLog();
+                saveSharedPreferences();
+            }
+            else {
+                RenewCallData(_lastCallUpdate);
+                saveSharedPreferences();
+            }
+            if(_lastMessageUpdate == 0) {
+                _messageLogTableAdapter.DeleteAllData();
+                _statisticTableAdapter.ResetMessageData();
+                FirstInitMessageLog();
+                saveSharedPreferences();
+            }
+            else
+            {
+                RenewMessageData(_lastMessageUpdate);
+                saveSharedPreferences();
+            }
+            // saveSharedPreferences();
+            return null;
+        }
+        @Override
+        protected void onProgressUpdate(Integer...values)
+        {
+            _progressBar.setProgress(values[0]);
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            _progressBar.setVisibility(View.GONE);
+            saveSharedPreferences();
         }
     }
 }

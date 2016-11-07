@@ -81,11 +81,15 @@ public class NumberHeaderManager implements Serializable {
     }
     public String getHeadNumber(String phoneNumber)
     {
-        phoneNumber= NormalizePhoneNumber(phoneNumber);
-        if(this.isOldNumber(phoneNumber))
-            return phoneNumber.substring(0,3);
+        if(phoneNumber.length() >=5) {
+            phoneNumber = NormalizePhoneNumber(phoneNumber);
+            if (this.isOldNumber(phoneNumber))
+                return phoneNumber.substring(0, 3);
+            else
+                return phoneNumber.substring(0, 4);
+        }
         else
-            return phoneNumber.substring(0,4);
+            return "0000000";
 
     }
     public boolean isMobifone(String phoneNumber)
