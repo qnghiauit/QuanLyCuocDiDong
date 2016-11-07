@@ -33,6 +33,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant;
 import com.uit.nst95.quanlycuocdidong.Manager.PackageNetwork;
+import com.uit.nst95.quanlycuocdidong.NetworkPackage.PackageFee;
 import com.uit.nst95.quanlycuocdidong.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private String _package;
     private int _id_logo_provider;
     private int _id_logo_package;
+    private PackageFee _myPackageFee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,39 +115,42 @@ public class MainActivity extends AppCompatActivity {
                         Fragment fragment = null;
                         Class fragmentClass = null;
                         long idDrawerItem = drawerItem.getIdentifier();
-                        if (idDrawerItem == 1) {
-                            fragmentClass = HomeFragment.class;
-                        } else if (idDrawerItem == 2) {
-                            fragmentClass = StatisticsFragment.class;
-                        } else if (idDrawerItem == 3) {
-                            fragmentClass = CheckByDayFragment.class;
-                        } else if (idDrawerItem == 4) {
-                            fragmentClass = PromotionFragment.class;
-                        } else if (idDrawerItem == 5) {
-                            fragmentClass = MakeLoanFragment.class;
-                        } else if (idDrawerItem == 6) {
-                            fragmentClass = CallbackFragment.class;
-                        } else if (idDrawerItem == 7) {
-                            fragmentClass = SubscriberInforFragment.class;
-                        } else if (idDrawerItem == 8) {
-                            fragmentClass = UsefulPhoneNumbersFragment.class;
-                        } else if (idDrawerItem == 9) {
-                            fragmentClass = DataServicesFragment.class;
-                        } else if (idDrawerItem == 10) {
-                            fragmentClass = AddCreditFragment.class;
-                        } else if (idDrawerItem == 11) {
-                            fragmentClass = SettingFragment.class;
-                        } else if (idDrawerItem == 12) {
-                            fragmentClass = AboutFragment.class;
-                        } else if (idDrawerItem == 13) {
-                            // add credit via camera with number recognition
-                            fragmentClass = CameraFragment.class;
+                        if(idDrawerItem == 11){
+                            fragment = SettingFragment.newInstance(_myPackageFee);
+                        }else {
+                            if (idDrawerItem == 1) {
+                                fragmentClass = HomeFragment.class;
+                            } else if (idDrawerItem == 2) {
+                                fragmentClass = StatisticsFragment.class;
+                            } else if (idDrawerItem == 3) {
+                                fragmentClass = CheckByDayFragment.class;
+                            } else if (idDrawerItem == 4) {
+                                fragmentClass = PromotionFragment.class;
+                            } else if (idDrawerItem == 5) {
+                                fragmentClass = MakeLoanFragment.class;
+                            } else if (idDrawerItem == 6) {
+                                fragmentClass = CallbackFragment.class;
+                            } else if (idDrawerItem == 7) {
+                                fragmentClass = SubscriberInforFragment.class;
+                            } else if (idDrawerItem == 8) {
+                                fragmentClass = UsefulPhoneNumbersFragment.class;
+                            } else if (idDrawerItem == 9) {
+                                fragmentClass = DataServicesFragment.class;
+                            } else if (idDrawerItem == 10) {
+                                fragmentClass = AddCreditFragment.class;
+                            } else if (idDrawerItem == 12) {
+                                fragmentClass = AboutFragment.class;
+                            } else if (idDrawerItem == 13) {
+                                // add credit via camera with number recognition
+                                fragmentClass = CameraFragment.class;
+                            }
+                            try {
+                                fragment = (Fragment) fragmentClass.newInstance();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
-                        try {
-                            fragment = (Fragment) fragmentClass.newInstance();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+
                         //set ActionBar Title
                         if (drawerItem instanceof Nameable) {
                             setActionBarTitle(((Nameable) drawerItem).getName().getText(MainActivity.this));
