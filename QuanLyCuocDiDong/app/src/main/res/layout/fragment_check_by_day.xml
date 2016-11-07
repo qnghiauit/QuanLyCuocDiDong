@@ -1,13 +1,352 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.uit.nst95.quanlycuocdidong.Activity.CheckByDayFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="CheckByDayFragment" />
+        android:layout_height="fill_parent"
+        tools:context=".MainActivity"
+        android:orientation="vertical"
+        android:baselineAligned="false"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chọn ngày: "
+                android:id="@+id/textViewv"
+                android:layout_gravity="center_vertical"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#303F9F" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="27/8/1995"
+                android:id="@+id/textViewValueOfCalendar"
+                android:layout_gravity="center_vertical"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#303F9F" />
+
+            <ImageButton
+                android:id="@+id/imageButtonCalendar"
+                android:background="@android:color/transparent"
+                android:layout_gravity="right"
+                android:scaleType="fitStart"
+                android:src="@drawable/ic_action_action_event"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:padding="6dp">
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cuộc gọi"
+                    android:id="@+id/textView"
+                    android:layout_marginStart="5dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/imageView4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100.000đ"
+                    android:id="@+id/textViewTongTienGoi"
+                    android:gravity="right"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textView"
+                    android:layout_marginStart="15dp" />
+
+                <ImageView
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/ic_action_communication_call"
+                    android:id="@+id/imageView4"
+                    android:layout_width="20dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nội mạng"
+                    android:id="@+id/textView3"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="50dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6 phút 17 giây"
+                    android:id="@+id/textViewSoPhutGoiNoiMang"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textView3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50.000đ"
+                    android:id="@+id/textViewTienGoiNoiMang"
+                    android:gravity="right"
+                    android:layout_marginStart="15dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textViewSoPhutGoiNoiMang" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="Ngoại mạng"
+                    android:id="@+id/textView31"
+                    android:layout_marginLeft="50dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5 phút 30 giây"
+                    android:id="@+id/textViewSoPhutGoiNgoaiMang"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textView31" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50.000đ"
+                    android:id="@+id/textViewTienGoiNgoaiMang"
+                    android:gravity="right"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textViewSoPhutGoiNgoaiMang"
+                    android:layout_marginStart="15dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tin nhắn"
+                    android:id="@+id/textView123"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/imageView5"
+                    android:layout_marginStart="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100.000đ"
+                    android:id="@+id/textViewTongTienSmS"
+                    android:gravity="right"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textView123"
+                    android:layout_marginStart="15dp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:srcCompat="@drawable/ic_action_communication_message"
+                    android:id="@+id/imageView5"
+                    android:layout_marginStart="15dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nội mạng"
+                    android:id="@+id/textView33"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="50dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2 tin nhắn"
+                    android:id="@+id/textViewSoSmsNoiMang"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textView33" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50.000đ"
+                    android:id="@+id/textViewTienSmSNoiMang"
+                    android:gravity="right"
+
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_toEndOf="@+id/textViewSoSmsNoiMang"
+                    android:layout_marginLeft="15dp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:text="Ngoại mạng"
+                    android:id="@+id/textView312"
+                    android:layout_marginLeft="50dp"
+                    android:layout_width="80dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6 tin nhắn"
+                    android:id="@+id/textViewSoSmsNgoaiMang"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textView312" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50.000đ"
+                    android:id="@+id/textViewTienSmsNgoaiMang"
+                    android:gravity="right"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/textViewSoSmsNgoaiMang"
+                    android:layout_marginLeft="15dp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng tiền:"
+                android:id="@+id/textViewds"
+                android:layout_marginStart="5dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imageView2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="500.000đ"
+                android:id="@+id/textViewTongTien"
+                android:gravity="right"
+                android:layout_marginStart="65dp"
+                android:layout_centerVertical="true"
+                android:layout_alignStart="@+id/textViewds" />
+
+            <ImageView
+                app:srcCompat="@drawable/total_money"
+                android:id="@+id/imageView2"
+                android:layout_marginStart="130dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_height="20dp"
+                android:layout_width="20dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TabHost
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tabLog">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TabWidget
+                        android:id="@android:id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_height="30dp"
+                        android:background="#303F9F"></TabWidget>
+
+                    <FrameLayout
+                        android:id="@android:id/tabcontent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:id="@+id/tab1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <include layout="@layout/custom_listview_tab_call_log"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/tab2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+                            <include layout="@layout/custom_listview_tab_message_log"/>
+                        </LinearLayout>
+
+                    </FrameLayout>
+                </LinearLayout>
+            </TabHost>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

@@ -153,16 +153,18 @@ public class DateTimeManager {
         }
         return 0;
     }*/
-    public String convertToMinutesAndSec( long sec)
+    public String convertToMinutesAndSec( long sec, boolean shortType)
     {
+        String minString = shortType ? "p" : "phút";
+        String secString = shortType ? "s" : "giây";
         int minutes = 0;
         if(sec > 60)
         {
             minutes = (int) (sec/60);
             sec = sec - minutes*60;
-            return minutes + "p" + sec + "s";
+            return minutes + minString + " " + sec + secString;
         }
-        return sec + "s";
+        return sec + secString;
     }
 
     public String ConvertToTimeSpan(String date)

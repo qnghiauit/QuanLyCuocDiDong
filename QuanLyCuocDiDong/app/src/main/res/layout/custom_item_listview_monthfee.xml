@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+    <include layout="@layout/custom_header_listview_monthfee" android:layout_width="fill_parent" android:layout_height="wrap_content"
+        android:id="@+id/header" />
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="vertical" android:padding="6dp"
+        android:background="@color/background_material_light">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cuộc gọi"
+                android:id="@+id/textView"
+                android:textColor="@color/abc_primary_text_material_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/textViewTongTienGoi"
+                android:gravity="right"
+                android:textColor="@color/abc_primary_text_material_light" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Gọi nội mạng"
+                android:id="@+id/textView3"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/abc_primary_text_material_light" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0s"
+                android:id="@+id/textViewSoPhutGoiNoiMang"
+                android:layout_marginLeft="25dp"
+                android:textColor="@color/abc_primary_text_material_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/textViewTienGoiNoiMang"
+                android:gravity="right"
+                android:textColor="@color/abc_primary_text_material_light" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Gọi ngoại mạng"
+                android:id="@+id/textView31"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/abc_primary_text_material_light" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0s"
+                android:id="@+id/textViewSoPhutGoiNgoaiMang"
+                android:layout_marginLeft="25dp"
+                android:textColor="@color/abc_primary_text_material_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/textViewTienGoiNgoaiMang"
+                android:gravity="right"
+                android:textColor="@color/abc_primary_text_material_light" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tin nhắn"
+                android:id="@+id/textView123"
+                android:textColor="@color/abc_primary_text_material_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/textViewTongTienSmS"
+                android:gravity="right"
+                android:textColor="@color/abc_primary_text_material_light" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Sms nội mạng"
+                android:id="@+id/textView33"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/abc_primary_text_material_light" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/textViewSoSmsNoiMang"
+                android:layout_marginLeft="25dp"
+                android:textColor="@color/abc_primary_text_material_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/textViewTienSmSNoiMang"
+                android:gravity="right"
+                android:textColor="@color/abc_primary_text_material_light" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Sms ngoại mạng"
+                android:id="@+id/textView312"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/abc_primary_text_material_light" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/textViewSoSmsNgoaiMang"
+                android:layout_marginLeft="25dp"
+                android:textColor="@color/abc_primary_text_material_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/textViewTienSmsNgoaiMang"
+                android:gravity="right"
+                android:textColor="@color/abc_primary_text_material_light" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="@android:color/darker_gray">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textView6"
+                android:background="@color/background_material_light"
+                android:textColor="@color/abc_primary_text_material_light" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng tiền:"
+                android:id="@+id/textViewds"
+                android:textColor="@color/abc_primary_text_material_light" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/textViewTongTien"
+                android:gravity="right"
+                android:textColor="@color/abc_primary_text_material_light" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
