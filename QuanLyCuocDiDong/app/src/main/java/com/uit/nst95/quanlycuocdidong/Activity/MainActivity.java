@@ -754,4 +754,37 @@ public class MainActivity extends AppCompatActivity {
             saveSharedPreferences();
         }
     }
+    public void ChangeFragment(int idDrawerItem) {
+        Fragment fragment = null;
+        Class fragmentClass = null;
+        if (idDrawerItem == 11) {
+            fragment = SettingFragment.newInstance(_myPackageFee);
+        } else {
+            if (idDrawerItem == 2) {
+                fragmentClass = StatisticsFragment.class;
+            } else if (idDrawerItem == 3) {
+                fragmentClass = CheckByDayFragment.class;
+            } else if (idDrawerItem == 4) {
+                fragmentClass = PromotionFragment.class;
+            } else if (idDrawerItem == 5) {
+                fragmentClass = MakeLoanFragment.class;
+            } else if (idDrawerItem == 8) {
+                fragmentClass = UsefulPhoneNumbersFragment.class;
+            } else if (idDrawerItem == 9) {
+                fragmentClass = DataServicesFragment.class;
+            } else if (idDrawerItem == 10) {
+                fragmentClass = AddCreditFragment.class;
+            }
+            try {
+                fragment = (Fragment) fragmentClass.newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (result.getDrawerItem(idDrawerItem) instanceof Nameable) {
+            setActionBarTitle(((Nameable) result.getDrawerItem(idDrawerItem)).getName().getText(MainActivity.this));
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).commit();
+    }
 }

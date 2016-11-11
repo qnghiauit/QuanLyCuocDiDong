@@ -18,6 +18,7 @@ public final class DefinedConstant {
     public static final String KEY_ID_LOGO_PROVIDER = "IDLogoProvider";
     public static final String BUNDLE_NAME = "TTTB";
 
+    public static final String KEY_ALLOWRECEIVE = "AllowReceive";
     public static final String KEY_ALLOWPOPUP = "AllowPopup";
     public static final String KEY_UPDATE_STATE = "UpdateState";
     public static final String KEY_LAST_TIME_UPDATE_CALL = "LastUpdateCall";

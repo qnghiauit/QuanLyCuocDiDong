@@ -91,4 +91,8 @@ public class Statistic {
 
     public void set_innerMessageCount(int innerMessageCount) {_innerMessageCount = innerMessageCount;}
     public void set_outerMessageCount (int outerMessageCount) {_outerMessageCount = outerMessageCount;}
+    
+    public int get_totalCost(){
+        return _innerCallFee +_outerCallFee +_innerMessageFee +_outerMessageFee;
+    }
 }

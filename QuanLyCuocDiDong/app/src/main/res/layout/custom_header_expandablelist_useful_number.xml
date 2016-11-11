@@ -7,18 +7,18 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#2196F3">
+        android:background="#2196F3"
+        android:layout_height="35dp">
 
         <ImageView
-            android:layout_width="23dp"
             android:id="@+id/imageViewHeader"
             android:layout_marginBottom="3dp"
             android:layout_marginTop="3dp"
             android:layout_marginLeft="40dp"
             app:srcCompat="@drawable/bank"
             android:layout_weight="0.01"
-            android:layout_height="23dp" />
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
 
         <TextView
             android:id="@+id/lblListHeader"
@@ -29,7 +29,9 @@
             android:layout_width="wrap_content"
             android:layout_weight="1"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="17sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:gravity="center_vertical" />
 
     </LinearLayout>
 

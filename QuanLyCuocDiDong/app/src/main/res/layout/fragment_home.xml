@@ -1,13 +1,316 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.uit.nst95.quanlycuocdidong.Activity.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Home" />
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    app:srcCompat="@drawable/total_money_backup"
+                    android:id="@+id/imageView7"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tiền cước tháng này của bạn là"
+                        android:id="@+id/textView16"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="150.000 VNĐ"
+                        android:id="@+id/textViewTongTienThang"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:orientation="vertical"
+                android:padding="6dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        app:srcCompat="@drawable/ic_action_communication_call"
+                        android:id="@+id/imageView6"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="50.000đ"
+                        android:id="@+id/textViewTienGoiNoiMang"
+                        android:gravity="right"
+                        android:layout_marginStart="15dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:textAlignment="viewStart" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        app:srcCompat="@drawable/ic_action_communication_call_orange"
+                        android:id="@+id/imageView61"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="50.000đ"
+                        android:id="@+id/textViewTienGoiNgoaiMang"
+                        android:gravity="right"
+                        android:layout_marginStart="15dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:textAlignment="viewStart" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        app:srcCompat="@drawable/ic_action_communication_message"
+                        android:id="@+id/imageView26"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="50.000đ"
+                        android:id="@+id/textViewTienSmSNoiMang"
+                        android:gravity="right"
+
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="15dp"
+                        android:textAlignment="viewStart" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        app:srcCompat="@drawable/ic_action_communication_message_cyan"
+                        android:id="@+id/imageView226"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="50.000đ"
+                        android:id="@+id/textViewTienSmsNgoaiMang"
+                        android:gravity="right"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="15dp"
+                        android:textAlignment="viewStart" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:text="Tiện ích"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView22"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <ImageButton
+                    app:srcCompat="@drawable/napcam"
+                    android:id="@+id/imageButtonNapTienCamera"
+                    android:layout_height="wrap_content"
+                    android:layout_width="70dp" />
+
+                <ImageButton
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/thk"
+                    android:id="@+id/imageButtonThongKe"
+                    android:layout_width="70dp" />
+
+                <ImageButton
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/tk"
+                    android:id="@+id/imageButtonTraTheoNgay"
+                    android:layout_width="70dp" />
+
+                <ImageButton
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/st"
+                    android:id="@+id/imageButtonCaiDat"
+                    android:layout_width="70dp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:text="Nạp bằng Camera"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView30"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:text="Thống kê"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView25"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:text="Tra theo ngày"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView24"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:text="Cài đặt"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView23"
+                    android:textAlignment="center" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <ImageButton
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ut"
+                    android:id="@+id/imageButtonUngTien" />
+
+                <ImageButton
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/um"
+                    android:id="@+id/imageButtonSDTHuuIch" />
+
+                <ImageButton
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/km"
+                    android:id="@+id/imageButtonKhuyenMai" />
+
+                <ImageButton
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/dt"
+                    android:id="@+id/imageButtonDK3G" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:text="Ứng tiền"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView301"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:text="Danh bạ điện thoại"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView251"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:text="Khuyến mãi"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView241"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:text="Đăng ký 3G"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView231"
+                    android:textAlignment="center" />
+            </TableRow>
+
+        </TableLayout>
+
+
+    </LinearLayout>
 
 </FrameLayout>
