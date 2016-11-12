@@ -15,6 +15,7 @@ import com.uit.nst95.quanlycuocdidong.Manager.DataMonthFee;
 import com.uit.nst95.quanlycuocdidong.Manager.MonthFee;
 import com.uit.nst95.quanlycuocdidong.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -92,6 +93,9 @@ public class StatisticsFragment extends Fragment {
         @Override
         public View getAmazingView(int position, View convertView, ViewGroup parent) {
             View res = convertView;
+
+            DecimalFormat formatter = new DecimalFormat("#,###,###");
+
             if (res == null)
                 res = getActivity().getLayoutInflater().inflate(R.layout.custom_item_listview_monthfee, null);
 
@@ -109,17 +113,17 @@ public class StatisticsFragment extends Fragment {
 
             MonthFee monthFee = getItem(position);
 
-            textViewTongTienGoi.setText(String.valueOf(monthFee.getFee_innerCall() + monthFee.getFee_outerCall()) + currency);
+            textViewTongTienGoi.setText(formatter.format(monthFee.getFee_innerCall() + monthFee.getFee_outerCall()) + currency);
             textViewSoPhutGoiNoiMang.setText(monthFee.getMinutes_innerCall());
-            textViewTienGoiNoiMang.setText(String.valueOf(monthFee.getFee_innerCall()) + currency);
+            textViewTienGoiNoiMang.setText(formatter.format(monthFee.getFee_innerCall()) + currency);
             textViewSoPhutGoiNgoaiMang.setText(monthFee.getMinutes_outerCall());
-            textViewTienGoiNgoaiMang.setText(String.valueOf(monthFee.getFee_outerCall()) + currency);
-            textViewTongTienSmS.setText(String.valueOf(monthFee.getFee_innerMess() + monthFee.getFee_outerMess()) + currency);
+            textViewTienGoiNgoaiMang.setText(formatter.format(monthFee.getFee_outerCall()) + currency);
+            textViewTongTienSmS.setText(formatter.format(monthFee.getFee_innerMess() + monthFee.getFee_outerMess()) + currency);
             textViewSoSmsNoiMang.setText(String.valueOf(monthFee.getNumber_innerMess()));
-            textViewTienSmSNoiMang.setText(String.valueOf(monthFee.getFee_innerMess()) + currency);
+            textViewTienSmSNoiMang.setText(formatter.format(monthFee.getFee_innerMess()) + currency);
             textViewSoSmsNgoaiMang.setText(String.valueOf(monthFee.getNumber_outerMess()));
-            textViewTienSmsNgoaiMang.setText(String.valueOf(monthFee.getFee_outerMess()) + currency);
-            textViewTongTien.setText(String.valueOf(monthFee.getFee_innerCall() + monthFee.getFee_outerCall() +
+            textViewTienSmsNgoaiMang.setText(formatter.format(monthFee.getFee_outerMess()) + currency);
+            textViewTongTien.setText(formatter.format(monthFee.getFee_innerCall() + monthFee.getFee_outerCall() +
                     monthFee.getFee_innerMess() + monthFee.getFee_outerMess()) + currency);
 
             return res;

@@ -12,6 +12,7 @@ import com.uit.nst95.quanlycuocdidong.Activity.CheckByDayFragment;
 import com.uit.nst95.quanlycuocdidong.DB.MessageLog;
 import com.uit.nst95.quanlycuocdidong.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -52,11 +53,11 @@ public class MessLogArrayAdapter extends ArrayAdapter<MessageLog>
                     convertView.findViewById(R.id.imageViewTypeLog);
 
             final MessageLog mess = myArrayMessLog.get(position);
-
+            DecimalFormat formatter = new DecimalFormat("#,###,###");
             imageViewTypeLog.setImageResource(R.drawable.ic_action_communication_message);
             textViewPhoneNumber.setText(CheckByDayFragment.getContactName(getContext(),mess.get_receiverNumber()));
             textViewTime.setText(DateTimeManager.get_instance().convertToDMYHms(mess.get_messageDate()).substring(11, 16));
-            textViewfee.setText(String.valueOf(mess.get_messageFee()) + CheckByDayFragment.currency);
+            textViewfee.setText(formatter.format(mess.get_messageFee()) + CheckByDayFragment.currency);
             textViewDuration.setText("");
 
         }

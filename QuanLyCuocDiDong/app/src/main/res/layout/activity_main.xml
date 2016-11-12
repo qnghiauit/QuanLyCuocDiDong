@@ -12,8 +12,8 @@
     <ProgressBar
         android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar" />
+        android:id="@+id/progressBar"
+        android:layout_height="15dp" />
     <FrameLayout
         android:layout_below="@id/progressBar"
         android:id="@+id/frame_container"

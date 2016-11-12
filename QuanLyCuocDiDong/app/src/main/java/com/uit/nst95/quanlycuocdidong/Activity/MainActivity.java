@@ -42,6 +42,9 @@ import com.uit.nst95.quanlycuocdidong.Manager.*;
 import java.util.List;
 import com.uit.nst95.quanlycuocdidong.DB.*;
 import com.uit.nst95.quanlycuocdidong.NetworkPackage.*;
+
+import static com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant.PREFS_NAME;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName(); // tag
     // permission request codes
@@ -255,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void saveSharedPreferences() {
-        SharedPreferences settings = getSharedPreferences(DefinedConstant.PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(DefinedConstant.KEY_PACKAGE, _package);
         editor.putString(DefinedConstant.KEY_PROVIDER, _provider);
@@ -285,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
                     _id_logo_provider = R.drawable.vmb;
                 }
                 _id_logo_package = goicuoc.getIdImage();
-                SharedPreferences settings = getSharedPreferences(DefinedConstant.PREFS_NAME, MODE_PRIVATE);
+                SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
                 _lastCallUpdate = settings.getLong(DefinedConstant.KEY_LAST_TIME_UPDATE_CALL, DefinedConstant.TIME_DEDAULT);
                 _lastMessageUpdate = settings.getLong(DefinedConstant.KEY_LAST_TIME_UPDATE_MESSAGE, DefinedConstant.TIME_DEDAULT);
                 this.InitPackage(_package);
@@ -293,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             // Restore preferences
-            SharedPreferences settings = getSharedPreferences(DefinedConstant.PREFS_NAME, MODE_PRIVATE);
+            SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
             _package = settings.getString(DefinedConstant.KEY_PACKAGE, DefinedConstant.VALUE_DEFAULT);
             _provider = settings.getString(DefinedConstant.KEY_PROVIDER, DefinedConstant.VALUE_DEFAULT);
             _id_logo_provider = settings.getInt(DefinedConstant.KEY_ID_LOGO_PROVIDER, 0);
@@ -759,6 +762,7 @@ public class MainActivity extends AppCompatActivity {
         Class fragmentClass = null;
         if (idDrawerItem == 11) {
             fragment = SettingFragment.newInstance(_myPackageFee);
+            setActionBarTitle("Cài đặt");
         } else {
             if (idDrawerItem == 2) {
                 fragmentClass = StatisticsFragment.class;
@@ -777,14 +781,23 @@ public class MainActivity extends AppCompatActivity {
             }
             try {
                 fragment = (Fragment) fragmentClass.newInstance();
+                if (result.getDrawerItem(idDrawerItem) instanceof Nameable) {
+                    setActionBarTitle(((Nameable) result.getDrawerItem(idDrawerItem)).getName().getText(MainActivity.this));
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
-        if (result.getDrawerItem(idDrawerItem) instanceof Nameable) {
-            setActionBarTitle(((Nameable) result.getDrawerItem(idDrawerItem)).getName().getText(MainActivity.this));
-        }
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).commit();
+    }
+    public void ResetProvider(){
+        SharedPreferences settings = getSharedPreferences(DefinedConstant.PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(DefinedConstant.KEY_PACKAGE, "");
+        editor.putString(DefinedConstant.KEY_PROVIDER, "");
+        editor.commit();
+        Intent myIntent = new Intent(MainActivity.this, ChooseNetworkProviderActivity.class);
+        myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(myIntent);
     }
 }

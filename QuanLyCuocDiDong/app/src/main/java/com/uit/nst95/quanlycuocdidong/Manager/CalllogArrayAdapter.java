@@ -12,6 +12,7 @@ import com.uit.nst95.quanlycuocdidong.Activity.CheckByDayFragment;
 import com.uit.nst95.quanlycuocdidong.DB.CallLog;
 import com.uit.nst95.quanlycuocdidong.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -52,11 +53,11 @@ public class CalllogArrayAdapter extends ArrayAdapter<CallLog>
                     convertView.findViewById(R.id.imageViewTypeLog);
 
             final CallLog call = myArrayCalllog.get(position);
-
+            DecimalFormat formatter = new DecimalFormat("#,###,###");
             imageViewTypeLog.setImageResource(R.drawable.ic_action_communication_call);
             textViewPhoneNumber.setText(CheckByDayFragment.getContactName(getContext(), call.get_callNumber()));
             textViewTime.setText(DateTimeManager.get_instance().convertToDMYHms(call.get_callDate()).substring(11, 16));
-            textViewfee.setText(String.valueOf(call.get_callFee()) + CheckByDayFragment.currency);
+            textViewfee.setText(formatter.format(call.get_callFee()) + CheckByDayFragment.currency);
             textViewDuration.setText(DateTimeManager.get_instance().convertToMinutesAndSec(call.get_callDuration(),true));
 
         }

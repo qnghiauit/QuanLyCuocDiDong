@@ -17,6 +17,8 @@ import com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant;
 import com.uit.nst95.quanlycuocdidong.NetworkPackage.PackageFee;
 import com.uit.nst95.quanlycuocdidong.R;
 
+import java.text.DecimalFormat;
+
 import static android.R.attr.fragment;
 
 /**
@@ -58,24 +60,25 @@ public class SettingFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
         TextView textViewGoiCuoc = (TextView) view.findViewById(R.id.textViewTenGoiCuoc);
         textViewGoiCuoc.setText(goiCuoc);
         TextView textViewTenNhaMang = (TextView) view.findViewById(R.id.textViewTenNhaMang);
         textViewTenNhaMang.setText(nhaMang);
         TextView textViewPhiGoiNoiMang = (TextView) view.findViewById(R.id.textViewPhiGoiNoiMang);
-        textViewPhiGoiNoiMang.setText(String.valueOf(_myPackageFee.get_internalCallFee()));
+        textViewPhiGoiNoiMang.setText(formatter.format(_myPackageFee.get_internalCallFee()));
         TextView textViewPhiGoiNgoaiMang = (TextView) view.findViewById(R.id.textViewPhiGoiNgoaiMang);
-        textViewPhiGoiNgoaiMang.setText(String.valueOf(_myPackageFee.get_outerCallFee()));
+        textViewPhiGoiNgoaiMang.setText(formatter.format(_myPackageFee.get_outerCallFee()));
         TextView textViewPhiNhanTinNoiMang = (TextView) view.findViewById(R.id.textViewPhiNhanTinNoiMang);
-        textViewPhiNhanTinNoiMang.setText(String.valueOf(_myPackageFee.get_internalMessageFee()));
+        textViewPhiNhanTinNoiMang.setText(formatter.format(_myPackageFee.get_internalMessageFee()));
         TextView textViewPhiNhanTinNgoaiMang = (TextView) view.findViewById(R.id.textViewPhiNhanTinNgoaiMang);
-        textViewPhiNhanTinNgoaiMang.setText(String.valueOf(_myPackageFee.get_outerMessageFee()));
+        textViewPhiNhanTinNgoaiMang.setText(formatter.format(_myPackageFee.get_outerMessageFee()));
 
         Button buttonChangeMobileNW = (Button) view.findViewById(R.id.buttonClear);
         buttonChangeMobileNW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //onButtonPressed();
+                ((MainActivity)getActivity()).ResetProvider();
             }
         });
 

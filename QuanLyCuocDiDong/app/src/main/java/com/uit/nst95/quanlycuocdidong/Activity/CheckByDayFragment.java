@@ -32,6 +32,7 @@ import com.uit.nst95.quanlycuocdidong.R;
 
 import org.joda.time.DateTime;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import static android.R.id.tabhost;
@@ -225,13 +226,14 @@ public class CheckByDayFragment extends Fragment implements CalendarDatePickerDi
             }
 
         }
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
         dayFee.setMinutes_innerCall(DateTimeManager.get_instance().convertToMinutesAndSec(minutes_innerCall,false));
         dayFee.setMinutes_outerCall(DateTimeManager.get_instance().convertToMinutesAndSec(minutes_outerCall,false));
-        textViewTongTienGoi.setText(String.valueOf(dayFee.getFee_innerCall() + dayFee.getFee_outerCall()) + currency);
+        textViewTongTienGoi.setText(formatter.format(dayFee.getFee_innerCall() + dayFee.getFee_outerCall()) + currency);
         textViewSoPhutGoiNoiMang.setText(dayFee.getMinutes_innerCall());
-        textViewTienGoiNoiMang.setText(String.valueOf(dayFee.getFee_innerCall()) + currency);
+        textViewTienGoiNoiMang.setText(formatter.format(dayFee.getFee_innerCall()) + currency);
         textViewSoPhutGoiNgoaiMang.setText(dayFee.getMinutes_outerCall());
-        textViewTienGoiNgoaiMang.setText(String.valueOf(dayFee.getFee_outerCall()) + currency);
+        textViewTienGoiNgoaiMang.setText(formatter.format(dayFee.getFee_outerCall()) + currency);
 
 
         for (i=0;i< numMessLog;i++)
@@ -248,11 +250,11 @@ public class CheckByDayFragment extends Fragment implements CalendarDatePickerDi
                 dayFee.addFee_outerMess(tempMess.get_messageFee());
             }
         }
-        textViewTongTienSmS.setText(String.valueOf(dayFee.getFee_innerMess() + dayFee.getFee_outerMess()) + currency);
+        textViewTongTienSmS.setText(formatter.format(dayFee.getFee_innerMess() + dayFee.getFee_outerMess()) + currency);
         textViewSoSmsNoiMang.setText(String.valueOf(dayFee.getNumber_innerMess()) + " tin nhắn");
-        textViewTienSmSNoiMang.setText(String.valueOf(dayFee.getFee_innerMess()) + currency);
+        textViewTienSmSNoiMang.setText(formatter.format(dayFee.getFee_innerMess()) + currency);
         textViewSoSmsNgoaiMang.setText(String.valueOf(dayFee.getNumber_outerMess()) + " tin nhắn");
-        textViewTienSmsNgoaiMang.setText(String.valueOf(dayFee.getFee_outerMess()) + currency);
+        textViewTienSmsNgoaiMang.setText(formatter.format(dayFee.getFee_outerMess()) + currency);
 
         textViewTongTien.setText(String.valueOf(dayFee.getFee_innerCall() + dayFee.getFee_outerCall()
                 + dayFee.getFee_innerMess() + dayFee.getFee_outerMess()) + currency);
