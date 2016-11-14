@@ -32,7 +32,7 @@ public class DataMonthFee {
         monthFeess = new MonthFee[n][1];
         for (int i = 0; i < n; i++) {
             temp = monthStatistics.get(i);
-            titles[i] = "Tháng" + temp.get_month() + "/" +  temp.get_year();
+            titles[i] = "Tháng " + temp.get_month() + "/" +  temp.get_year();
             monthFeess[i][0] = new MonthFee(String.valueOf(temp.get_month()),String.valueOf(temp.get_year()),
                     DateTimeManager.get_instance().convertToMinutesAndSec(temp.get_innerCallDuration(),true),temp.get_innerCallFee(),
                     DateTimeManager.get_instance().convertToMinutesAndSec(temp.get_outerCallDuration(),true),temp.get_outerCallFee(),

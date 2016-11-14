@@ -54,7 +54,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:textColor="#2196F3" />
+                    android:textColor="#3F51B5" />
 
                 <TextView
                     android:text="Hỗ trợ tính toán cước, thống kê các cước phí theo từng tháng, từng ngày (thời lượng cuộc gọi, số lượng tin nhắn, cước phí) cho người dùng sử dụng các nhà mạng hiện tại: Vinaphone, Mobifone, Viettel, Vietnamobile, G-Mobile."
@@ -86,7 +86,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:textColor="#2196F3" />
+                    android:textColor="#3F51B5" />
 
                 <TextView
                     android:text="Fanpage: facebook.com/nts95.uit"

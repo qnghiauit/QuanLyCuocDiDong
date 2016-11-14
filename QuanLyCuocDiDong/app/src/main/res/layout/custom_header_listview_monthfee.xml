@@ -3,9 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="#2196F3"
-    android:textColor="#ffff"
     android:text="Header"
-    android:textStyle="bold"
     android:padding="6dp"
     android:id="@+id/header"
-    android:textSize="15dp" />
+    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+    android:textColor="@android:color/white" />

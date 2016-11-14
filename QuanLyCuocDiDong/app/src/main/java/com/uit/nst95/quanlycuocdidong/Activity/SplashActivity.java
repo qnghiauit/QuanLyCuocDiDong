@@ -26,7 +26,7 @@ public class SplashActivity extends Activity {
 
         SharedPreferences settings = getSharedPreferences(DefinedConstant.PREFS_NAME, MODE_PRIVATE);
         _package = settings.getString(DefinedConstant.KEY_PACKAGE, DefinedConstant.VALUE_DEFAULT);
-        new CountDownTimer(3000, 3000) {
+        new CountDownTimer(1500, 1500) {
 
             public void onTick(long millisUntilFinished) {
                 //Do nothing

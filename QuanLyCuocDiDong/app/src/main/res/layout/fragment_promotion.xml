@@ -26,18 +26,22 @@
                 android:text="Khuyến mãi nạp thẻ"
                 android:id="@+id/textView16"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="#3F51B5" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                app:srcCompat="@drawable/vinaphone_provider"
+                android:id="@+id/imageViewLogoProvider"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp" />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="140dp"
-                    app:srcCompat="@drawable/vietel"
-                    android:id="@+id/imageViewLogoProvider"
-                    android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -45,41 +49,110 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <TextView
-                        android:text="Ngày: 27/8/2016"
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/textViewPromotionDay"
                         android:layout_weight="1"
-                        android:layout_marginLeft="5dp"
-                        android:gravity="center_vertical" />
+                        android:gravity="center_vertical">
 
-                    <TextView
+                        <TextView
+                            android:text="Nội dung:"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView3221"
+                            android:layout_weight="1"
+                            android:layout_width="140dp" />
+
+                        <TextView
+                            android:text="+ 50% giá trị thẻ nạp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textViewDoiTu2ong"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center_vertical" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nội dung: Tặng 50% giá trị thẻ nạp"
-                        android:id="@+id/textViewNoiDung"
                         android:layout_weight="1"
-                        android:layout_marginLeft="5dp"
-                        android:gravity="center_vertical" />
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:text="Thời gian:"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView32"
+                            android:layout_weight="1"
+                            android:layout_width="140dp" />
+
+                        <TextView
+                            android:text="27/8/2016"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textViewPromotionDay"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center_vertical"
+                            android:textColor="@android:color/holo_red_dark" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:text="Đối tượng:"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView321"
+                            android:layout_weight="1"
+                            android:layout_width="140dp" />
+
+                        <TextView
+                            android:text="Tất cả"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textViewDoiTuong"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center_vertical" />
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thông báo thông minh"
+            android:id="@+id/textView161"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_weight="1"
+            android:textColor="#3F51B5" />
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView18"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:text="Chặn tin nhắn quảng cáo từ nhà mạng" />
+                android:text="Bước 1: Chặn tin nhắn quảng cáo"
+                android:textColor="#3F51B5" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -100,15 +173,14 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nhận thông báo khuyến mãi nạp thẻ"
+                android:text="Bước 2: Nhận thông báo từ ứng dụng"
                 android:id="@+id/textView"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textColor="#3F51B5" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -127,10 +199,11 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/switchNhanTB"
                     android:layout_weight="1"
-                    android:layout_width="80dp" />
+                    android:layout_width="100dp" />
             </LinearLayout>
 
         </LinearLayout>
+    </LinearLayout>
 
     </LinearLayout>
 

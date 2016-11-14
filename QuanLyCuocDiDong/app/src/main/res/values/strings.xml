@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QuanLyCuocDiDong</string>
+    <string name="app_name">Quản lý cước di động</string>
     <string name="actionbar_title">Quản lý cước di động</string>
     <string name="calllog_notification_title">Thông tin cuộc gọi</string>
     <string name="drawer_item_profile_network_provider">Nhà mạng: </string>

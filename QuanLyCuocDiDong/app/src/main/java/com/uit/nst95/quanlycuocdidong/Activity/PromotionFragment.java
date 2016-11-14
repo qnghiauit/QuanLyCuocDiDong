@@ -42,21 +42,21 @@ public class PromotionFragment extends Fragment {
         nhaMang = settings.getString(DefinedConstant.KEY_PROVIDER, DefinedConstant.VALUE_DEFAULT);
         if(nhaMang.equals(DefinedConstant.MOBIFONE)){
             SDT = "9241";
-            idImage = R.drawable.mobifone;
+            idImage = R.drawable.mobifone_provider;
         }else if (nhaMang.equals(DefinedConstant.VIETTEL)){
             SDT = "199";
-            idImage = R.drawable.vietel;
+            idImage = R.drawable.viettel_provider;
         }else if(nhaMang.equals(DefinedConstant.VINAPHONE)){
             SDT = "18001091";
-            idImage = R.drawable.vinaphonne;
+            idImage = R.drawable.vinaphone_provider;
         }else if (nhaMang.equals(DefinedConstant.VIETNAMOBILE)){
             SDT = "123";
             NoiDung = "TCQC";
-            idImage = R.drawable.vietnamobile;
+            idImage = R.drawable.vietnamobile_provider;
         }else if (nhaMang.equals(DefinedConstant.GMOBILE)){
             SDT = "123";
             NoiDung = "TCQC";
-            idImage = R.drawable.gmobile;
+            idImage = R.drawable.gmobile_provider;
         }
     }
 
@@ -69,9 +69,11 @@ public class PromotionFragment extends Fragment {
         imageViewLogo.setImageResource(idImage);
 
         TextView textViewNgayKM = (TextView) view.findViewById(R.id.textViewPromotionDay);
-        //write code in here
+        TextView textViewNgayDoiTuong = (TextView) view.findViewById(R.id.textViewDoiTuong);
 
-
+        //set text read from xml
+        //textViewNgayKM
+        //textViewNgayDoiTuong
 
 
         TextView textViewHD = (TextView) view.findViewById(R.id.textViewHuongDan);

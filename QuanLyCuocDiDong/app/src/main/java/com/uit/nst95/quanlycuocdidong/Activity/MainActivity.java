@@ -43,7 +43,7 @@ import java.util.List;
 import com.uit.nst95.quanlycuocdidong.DB.*;
 import com.uit.nst95.quanlycuocdidong.NetworkPackage.*;
 
-import static com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant.PREFS_NAME;
+import static com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant.*;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName(); // tag
@@ -142,8 +142,7 @@ public class MainActivity extends AppCompatActivity {
                         new SecondaryDrawerItem().withName(R.string.drawer_item_utility_callback).withIdentifier(6).withIcon(FontAwesome.Icon.faw_phone),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_utility_info_owner).withIdentifier(7).withIcon(FontAwesome.Icon.faw_user),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_utility_contacts).withIdentifier(8).withIcon(FontAwesome.Icon.faw_taxi),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_utility_datamobile).withIdentifier(9).withIcon(FontAwesome.Icon.faw_exchange),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_utility_add_credit).withIdentifier(10).withIcon(FontAwesome.Icon.faw_camera)
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_utility_datamobile).withIdentifier(9).withIcon(FontAwesome.Icon.faw_exchange)
                 ) // add the items we want to use with our Drawer
                 .addStickyDrawerItems(
                         new SecondaryDrawerItem().withName(R.string.drawer_item_setting).withIdentifier(11).withIcon(FontAwesome.Icon.faw_cog),
@@ -176,12 +175,9 @@ public class MainActivity extends AppCompatActivity {
                                 fragmentClass = UsefulPhoneNumbersFragment.class;
                             } else if (idDrawerItem == 9) {
                                 fragmentClass = DataServicesFragment.class;
-                            } else if (idDrawerItem == 10) {
-                                fragmentClass = AddCreditFragment.class;
                             } else if (idDrawerItem == 12) {
                                 fragmentClass = AboutFragment.class;
                             } else if (idDrawerItem == 13) {
-                                // add credit via camera with number recognition
                                 fragmentClass = CameraFragment.class;
                             }
                             try {
@@ -196,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
                             setActionBarTitle(((Nameable) drawerItem).getName().getText(MainActivity.this));
                         }
                         // Insert the fragment by replacing any existing fragment
-                        // if (idDrawerItem != 13) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).commit();
                         // }
                         //return true/false - remain/close drawer after select item
@@ -264,6 +259,8 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(DefinedConstant.KEY_PROVIDER, _provider);
         editor.putInt(DefinedConstant.KEY_ID_LOGO_PROVIDER, _id_logo_provider);
         editor.putInt(DefinedConstant.KEY_ID_LOGO_PACKAGE, _id_logo_package);
+        editor.putLong(KEY_LAST_TIME_UPDATE_CALL, _lastCallUpdate);
+        editor.putLong(KEY_LAST_TIME_UPDATE_MESSAGE, _lastMessageUpdate);
         // Commit the edits!
         editor.apply();
     }
@@ -289,8 +286,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 _id_logo_package = goicuoc.getIdImage();
                 SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-                _lastCallUpdate = settings.getLong(DefinedConstant.KEY_LAST_TIME_UPDATE_CALL, DefinedConstant.TIME_DEDAULT);
-                _lastMessageUpdate = settings.getLong(DefinedConstant.KEY_LAST_TIME_UPDATE_MESSAGE, DefinedConstant.TIME_DEDAULT);
+                _lastCallUpdate = settings.getLong(KEY_LAST_TIME_UPDATE_CALL, DefinedConstant.TIME_DEDAULT);
+                _lastMessageUpdate = settings.getLong(KEY_LAST_TIME_UPDATE_MESSAGE, DefinedConstant.TIME_DEDAULT);
                 this.InitPackage(_package);
                 this._logManager = PhoneLogManager.get_instance(this, _myPackageFee);
             }
@@ -301,8 +298,8 @@ public class MainActivity extends AppCompatActivity {
             _provider = settings.getString(DefinedConstant.KEY_PROVIDER, DefinedConstant.VALUE_DEFAULT);
             _id_logo_provider = settings.getInt(DefinedConstant.KEY_ID_LOGO_PROVIDER, 0);
             _id_logo_package = settings.getInt(DefinedConstant.KEY_ID_LOGO_PACKAGE, 0);
-            _lastCallUpdate = settings.getLong(DefinedConstant.KEY_LAST_TIME_UPDATE_CALL, DefinedConstant.TIME_DEDAULT);
-            _lastMessageUpdate = settings.getLong(DefinedConstant.KEY_LAST_TIME_UPDATE_MESSAGE, DefinedConstant.TIME_DEDAULT);
+            _lastCallUpdate = settings.getLong(KEY_LAST_TIME_UPDATE_CALL, DefinedConstant.TIME_DEDAULT);
+            _lastMessageUpdate = settings.getLong(KEY_LAST_TIME_UPDATE_MESSAGE, DefinedConstant.TIME_DEDAULT);
             this.InitPackage(this._package);
             this._logManager = PhoneLogManager.get_instance(this, _myPackageFee);
         }

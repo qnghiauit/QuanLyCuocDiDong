@@ -44,7 +44,7 @@
                 android:background="@android:color/transparent"
                 android:layout_gravity="right"
                 android:scaleType="fitStart"
-                android:src="@drawable/ic_action_action_event"
+                android:src="@drawable/eventicon"
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
                 android:layout_width="35dp"
@@ -70,7 +70,8 @@
                     android:id="@+id/textView"
                     android:layout_marginStart="5dp"
                     android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/imageView4" />
+                    android:layout_toEndOf="@+id/imageView4"
+                    android:textColor="#3F51B5" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -169,7 +170,8 @@
                     android:id="@+id/textView123"
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/imageView5"
-                    android:layout_marginStart="5dp" />
+                    android:layout_marginStart="5dp"
+                    android:textColor="#3F51B5" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -274,7 +276,8 @@
                 android:id="@+id/textViewds"
                 android:layout_marginStart="5dp"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/imageView2" />
+                android:layout_toEndOf="@+id/imageView2"
+                android:textColor="@android:color/holo_red_dark" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -284,7 +287,8 @@
                 android:gravity="right"
                 android:layout_marginStart="65dp"
                 android:layout_centerVertical="true"
-                android:layout_alignStart="@+id/textViewds" />
+                android:layout_alignStart="@+id/textViewds"
+                android:textColor="@android:color/holo_red_dark" />
 
             <ImageView
                 app:srcCompat="@drawable/total_money"

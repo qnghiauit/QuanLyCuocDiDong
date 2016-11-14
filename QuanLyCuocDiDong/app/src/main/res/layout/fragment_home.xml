@@ -42,7 +42,8 @@
                         android:text="Tiền cước tháng này của bạn là"
                         android:id="@+id/textView16"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textColor="#3F51B5" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -173,7 +174,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView22"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#3F51B5" />
 
         <TableLayout
             android:layout_width="match_parent"
@@ -220,28 +222,32 @@
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView30"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="#3F51B5" />
 
                 <TextView
                     android:text="Thống kê"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView25"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="#3F51B5" />
 
                 <TextView
                     android:text="Tra theo ngày"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView24"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="#3F51B5" />
 
                 <TextView
                     android:text="Cài đặt"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView23"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="#3F51B5" />
             </TableRow>
 
             <TableRow
@@ -284,28 +290,32 @@
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView301"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="#3F51B5" />
 
                 <TextView
                     android:text="Danh bạ điện thoại"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView251"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="#3F51B5" />
 
                 <TextView
                     android:text="Khuyến mãi"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView241"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="#3F51B5" />
 
                 <TextView
                     android:text="Đăng ký 3G"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView231"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="#3F51B5" />
             </TableRow>
 
         </TableLayout>

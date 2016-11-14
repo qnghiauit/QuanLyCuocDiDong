@@ -25,7 +25,8 @@
                 android:layout_height="wrap_content"
                 android:text="Thông tin gói cước"
                 android:id="@+id/textView16"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#3F51B5" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -49,14 +50,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/textView5"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:textColor="#2196F3" />
 
                         <TextView
                             android:text="Gói cước"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/textView3"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:textColor="#2196F3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -70,14 +73,16 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/textViewTenNhaMang"
                             android:layout_weight="1"
-                            android:textAlignment="viewStart" />
+                            android:textAlignment="viewStart"
+                            android:textColor="@android:color/holo_red_dark" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/textViewTenGoiCuoc"
                             android:layout_weight="1"
-                            android:textAlignment="viewStart" />
+                            android:textAlignment="viewStart"
+                            android:textColor="@android:color/holo_red_dark" />
 
                     </LinearLayout>
 
@@ -96,7 +101,8 @@
                     android:text="Cước phí"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView4" />
+                    android:id="@+id/textView4"
+                    android:textColor="#2196F3" />
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -243,9 +249,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chế độ Pop-up"
+                android:text="Chế độ thông báo"
                 android:id="@+id/textView18"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#3F51B5" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -267,26 +274,6 @@
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thông tin chi tiết"
-                android:id="@+id/textView20"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Để biết thêm thông tin chi tiết của tiện ích, bạn có thể truy cập ở đây"
-                android:id="@+id/textViewTTChiTiet" />
         </LinearLayout>
 
     </LinearLayout>
