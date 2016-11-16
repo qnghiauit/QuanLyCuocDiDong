@@ -3,6 +3,7 @@ package com.uit.nst95.quanlycuocdidong.Activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,12 +50,16 @@ public class HomeFragment extends Fragment {
 
         DAO_Statistic dao_statistic = new DAO_Statistic(getContext());
         dao_statistic.Open();
-        Statistic monthStatistics = dao_statistic.FindStatisticByMonthYear(DateTime.now().getMonthOfYear(),DateTime.now().getYear());
-        textViewTongTienThang.setText(formatter.format(monthStatistics.get_totalCost()) + "đ");
-        textViewTienGoiNoiMang.setText(formatter.format(monthStatistics.get_innerCallFee()) + "đ cho " + DateTimeManager.get_instance().convertToMinutesAndSec(monthStatistics.get_innerCallDuration(),false) + " gọi nội mạng");
-        textViewTienGoiNgoaiMang.setText(formatter.format(monthStatistics.get_outerCallFee()) + "đ cho " + DateTimeManager.get_instance().convertToMinutesAndSec(monthStatistics.get_outerCallDuration(),false) + " gọi ngoại mạng");
-        textViewNhanTinNoiMang.setText(formatter.format(monthStatistics.get_innerMessageFee()) + "đ cho " + monthStatistics.get_innerMessageCount() + " tin nhắn nội mạng");
-        textViewNhanTinNgoaiMang.setText(formatter.format(monthStatistics.get_outerMessageFee()) + "đ cho " + monthStatistics.get_outerMessageCount() + " tin nhắn ngoại mạng");
+        Statistic monthStatistics = dao_statistic.FindStatisticByMonthYear(DateTime.now().getMonthOfYear(), DateTime.now().getYear());
+        // make sure data for current time is not null
+        if (monthStatistics != null) {
+
+            textViewTongTienThang.setText(formatter.format(monthStatistics.get_totalCost()) + "đ");
+            textViewTienGoiNoiMang.setText(formatter.format(monthStatistics.get_innerCallFee()) + "đ cho " + DateTimeManager.get_instance().convertToMinutesAndSec(monthStatistics.get_innerCallDuration(), false) + " gọi nội mạng");
+            textViewTienGoiNgoaiMang.setText(formatter.format(monthStatistics.get_outerCallFee()) + "đ cho " + DateTimeManager.get_instance().convertToMinutesAndSec(monthStatistics.get_outerCallDuration(), false) + " gọi ngoại mạng");
+            textViewNhanTinNoiMang.setText(formatter.format(monthStatistics.get_innerMessageFee()) + "đ cho " + monthStatistics.get_innerMessageCount() + " tin nhắn nội mạng");
+            textViewNhanTinNgoaiMang.setText(formatter.format(monthStatistics.get_outerMessageFee()) + "đ cho " + monthStatistics.get_outerMessageCount() + " tin nhắn ngoại mạng");
+        }
 
         ImageButton buttonSetting = (ImageButton) view.findViewById(R.id.imageButtonCaiDat);
         ImageButton buttonThongKe = (ImageButton) view.findViewById(R.id.imageButtonThongKe);
@@ -77,13 +82,11 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private class ShortcutOnClick implements View.OnClickListener
-    {
+    private class ShortcutOnClick implements View.OnClickListener {
         @Override
         public void onClick(View arg0) {
             int id = 11;
-            switch(arg0.getId())
-            {
+            switch (arg0.getId()) {
                 case R.id.imageButtonCaiDat:
                     id = 11;
                     break;
@@ -109,7 +112,7 @@ public class HomeFragment extends Fragment {
                     id = 9;
                     break;
             }
-            ((MainActivity)getActivity()).ChangeFragment(id);
+            ((MainActivity) getActivity()).ChangeFragment(id);
         }
 
     }

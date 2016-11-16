@@ -71,6 +71,9 @@
     <string name="accept_recharge">Nạp</string>
     <string name="cancel">Hủy</string>
     <string name="dialog_number_recognition_title">Kết quả nhận diện</string>
+    <string name="clusterpoint_cloud_query">https://api-eu.clusterpoint.com/v4/3338/promotion_information.promotion_information/_query</string>
+    <string name="authentication_string">sonitdeveloper@gmail.com:khongcopass</string>
+    <string name="read_sms_request_permission">Ứng dụng cần bạn cho phép để đọc lịch sử tin nhắn thiết bị để phân tích.</string>
 
 
 </resources>

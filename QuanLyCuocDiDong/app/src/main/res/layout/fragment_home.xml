@@ -6,53 +6,53 @@
     tools:context="com.uit.nst95.quanlycuocdidong.Activity.HomeFragment">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <ImageView
-                    app:srcCompat="@drawable/total_money_backup"
                     android:id="@+id/imageView7"
                     android:layout_width="80dp"
-                    android:layout_height="80dp" />
+                    android:layout_height="80dp"
+                    app:srcCompat="@drawable/total_money_backup" />
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/textView16"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Tiền cước tháng này của bạn là"
-                        android:id="@+id/textView16"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="#3F51B5" />
 
                     <TextView
+                        android:id="@+id/textViewTongTienThang"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="150.000 VNĐ"
-                        android:id="@+id/textViewTongTienThang"
+                        android:textAlignment="center"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textAlignment="center" />
+                        android:textColor="@android:color/holo_red_dark" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -60,107 +60,109 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="6dp">
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
                     <ImageView
-                        app:srcCompat="@drawable/ic_action_communication_call"
                         android:id="@+id/imageView6"
                         android:layout_width="15dp"
-                        android:layout_height="15dp" />
+                        android:layout_height="15dp"
+                        app:srcCompat="@drawable/ic_action_communication_call" />
 
                     <TextView
+                        android:id="@+id/textViewTienGoiNoiMang"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="50.000đ"
-                        android:id="@+id/textViewTienGoiNoiMang"
-                        android:gravity="right"
-                        android:layout_marginStart="15dp"
-                        android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="15dp"
+                        android:gravity="right"
+                        android:text="50.000đ"
                         android:textAlignment="viewStart" />
 
                 </LinearLayout>
+
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
                     <ImageView
-                        app:srcCompat="@drawable/ic_action_communication_call_orange"
                         android:id="@+id/imageView61"
                         android:layout_width="15dp"
-                        android:layout_height="15dp" />
+                        android:layout_height="15dp"
+                        app:srcCompat="@drawable/ic_action_communication_call_orange" />
 
                     <TextView
+                        android:id="@+id/textViewTienGoiNgoaiMang"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="50.000đ"
-                        android:id="@+id/textViewTienGoiNgoaiMang"
-                        android:gravity="right"
-                        android:layout_marginStart="15dp"
-                        android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="15dp"
+                        android:gravity="right"
+                        android:text="50.000đ"
                         android:textAlignment="viewStart" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
                     <ImageView
-                        app:srcCompat="@drawable/ic_action_communication_message"
                         android:id="@+id/imageView26"
                         android:layout_width="15dp"
-                        android:layout_height="15dp" />
+                        android:layout_height="15dp"
+                        app:srcCompat="@drawable/ic_action_communication_message" />
 
                     <TextView
+                        android:id="@+id/textViewTienSmSNoiMang"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="50.000đ"
-                        android:id="@+id/textViewTienSmSNoiMang"
-                        android:gravity="right"
-
-                        android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+
                         android:layout_marginStart="15dp"
+                        android:gravity="right"
+                        android:text="50.000đ"
                         android:textAlignment="viewStart" />
 
                 </LinearLayout>
+
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
                     <ImageView
-                        app:srcCompat="@drawable/ic_action_communication_message_cyan"
                         android:id="@+id/imageView226"
                         android:layout_width="15dp"
-                        android:layout_height="15dp" />
+                        android:layout_height="15dp"
+                        app:srcCompat="@drawable/ic_action_communication_message_cyan" />
 
                     <TextView
+                        android:id="@+id/textViewTienSmsNgoaiMang"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="50.000đ"
-                        android:id="@+id/textViewTienSmsNgoaiMang"
-                        android:gravity="right"
-                        android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
                         android:layout_marginStart="15dp"
+                        android:gravity="right"
+                        android:text="50.000đ"
                         android:textAlignment="viewStart" />
 
                 </LinearLayout>
@@ -170,10 +172,10 @@
         </LinearLayout>
 
         <TextView
-            android:text="Tiện ích"
+            android:id="@+id/textView22"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView22"
+            android:text="Tiện ích"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="#3F51B5" />
 
@@ -188,28 +190,28 @@
                 android:gravity="center_horizontal">
 
                 <ImageButton
-                    app:srcCompat="@drawable/napcam"
                     android:id="@+id/imageButtonNapTienCamera"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:layout_width="70dp" />
+                    app:srcCompat="@drawable/napcam" />
 
                 <ImageButton
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/thk"
                     android:id="@+id/imageButtonThongKe"
-                    android:layout_width="70dp" />
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/thk" />
 
                 <ImageButton
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/tk"
                     android:id="@+id/imageButtonTraTheoNgay"
-                    android:layout_width="70dp" />
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/tk" />
 
                 <ImageButton
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/st"
                     android:id="@+id/imageButtonCaiDat"
-                    android:layout_width="70dp" />
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/st" />
             </TableRow>
 
             <TableRow
@@ -218,34 +220,34 @@
                 android:gravity="center_horizontal">
 
                 <TextView
-                    android:text="Nạp bằng Camera"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView30"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nạp bằng Camera"
                     android:textAlignment="center"
                     android:textColor="#3F51B5" />
 
                 <TextView
-                    android:text="Thống kê"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView25"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="Thống kê"
                     android:textAlignment="center"
                     android:textColor="#3F51B5" />
 
                 <TextView
-                    android:text="Tra theo ngày"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView24"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="Tra theo ngày"
                     android:textAlignment="center"
                     android:textColor="#3F51B5" />
 
                 <TextView
-                    android:text="Cài đặt"
+                    android:id="@+id/textView23"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView23"
+                    android:text="Cài đặt"
                     android:textAlignment="center"
                     android:textColor="#3F51B5" />
             </TableRow>
@@ -256,28 +258,28 @@
                 android:gravity="center_horizontal">
 
                 <ImageButton
+                    android:id="@+id/imageButtonUngTien"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ut"
-                    android:id="@+id/imageButtonUngTien" />
+                    app:srcCompat="@drawable/ut" />
 
                 <ImageButton
+                    android:id="@+id/imageButtonSDTHuuIch"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/um"
-                    android:id="@+id/imageButtonSDTHuuIch" />
+                    app:srcCompat="@drawable/um" />
 
                 <ImageButton
+                    android:id="@+id/imageButtonKhuyenMai"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/km"
-                    android:id="@+id/imageButtonKhuyenMai" />
+                    app:srcCompat="@drawable/km" />
 
                 <ImageButton
+                    android:id="@+id/imageButtonDK3G"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/dt"
-                    android:id="@+id/imageButtonDK3G" />
+                    app:srcCompat="@drawable/dt" />
             </TableRow>
 
             <TableRow
@@ -286,34 +288,34 @@
                 android:gravity="center_horizontal">
 
                 <TextView
-                    android:text="Ứng tiền"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView301"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="Ứng tiền"
                     android:textAlignment="center"
                     android:textColor="#3F51B5" />
 
                 <TextView
-                    android:text="Danh bạ điện thoại"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView251"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="Danh bạ điện thoại"
                     android:textAlignment="center"
                     android:textColor="#3F51B5" />
 
                 <TextView
-                    android:text="Khuyến mãi"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
                     android:id="@+id/textView241"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="Khuyến mãi"
                     android:textAlignment="center"
                     android:textColor="#3F51B5" />
 
                 <TextView
-                    android:text="Đăng ký 3G"
+                    android:id="@+id/textView231"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView231"
+                    android:text="Đăng ký 3G"
                     android:textAlignment="center"
                     android:textColor="#3F51B5" />
             </TableRow>

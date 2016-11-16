@@ -6,120 +6,120 @@
     tools:context="com.uit.nst95.quanlycuocdidong.Activity.PromotionFragment">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Khuyến mãi nạp thẻ"
-                android:id="@+id/textView16"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:layout_weight="1"
+                android:text="Khuyến mãi nạp thẻ"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="#3F51B5" />
 
             <ImageView
-                android:layout_width="match_parent"
-                app:srcCompat="@drawable/vinaphone_provider"
                 android:id="@+id/imageViewLogoProvider"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/vinaphone_provider" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:text="Nội dung:"
-                            android:layout_height="wrap_content"
                             android:id="@+id/textView3221"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="140dp" />
+                            android:text="Nội dung:" />
 
                         <TextView
-                            android:text="+ 50% giá trị thẻ nạp"
+                            android:id="@+id/textViewNoiDung"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textViewDoiTu2ong"
-                            android:layout_weight="1"
                             android:layout_marginLeft="5dp"
-                            android:gravity="center_vertical" />
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="+ 50% giá trị thẻ nạp" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:text="Thời gian:"
-                            android:layout_height="wrap_content"
                             android:id="@+id/textView32"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="140dp" />
+                            android:text="Thời gian:" />
 
                         <TextView
-                            android:text="27/8/2016"
+                            android:id="@+id/textViewThoiGian"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textViewPromotionDay"
-                            android:layout_weight="1"
                             android:layout_marginLeft="5dp"
+                            android:layout_weight="1"
                             android:gravity="center_vertical"
+                            android:text="27/8/2016"
                             android:textColor="@android:color/holo_red_dark" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center_vertical">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:text="Đối tượng:"
-                            android:layout_height="wrap_content"
                             android:id="@+id/textView321"
+                            android:layout_width="140dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_width="140dp" />
+                            android:text="Đối tượng:" />
 
                         <TextView
-                            android:text="Tất cả"
+                            android:id="@+id/textViewDoiTuong"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textViewDoiTuong"
-                            android:layout_weight="1"
                             android:layout_marginLeft="5dp"
-                            android:gravity="center_vertical" />
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Tất cả" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -127,83 +127,83 @@
 
         </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp">
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Thông báo thông minh"
-            android:id="@+id/textView161"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:layout_weight="1"
-            android:textColor="#3F51B5" />
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_margin="5dp"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/textView161"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView18"
-                android:text="Bước 1: Chặn tin nhắn quảng cáo"
-                android:textColor="#3F51B5" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Soạn tin TC gửi đến 9241"
-                android:id="@+id/textViewHuongDan" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonThucHien"
-                android:layout_gravity="center_horizontal"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:text="Thực hiện" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bước 2: Nhận thông báo từ ứng dụng"
-                android:id="@+id/textView"
+                android:layout_weight="1"
+                android:text="Thông báo thông minh"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="#3F51B5" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical">
+                android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/textView18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nhận tin nhắn khuyến mãi nạp thẻ từ ứng dụng"
-                    android:id="@+id/textViewHuongDaan"
-                    android:layout_weight="1" />
+                    android:text="Bước 1: Chặn tin nhắn quảng cáo"
+                    android:textColor="#3F51B5" />
 
-                <Switch
+                <TextView
+                    android:id="@+id/textViewHuongDan"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/switchNhanTB"
-                    android:layout_weight="1"
-                    android:layout_width="100dp" />
+                    android:text="Soạn tin TC gửi đến 9241" />
+
+                <Button
+                    android:id="@+id/buttonThucHien"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Thực hiện" />
+
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bước 2: Nhận thông báo từ ứng dụng"
+                    android:textColor="#3F51B5" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewHuongDaan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Nhận tin nhắn khuyến mãi nạp thẻ từ ứng dụng" />
+
+                    <Switch
+                        android:id="@+id/switchNhanTB"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
     </LinearLayout>
 

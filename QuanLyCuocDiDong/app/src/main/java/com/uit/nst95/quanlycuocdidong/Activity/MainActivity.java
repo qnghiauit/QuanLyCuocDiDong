@@ -39,7 +39,9 @@ import com.uit.nst95.quanlycuocdidong.Manager.PackageNetwork;
 import com.uit.nst95.quanlycuocdidong.NetworkPackage.PackageFee;
 import com.uit.nst95.quanlycuocdidong.R;
 import com.uit.nst95.quanlycuocdidong.Manager.*;
+
 import java.util.List;
+
 import com.uit.nst95.quanlycuocdidong.DB.*;
 import com.uit.nst95.quanlycuocdidong.NetworkPackage.*;
 
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName(); // tag
     // permission request codes
     private static final int READ_PHONESTATE_PERMISSON_REQUEST_CODE = 1;
-    private static final int READ_CALLLOG_PERMISSON_REQUEST_CODE = 2;
+    private static final int READ_SMS_PERMISSION_REQUEST_CODE = 3;
     ////save our header or result
     private AccountHeader headerResult = null;
     private Drawer result = null;
@@ -91,9 +93,6 @@ public class MainActivity extends AppCompatActivity {
         //Get information about provider and package of user
         getUserInformation();
 
-        //Write your code here ahihi :)) -> con cu
-
-
         // Create a network provider info
         createProfile();
 
@@ -108,15 +107,56 @@ public class MainActivity extends AppCompatActivity {
         HomeFragment homeFragment = HomeFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, homeFragment).commit();
         //Them progress bar + cho chay Asynctask
-        _progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        new DatabaseExecuteTask(_lastCallUpdate,_lastMessageUpdate).execute();
+        _progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            new DatabaseExecuteTask(_lastCallUpdate, _lastMessageUpdate).execute();
+        } else {
+            // if device's android version is 6 (Android API 22) or higher, we need to grant permission user
+            // request read phone state
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+                // should we show an explanation
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_SMS)) {
+                    // code to show an explanation here
+                    new ReadSMSPermissionConfirmDialog().show(this.getSupportFragmentManager(), TAG);
+                } else {
+                    // no explanation needed , we can request permission
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS}, READ_SMS_PERMISSION_REQUEST_CODE);
+                }
+
+            }
+        }
+
+
+        /**
+         * The application need to read permission in dangerous permission group PHONE.
+         * So we need to check that if the current device's version is Android M or higher. If so, we need to request permission at runtime
+         */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+
+            // request read phone state
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                // should we show an explanation
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE)) {
+                    // code to show an explanation here
+                    new ReadPhoneStatePermissionConfirmDialog().show(this.getSupportFragmentManager(), TAG);
+                } else {
+                    // no explanation needed , we can request permission
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_CONTACTS}, READ_PHONESTATE_PERMISSON_REQUEST_CODE);
+                }
+
+            }
+
+        }
     }
+
     @Override
     protected void onDestroy() {
 
         saveSharedPreferences();
         super.onDestroy();
     }
+
     @Override
     protected void onStop() {
         // We need an Editor object to make preference changes.
@@ -125,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
 
     }
+
     private void createDrawer(Toolbar toolbar, Bundle savedInstanceState) {
         result = new DrawerBuilder()
                 .withActivity(this)
@@ -154,9 +195,9 @@ public class MainActivity extends AppCompatActivity {
                         Fragment fragment = null;
                         Class fragmentClass = null;
                         long idDrawerItem = drawerItem.getIdentifier();
-                        if(idDrawerItem == 11){
+                        if (idDrawerItem == 11) {
                             fragment = SettingFragment.newInstance(_myPackageFee);
-                        }else {
+                        } else {
                             if (idDrawerItem == 1) {
                                 fragmentClass = HomeFragment.class;
                             } else if (idDrawerItem == 2) {
@@ -309,39 +350,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        /**
-         * The application need to read permission in dangerous permission group PHONE.
-         * So we need to check that if the current device's version is Android M or higher. If so, we need to request permission at runtime
-         */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-
-            // request read phone state
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                // should we show an explanation
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE)) {
-                    // code to show an explanation here
-                    new ReadPhoneStatePermissionConfirmDialog().show(this.getSupportFragmentManager(), TAG);
-                } else {
-                    // no explanation needed , we can request permission
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, READ_PHONESTATE_PERMISSON_REQUEST_CODE);
-                }
-
-            }
-            // request read call log permission
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
-                // should we show an explanation
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CALL_LOG)) {
-                    // code to show an explanation here
-                    new ReadCallLogPermissionConfirmDialog().show(this.getSupportFragmentManager(), TAG);
-                } else {
-                    // no explanation needed , we can request permission
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALL_LOG}, READ_CALLLOG_PERMISSON_REQUEST_CODE);
-                }
-
-            }
-
-        }
     }
 
     /**
@@ -354,9 +363,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case READ_CALLLOG_PERMISSON_REQUEST_CODE:
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            case READ_PHONESTATE_PERMISSON_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //
                     // do some thing related to read phone state
                     //
@@ -364,13 +373,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, R.string.permission_not_granted_message, Toast.LENGTH_LONG).show();
                 }
                 break;
-
-            case READ_PHONESTATE_PERMISSON_REQUEST_CODE:
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //
-                    // do some thing related to read phone state
-                    //
+            case READ_SMS_PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // run asynchronous to run database service
+                    new DatabaseExecuteTask(_lastCallUpdate, _lastMessageUpdate).execute();
                 } else {
                     Toast.makeText(this, R.string.permission_not_granted_message, Toast.LENGTH_LONG).show();
                 }
@@ -381,37 +387,37 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    /**
-     * Dialog for explaining read call log permission
-     */
-    public static class ReadCallLogPermissionConfirmDialog extends DialogFragment {
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Fragment parent = getParentFragment();
-            return new AlertDialog.Builder(getActivity())
-                    .setMessage(R.string.read_calllog_request_permission)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            requestPermissions(
-                                    new String[]{Manifest.permission.READ_CALL_LOG},
-                                    READ_CALLLOG_PERMISSON_REQUEST_CODE);
-                        }
-                    })
-                    .setNegativeButton(android.R.string.cancel,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // finish activity if user deny permission
-
-                                }
-                            })
-                    .create();
-        }
-    }
+//
+//    /**
+//     * Dialog for explaining read call log permission
+//     */
+//    public static class ReadCallLogPermissionConfirmDialog extends DialogFragment {
+//
+//        @NonNull
+//        @Override
+//        public Dialog onCreateDialog(Bundle savedInstanceState) {
+//            //final Fragment parent = getParentFragment();
+//            return new AlertDialog.Builder(getActivity())
+//                    .setMessage(R.string.read_calllog_request_permission)
+//                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            requestPermissions(
+//                                    new String[]{Manifest.permission.READ_CALL_LOG},
+//                                    READ_CALLLOG_PERMISSON_REQUEST_CODE);
+//                        }
+//                    })
+//                    .setNegativeButton(android.R.string.cancel,
+//                            new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    // finish activity if user deny permission
+//
+//                                }
+//                            })
+//                    .create();
+//        }
+//    }
 
     /**
      * Dialog for explaining read call log permission
@@ -421,7 +427,7 @@ public class MainActivity extends AppCompatActivity {
         @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Fragment parent = getParentFragment();
+            // final Fragment parent = getParentFragment();
             return new AlertDialog.Builder(getActivity())
                     .setMessage(R.string.read_phone_state_request_permission)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -443,15 +449,46 @@ public class MainActivity extends AppCompatActivity {
                     .create();
         }
     }
-    public void RenewCallData(long time)
-    {
+
+    /**
+     * Dialog for explaining read sms permission
+     */
+    public static class ReadSMSPermissionConfirmDialog extends DialogFragment {
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // final Fragment parent = getParentFragment();
+            return new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.read_sms_request_permission)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            requestPermissions(
+                                    new String[]{Manifest.permission.READ_SMS},
+                                    READ_SMS_PERMISSION_REQUEST_CODE);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // finish activity if user deny permission
+                                    dialog.dismiss();
+                                }
+                            })
+                    .create();
+        }
+    }
+
+
+    public void RenewCallData(long time) {
 
         List<CallLog> _listCall = _logManager.LoadCallLogAfterTimeSpan(time);
-        if(_listCall.isEmpty())
+        if (_listCall.isEmpty())
             return;
-        for(CallLog i : _listCall)
-        {
-            if(i.get_callNumber().length() >=10) {
+        for (CallLog i : _listCall) {
+            if (i.get_callNumber().length() >= 10) {
                 _callLogTableAdapter.CreateCallLogRow(i);
                 String callDate = _dateTimeManager.convertToDMYHms(i.get_callDate());
                 int callFee = i.get_callFee();
@@ -478,15 +515,14 @@ public class MainActivity extends AppCompatActivity {
         saveSharedPreferences();
 
     }
-    public void RenewMessageData(long time)
-    {
+
+    public void RenewMessageData(long time) {
 
         List<MessageLog> _listMessage = _logManager.LoadMessageLogAfterTimeSpan(time);
-        if(_listMessage.isEmpty())
+        if (_listMessage.isEmpty())
             return;
-        for(MessageLog i : _listMessage)
-        {
-            if(i.get_receiverNumber().length() >=10) {
+        for (MessageLog i : _listMessage) {
+            if (i.get_receiverNumber().length() >= 10) {
                 _messageLogTableAdapter.CreateMessageLogRow(i);
                 String messageDate = _dateTimeManager.convertToDMYHms(i.get_messageDate());
                 int messageFee = i.get_messageFee();
@@ -507,16 +543,15 @@ public class MainActivity extends AppCompatActivity {
         saveSharedPreferences();
 
     }
-    public void FirstInitCallLog()
-    {
+
+    public void FirstInitCallLog() {
 
         List<CallLog> _listCall = _logManager.LoadCallLogFromPhone();
-        if(_listCall.isEmpty())
+        if (_listCall.isEmpty())
             return;
-        for (CallLog i : _listCall)
-        {
+        for (CallLog i : _listCall) {
             // CallLog temp = i;
-            if(i.get_callNumber().length() >=10) {
+            if (i.get_callNumber().length() >= 10) {
                 _callLogTableAdapter.CreateCallLogRow(i);
                 String callDate = _dateTimeManager.convertToDMYHms(i.get_callDate());
                 int callFee = i.get_callFee();
@@ -542,15 +577,14 @@ public class MainActivity extends AppCompatActivity {
         _lastCallUpdate = _logManager.GetLastedCallTime();
         saveSharedPreferences();
     }
-    public void FirstInitMessageLog()
-    {
+
+    public void FirstInitMessageLog() {
 
         List<MessageLog> _listMessage = _logManager.LoadMessageLogFromPhone();
-        if(_listMessage.isEmpty())
+        if (_listMessage.isEmpty())
             return;
-        for(MessageLog i: _listMessage)
-        {
-            if(i.get_receiverNumber().length() >= 10) {
+        for (MessageLog i : _listMessage) {
+            if (i.get_receiverNumber().length() >= 10) {
                 _messageLogTableAdapter.CreateMessageLogRow(i);
                 String messageDate = _dateTimeManager.convertToDMYHms(i.get_messageDate());
                 int messageFee = i.get_messageFee();
@@ -572,6 +606,7 @@ public class MainActivity extends AppCompatActivity {
         saveSharedPreferences();
 
     }
+
     public void InitPackage(String _package) {
         switch (_package) {
             case DefinedConstant.MOBICARD: {
@@ -614,14 +649,12 @@ public class MainActivity extends AppCompatActivity {
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
                 break;
             }
-            case DefinedConstant.TALKSTUDENT:
-            {
+            case DefinedConstant.TALKSTUDENT: {
                 _myPackageFee = new TalkStudent();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
                 break;
             }
-            case DefinedConstant.TALKTEEN:
-            {
+            case DefinedConstant.TALKTEEN: {
                 _myPackageFee = new TalkTeen();
                 _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
                 break;
@@ -706,54 +739,52 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private class DatabaseExecuteTask extends AsyncTask<Void,Integer,Void>
-    {
+    private class DatabaseExecuteTask extends AsyncTask<Void, Integer, Void> {
         long lastCallTime;
         long lastMessageTime;
-        public  DatabaseExecuteTask(long calltime, long messagetime)
-        {
+
+        public DatabaseExecuteTask(long calltime, long messagetime) {
             lastCallTime = calltime;
             lastMessageTime = messagetime;
         }
-        @Override
-        protected  Void doInBackground(Void...params)
-        {
 
-            if(_lastCallUpdate == 0) {
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            if (_lastCallUpdate == 0) {
                 _callLogTableAdapter.DeleteAllData();
                 _statisticTableAdapter.ResetCallData();
                 FirstInitCallLog();
                 saveSharedPreferences();
-            }
-            else {
+            } else {
                 RenewCallData(_lastCallUpdate);
                 saveSharedPreferences();
             }
-            if(_lastMessageUpdate == 0) {
+            if (_lastMessageUpdate == 0) {
                 _messageLogTableAdapter.DeleteAllData();
                 _statisticTableAdapter.ResetMessageData();
                 FirstInitMessageLog();
                 saveSharedPreferences();
-            }
-            else
-            {
+            } else {
                 RenewMessageData(_lastMessageUpdate);
                 saveSharedPreferences();
             }
             // saveSharedPreferences();
             return null;
         }
+
         @Override
-        protected void onProgressUpdate(Integer...values)
-        {
+        protected void onProgressUpdate(Integer... values) {
             _progressBar.setProgress(values[0]);
         }
+
         @Override
         protected void onPostExecute(Void result) {
             _progressBar.setVisibility(View.GONE);
             saveSharedPreferences();
         }
     }
+
     public void ChangeFragment(int idDrawerItem) {
         Fragment fragment = null;
         Class fragmentClass = null;
@@ -787,7 +818,8 @@ public class MainActivity extends AppCompatActivity {
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, fragment).commit();
     }
-    public void ResetProvider(){
+
+    public void ResetProvider() {
         SharedPreferences settings = getSharedPreferences(DefinedConstant.PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(DefinedConstant.KEY_PACKAGE, "");
