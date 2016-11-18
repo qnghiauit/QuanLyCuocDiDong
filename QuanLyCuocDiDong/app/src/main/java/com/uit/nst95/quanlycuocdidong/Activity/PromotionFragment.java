@@ -17,9 +17,11 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.uit.nst95.quanlycuocdidong.BackgroundService.FetchCloudPromotionDataAsyncTask;
 import com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant;
 import com.uit.nst95.quanlycuocdidong.Manager.PromotionInformation;
 import com.uit.nst95.quanlycuocdidong.R;
+import com.uit.nst95.quanlycuocdidong.tools.NetworkChecker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,11 +41,31 @@ public class PromotionFragment extends Fragment {
 
     private static final String TAG = PromotionFragment.class.getSimpleName();
 
-    // values for shared preference keys
-    public static final String PROMOTION_SHARED_PREFERENCE_KEY = "promotion_shared_preference_key";
-    public static final String PROMOTION_PERCENTAGE_PREFERENCE_KEY = "promotion_percentage_preference_key";
-    public static final String PROMOTION_TIME_PREFERENCE_KEY = "promotion_time_preference_key";
-    public static final String PROMOTION_DEFAULT_VALUE = "promotion_default_value";
+    /**
+     * Create a custom {@link FetchCloudPromotionDataAsyncTaskCustom} extending super class {@link FetchCloudPromotionDataAsyncTask} to download cloud cluster point data
+     * and save into application's {@link SharedPreferences}. This include update view after downloading data.
+     */
+    private class FetchCloudPromotionDataAsyncTaskCustom extends FetchCloudPromotionDataAsyncTask {
+        public FetchCloudPromotionDataAsyncTaskCustom(String providerName, Context context) {
+            super(providerName, context);
+        }
+
+        @Override
+        protected void onPostExecute(PromotionInformation.Results results) {
+            super.onPostExecute(results);
+            // Once the download completes, the desired promotion data is saved into application's SharedPreferences
+            // so, we get data from SharedPreferences to update the View components (concretely , TextView)
+            // start to update Views
+            SharedPreferences preferences = getContext().getSharedPreferences(PROMOTION_SHARED_PREFERENCE_KEY, Context.MODE_PRIVATE);
+            final TextView promotionTimeTextView = (TextView) getView().findViewById(R.id.textViewThoiGian);
+            promotionTimeTextView.setText(preferences.getString(PROMOTION_TIME_PREFERENCE_KEY, PROMOTION_DEFAULT_VALUE));
+            final TextView promotionPercentageTextView = (TextView) getView().findViewById(R.id.textViewNoiDung);
+            promotionPercentageTextView.setText(preferences.getString(PROMOTION_PERCENTAGE_PREFERENCE_KEY + "% giá trị các thẻ nạp", PROMOTION_DEFAULT_VALUE));
+
+
+        }
+    }
+
 
     private String SDT = "123";
     private String nhaMang;
@@ -97,12 +119,17 @@ public class PromotionFragment extends Fragment {
          If shared preference's value is default, we start a task to manually get data from cloud server.
          Additionally, We have a service run in background to update data from server every 5 minutes.
          */
-        SharedPreferences preferences = this.getContext().getSharedPreferences(PROMOTION_SHARED_PREFERENCE_KEY, Context.MODE_PRIVATE);
-        String promotionPercentage = preferences.getString(PROMOTION_PERCENTAGE_PREFERENCE_KEY, PROMOTION_DEFAULT_VALUE);
-        String promotionTime = preferences.getString(PROMOTION_TIME_PREFERENCE_KEY, PROMOTION_DEFAULT_VALUE);
-        if (promotionPercentage.equals(PROMOTION_DEFAULT_VALUE) || promotionTime.equals(PROMOTION_DEFAULT_VALUE)) {
-            // start to asynchronous
-            new FetchCloudPromotionDataAsync().execute();
+        SharedPreferences preferences = this.getContext().getSharedPreferences(FetchCloudPromotionDataAsyncTask.PROMOTION_SHARED_PREFERENCE_KEY, Context.MODE_PRIVATE);
+        String promotionPercentage = preferences.getString(FetchCloudPromotionDataAsyncTask.PROMOTION_PERCENTAGE_PREFERENCE_KEY, FetchCloudPromotionDataAsyncTask.PROMOTION_DEFAULT_VALUE);
+        String promotionTime = preferences.getString(FetchCloudPromotionDataAsyncTask.PROMOTION_TIME_PREFERENCE_KEY, FetchCloudPromotionDataAsyncTask.PROMOTION_DEFAULT_VALUE);
+        if (promotionPercentage.equals(FetchCloudPromotionDataAsyncTask.PROMOTION_DEFAULT_VALUE) || promotionTime.equals(FetchCloudPromotionDataAsyncTask.PROMOTION_DEFAULT_VALUE)) {
+
+            // at first, we need check internet connection before fetching
+            if (NetworkChecker.isInternetConnectionAvailable(this.getContext())) {
+
+                // start to asynchronous task to download data manually
+                new FetchCloudPromotionDataAsyncTaskCustom(this.nhaMang, this.getContext()).execute();
+            }
         } else {
             final TextView textViewNgayKM = (TextView) view.findViewById(R.id.textViewThoiGian);
             textViewNgayKM.setText(promotionTime);
@@ -145,171 +172,6 @@ public class PromotionFragment extends Fragment {
         // Commit the edits!
         editor.apply();
         super.onStop();
-    }
-
-
-    public class FetchCloudPromotionDataAsync extends AsyncTask<Void, Void, PromotionInformation.Results> {
-        @Override
-        protected PromotionInformation.Results doInBackground(Void... params) {
-
-            try {
-                return this.getAllPromotionDataFromClusterPointService();
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-                return null;
-            }
-
-        }
-
-        @Override
-        protected void onPostExecute(PromotionInformation.Results results) {
-            super.onPostExecute(results);
-            // make we have valid result
-            if (results != null) {
-                // loop to find user portal service provider
-                for (PromotionInformation.Result detailInformation : results.getResults()) {
-                    if (detailInformation.getProviderName().equalsIgnoreCase(nhaMang)) {
-                        // save this updated values
-                        SharedPreferences preferences = getContext().getSharedPreferences(PROMOTION_SHARED_PREFERENCE_KEY, Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor
-                                = preferences.edit();
-                        editor.putString(PROMOTION_PERCENTAGE_PREFERENCE_KEY, detailInformation.getPercentage());
-                        editor.putString(PROMOTION_TIME_PREFERENCE_KEY, detailInformation.getTime());
-                        editor.apply();
-                        // update views
-                        final TextView textViewNgayKM = (TextView) getView().findViewById(R.id.textViewThoiGian);
-                        textViewNgayKM.setText(detailInformation.getTime());
-                        final TextView textViewNgayNoiDung = (TextView) getView().findViewById(R.id.textViewNoiDung);
-                        textViewNgayNoiDung.setText(detailInformation.getPercentage() + "% giá trị các thẻ nạp.");
-                        // exit the function
-                        return;
-                    }
-                }
-            }
-        }
-
-        /**
-         * Get promotion data from cloud server : Cluster Point
-         * Visit this site : https://cloud-eu.clusterpoint.com/#/collection/promotion_information.promotion_information/run-query
-         * See : R.string.accountString to see username and password for authentication
-         * <p>
-         * The response is Json format. So we use XmlMapper (an open source API) to parse for fast performance.
-         * This is how server responses
-         * {
-         * "results": [
-         * {
-         * "providerName": "vietnamobile",
-         * "time": "1/1/2016",
-         * "percent": "100",
-         * "_id": "cmJvLpMO"
-         * },
-         * {
-         * "providerName": "mobifone",
-         * "time": "1/1/2016",
-         * "percent": "100",
-         * "_id": "cP1GwHi2"
-         * },
-         * {
-         * "providerName": "vinafone",
-         * "time": "1/1/2016",
-         * "percent": "100",
-         * "_id": "XsG8nTd"
-         * },
-         * {
-         * "providerName": "viettel",
-         * "time": "1/1/2016",
-         * "percent": "100",
-         * "_id": "cP1GwCmH"
-         * }
-         * ],
-         * "error": null,
-         * "seconds": 0.331634,
-         * "hits": "4",
-         * "more": "=4",
-         * "found": "4",
-         * "from": "0",
-         * "to": "4"
-         * }
-         *
-         * @return : {@link com.uit.nst95.quanlycuocdidong.Manager.PromotionInformation.Results} contains list of promotion details
-         * @throws IOException
-         */
-        private PromotionInformation.Results getAllPromotionDataFromClusterPointService() throws IOException, JSONException {
-            String clusterPointQuery = getString(R.string.clusterpoint_cloud_query);
-            String accountString = getString(R.string.authentication_string);
-            String authenticationString = "Basic " + Base64.encodeToString(accountString.getBytes(),
-                    0, accountString.length(), Base64.DEFAULT); // authentication string
-
-            URL clusterPointURL = new URL(clusterPointQuery);
-            HttpURLConnection httpURLConnection = (HttpURLConnection) clusterPointURL.openConnection();
-            httpURLConnection.addRequestProperty("Authorization", authenticationString);
-            httpURLConnection.setDoOutput(true);
-
-            DataOutputStream dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
-            // write select query into output stream
-            dataOutputStream.writeBytes("select * from promotion_information");
-            dataOutputStream.flush();
-            dataOutputStream.close();
-
-            // Receive response
-            InputStream in = httpURLConnection.getInputStream();
-            InputStreamReader isr = new InputStreamReader(in);
-
-            int numCharsRead;
-            char[] charArray = new char[1024];
-            StringBuilder stringBuilder = new StringBuilder();
-            while ((numCharsRead = isr.read(charArray)) > 0) {
-                stringBuilder.append(charArray, 0, numCharsRead);
-            }
-
-            Log.d(TAG, "Server Cluster point responses : " + stringBuilder.toString());
-
-
-            JSONObject jsonObject = new JSONObject(stringBuilder.toString());
-            // parse inner values
-            PromotionInformation promotionInformation = this.JsonToPromotionInformation(jsonObject);
-            return promotionInformation.getResults();
-        }
-
-
-        /**
-         * Parse Json response from server to {@link PromotionInformation} value
-         *
-         * @param jsonObject : The response from server
-         * @return : {@link PromotionInformation} corresponding to json
-         * @throws JSONException : if some errors occur when parsing
-         */
-        private PromotionInformation JsonToPromotionInformation(JSONObject jsonObject) throws JSONException {
-            PromotionInformation promotionInformation = new PromotionInformation();
-            // parse inner values
-            // get all response properties from server
-            promotionInformation.setFrom(jsonObject.getString("from"));
-            promotionInformation.setFound(jsonObject.getString("found"));
-            promotionInformation.setHits(jsonObject.getString("hits"));
-            promotionInformation.setMore(jsonObject.getString("more"));
-            promotionInformation.setFrom(jsonObject.getString("from"));
-            promotionInformation.setTo(jsonObject.getString("to"));
-            // primary data
-            // get array
-            JSONArray detailedInformationArray = jsonObject.getJSONArray("results");
-            PromotionInformation.Result[] arrayOfResults = new PromotionInformation.Result[detailedInformationArray.length()];
-            for (int index = 0; index < detailedInformationArray.length(); ++index) {
-                JSONObject detailedPromotionInformationJson = detailedInformationArray.getJSONObject(index);
-                arrayOfResults[index] = new PromotionInformation.Result();
-                arrayOfResults[index].setId(detailedPromotionInformationJson.getString("_id"));
-                arrayOfResults[index].setProviderName(detailedPromotionInformationJson.getString("providerName"));
-                arrayOfResults[index].setPercentage(detailedPromotionInformationJson.getString("percent"));
-                arrayOfResults[index].setTime(detailedPromotionInformationJson.getString("time"));
-            }
-
-            PromotionInformation.Results results = new PromotionInformation.Results();
-            results.setResults(arrayOfResults);
-            promotionInformation.setResults(results);
-            // log the result
-            Log.d(TAG, promotionInformation.toString());
-            return promotionInformation;
-        }
-
     }
 
 

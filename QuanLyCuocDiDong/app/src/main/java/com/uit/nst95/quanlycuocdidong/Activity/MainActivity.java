@@ -110,20 +110,6 @@ public class MainActivity extends AppCompatActivity {
         _progressBar = (ProgressBar) findViewById(R.id.progressBar);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             new DatabaseExecuteTask(_lastCallUpdate, _lastMessageUpdate).execute();
-        } else {
-            // if device's android version is 6 (Android API 22) or higher, we need to grant permission user
-            // request read phone state
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-                // should we show an explanation
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_SMS)) {
-                    // code to show an explanation here
-                    new ReadSMSPermissionConfirmDialog().show(this.getSupportFragmentManager(), TAG);
-                } else {
-                    // no explanation needed , we can request permission
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS}, READ_SMS_PERMISSION_REQUEST_CODE);
-                }
-
-            }
         }
 
 
@@ -142,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     new ReadPhoneStatePermissionConfirmDialog().show(this.getSupportFragmentManager(), TAG);
                 } else {
                     // no explanation needed , we can request permission
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_CONTACTS}, READ_PHONESTATE_PERMISSON_REQUEST_CODE);
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS}, READ_PHONESTATE_PERMISSON_REQUEST_CODE);
                 }
 
             }
@@ -369,6 +355,7 @@ public class MainActivity extends AppCompatActivity {
                     //
                     // do some thing related to read phone state
                     //
+                    new DatabaseExecuteTask(_lastCallUpdate, _lastMessageUpdate).execute();
                 } else {
                     Toast.makeText(this, R.string.permission_not_granted_message, Toast.LENGTH_LONG).show();
                 }
@@ -376,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
             case READ_SMS_PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // run asynchronous to run database service
-                    new DatabaseExecuteTask(_lastCallUpdate, _lastMessageUpdate).execute();
+
                 } else {
                     Toast.makeText(this, R.string.permission_not_granted_message, Toast.LENGTH_LONG).show();
                 }
@@ -386,38 +373,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-
-//
-//    /**
-//     * Dialog for explaining read call log permission
-//     */
-//    public static class ReadCallLogPermissionConfirmDialog extends DialogFragment {
-//
-//        @NonNull
-//        @Override
-//        public Dialog onCreateDialog(Bundle savedInstanceState) {
-//            //final Fragment parent = getParentFragment();
-//            return new AlertDialog.Builder(getActivity())
-//                    .setMessage(R.string.read_calllog_request_permission)
-//                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            requestPermissions(
-//                                    new String[]{Manifest.permission.READ_CALL_LOG},
-//                                    READ_CALLLOG_PERMISSON_REQUEST_CODE);
-//                        }
-//                    })
-//                    .setNegativeButton(android.R.string.cancel,
-//                            new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    // finish activity if user deny permission
-//
-//                                }
-//                            })
-//                    .create();
-//        }
-//    }
 
     /**
      * Dialog for explaining read call log permission

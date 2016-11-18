@@ -18,6 +18,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.uit.nst95.quanlycuocdidong.Activity.MainActivity;
 import com.uit.nst95.quanlycuocdidong.DB.CallLog;
@@ -359,6 +360,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
         // check version at runtime to check whether version is 6 , higher or not
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(this._context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG , "Permission Read call log from user");
                 // user deny permission for reading call log, return null to disable notification after a call
                 return null;
             }
