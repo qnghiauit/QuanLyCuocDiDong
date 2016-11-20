@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -33,6 +34,8 @@ import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
+import com.uit.nst95.quanlycuocdidong.FirebaseDB.*;
+import com.uit.nst95.quanlycuocdidong.FirebaseDB.Data3GPackage;
 import com.uit.nst95.quanlycuocdidong.Manager.DateTimeManager;
 import com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant;
 import com.uit.nst95.quanlycuocdidong.Manager.PackageNetwork;
@@ -40,6 +43,7 @@ import com.uit.nst95.quanlycuocdidong.NetworkPackage.PackageFee;
 import com.uit.nst95.quanlycuocdidong.R;
 import com.uit.nst95.quanlycuocdidong.Manager.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.uit.nst95.quanlycuocdidong.DB.*;
@@ -48,6 +52,7 @@ import com.uit.nst95.quanlycuocdidong.NetworkPackage.*;
 import static com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant.*;
 
 public class MainActivity extends AppCompatActivity {
+
     private static final String TAG = MainActivity.class.getSimpleName(); // tag
     // permission request codes
     private static final int READ_PHONESTATE_PERMISSON_REQUEST_CODE = 1;
@@ -74,10 +79,53 @@ public class MainActivity extends AppCompatActivity {
     private long _lastMessageUpdate;
     private ProgressBar _progressBar;
 
+
+    private DataManager<CuuHo> cuuHoDataManager;
+    private DataManager<NganHang>  nganHangDataManager;
+    private DataManager<com.uit.nst95.quanlycuocdidong.FirebaseDB.Data3GPackage> data3GPackageDataManager;
+    private DataManager<NhaMang> nhaMangDataManager;
+    private DataManager<Taxi> taxiDataManager;
+    private DataManager<TuVan> tuVanDataManager;
+
+    public static ArrayList<CuuHo> cuuHos;
+    public static ArrayList<NganHang> nganHangs;
+    public static ArrayList<Data3GPackage> data3GPackages;
+    public static ArrayList<NhaMang> nhaMangs;
+    public static ArrayList<Taxi> taxis;
+    public static ArrayList<TuVan> tuVans;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        cuuHoDataManager = new DataManager<>(CuuHo.class);
+        //cuuHoDataManager.setOnLoadDataComplete(this);
+
+        cuuHos = cuuHoDataManager.getDataset();
+
+        nganHangDataManager = new DataManager<>(NganHang.class);
+        nganHangs = nganHangDataManager.getDataset();
+
+        data3GPackageDataManager = new DataManager<>(Data3GPackage.class);
+        data3GPackages = data3GPackageDataManager.getDataset();
+
+        nhaMangDataManager = new DataManager<>(NhaMang.class);
+        nhaMangs = nhaMangDataManager.getDataset();
+
+        taxiDataManager = new DataManager<>(Taxi.class);
+        taxis = taxiDataManager.getDataset();
+
+        tuVanDataManager = new DataManager<>(TuVan.class);
+        tuVans = tuVanDataManager.getDataset();
+
+//        nganHangDataManager.setOnLoadDataComplete(new OnLoadDataComplete() {
+//            @Override
+//            public void onComplete() {
+//                NganHang itemVuaLay = nganHangDataManager.getDataset().get(nganHangDataManager.getDataset().size()-1);
+//                Toast.makeText(MainActivity.this, itemVuaLay.getNAME(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
         _dateTimeManager = DateTimeManager.get_instance();
         this._callLogTableAdapter = new DAO_CallLog(this);
         this._statisticTableAdapter = new DAO_Statistic(this);
@@ -373,6 +421,12 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+//    @Override
+//    public void onComplete() {
+//        CuuHo itemVuaLoadXong = cuuHoDataManager.getDataset().get(cuuHoDataManager.getDataset().size()-1);
+//        Toast.makeText(this, itemVuaLoadXong.getNAME(), Toast.LENGTH_SHORT).show();
+//    }
 
     /**
      * Dialog for explaining read call log permission
@@ -724,7 +778,7 @@ public class MainActivity extends AppCompatActivity {
                 RenewMessageData(_lastMessageUpdate);
                 saveSharedPreferences();
             }
-            // saveSharedPreferences();
+             saveSharedPreferences();
             return null;
         }
 
