@@ -35,7 +35,8 @@
             android:textColor="#2196F3"
             android:text="Name Items"
             android:gravity="center_vertical|center_horizontal"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:textAlignment="viewStart" />
 
     </LinearLayout>
 

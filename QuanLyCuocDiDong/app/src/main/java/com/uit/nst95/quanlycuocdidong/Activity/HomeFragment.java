@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment {
                     id = 3;
                     break;
                 case R.id.imageButtonNapTienCamera:
-                    id = 10;
+                    id = 13;
                     break;
                 case R.id.imageButtonKhuyenMai:
                     id = 4;

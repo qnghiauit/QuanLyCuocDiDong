@@ -15,13 +15,13 @@
         android:layout_marginBottom="10dp">
 
         <ImageView
-            android:layout_width="312dp"
+            android:layout_width="match_parent"
             android:layout_height="115dp"
             app:srcCompat="@drawable/logo_remaster"
             android:id="@+id/imageView3"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="2dp" />
+            android:layout_margin="5dp" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -33,15 +33,16 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:text="Ứng dụng hỗ trợ người dùng quản lý được cước phí các cuộc gọi và tin nhắn trong nước với độ chính xác cao giúp người dùng có thể biết được thống kê về cước và có thể phân tích được các cước phí trên có phù hợp với tình hình sử dụng thực tế không."
+                    android:text="Ứng dụng hỗ trợ người dùng quản lý được cước phí các cuộc gọi và tin nhắn trong nước với độ chính xác cao giúp người dùng có thể biết được thống kê về cước."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imageView3"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dp"
                     android:id="@+id/textView9"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#2196F3" />
 
                 <TextView
                     android:text="Các chức năng chính của ứng dụng"
@@ -51,30 +52,29 @@
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/textView12"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="#3F51B5"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginTop="5dp"
-                    android:textColor="#3F51B5" />
+                    android:layout_marginTop="5dp" />
 
                 <TextView
                     android:text="Hỗ trợ tính toán cước, thống kê các cước phí theo từng tháng, từng ngày (thời lượng cuộc gọi, số lượng tin nhắn, cước phí) cho người dùng sử dụng các nhà mạng hiện tại: Vinaphone, Mobifone, Viettel, Vietnamobile, G-Mobile."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView19"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp"
                     android:layout_below="@+id/textView12"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp" />
 
                 <TextView
                     android:text="Các tiện ích đi kèm giúp người dung dễ dàng kiểm tra, đăng ký các dịch vụ mà không cần tốn quá nhiều thời gian."
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView26"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
                     android:layout_below="@+id/textView19"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp" />
 
                 <TextView
                     android:text="Mọi thắc mắc hoặc đóng góp ý kiến, bạn có thể liên lạc với chúng tôi theo địa chỉ sau"
@@ -83,10 +83,11 @@
                     android:layout_below="@+id/textView26"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/textView27"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="#3F51B5"
                     android:layout_marginTop="5dp"
-                    android:textColor="#3F51B5" />
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
 
                 <TextView
                     android:text="Fanpage: facebook.com/nts95.uit"
@@ -94,9 +95,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView28"
                     android:id="@+id/textView29"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp" />
 
                 <TextView
                     android:text="Email: nts95.uit@gmail.com"
@@ -104,9 +104,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView27"
                     android:id="@+id/textView28"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="2dp" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp" />
 
             </LinearLayout>
         </ScrollView>

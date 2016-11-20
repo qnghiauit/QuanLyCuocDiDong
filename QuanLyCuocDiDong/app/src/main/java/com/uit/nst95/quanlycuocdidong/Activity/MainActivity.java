@@ -759,8 +759,8 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = UsefulPhoneNumbersFragment.class;
             } else if (idDrawerItem == 9) {
                 fragmentClass = DataServicesFragment.class;
-            } else if (idDrawerItem == 10) {
-                fragmentClass = AddCreditFragment.class;
+            } else if (idDrawerItem == 13) {
+                fragmentClass = CameraFragment.class;
             }
             try {
                 fragment = (Fragment) fragmentClass.newInstance();

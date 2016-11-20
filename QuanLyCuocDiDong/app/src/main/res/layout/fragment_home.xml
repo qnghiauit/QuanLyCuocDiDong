@@ -87,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="5dp"
                         android:gravity="right"
                         android:text="50.000đ"
                         android:textAlignment="viewStart" />
@@ -107,11 +107,11 @@
 
                     <TextView
                         android:id="@+id/textViewTienGoiNgoaiMang"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="5dp"
                         android:gravity="right"
                         android:text="50.000đ"
                         android:textAlignment="viewStart" />
@@ -131,12 +131,12 @@
 
                     <TextView
                         android:id="@+id/textViewTienSmSNoiMang"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
 
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="5dp"
                         android:gravity="right"
                         android:text="50.000đ"
                         android:textAlignment="viewStart" />
@@ -156,11 +156,11 @@
 
                     <TextView
                         android:id="@+id/textViewTienSmsNgoaiMang"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="5dp"
                         android:gravity="right"
                         android:text="50.000đ"
                         android:textAlignment="viewStart" />
