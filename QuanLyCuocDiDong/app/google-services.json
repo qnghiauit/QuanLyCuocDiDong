@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "757309286422",
+    "firebase_url": "https://quanlycuocdidong.firebaseio.com",
+    "project_id": "quanlycuocdidong",
+    "storage_bucket": "quanlycuocdidong.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757309286422:android:bba9228afb26be94",
+        "android_client_info": {
+          "package_name": "com.uit.nst95.quanlycuocdidong"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757309286422-rlc86gilfi1a6ie8ufr4eecrr0tmm3ur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4i9tPc3BvlxFy2m_fGuXnLdBlwYZmlLM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
