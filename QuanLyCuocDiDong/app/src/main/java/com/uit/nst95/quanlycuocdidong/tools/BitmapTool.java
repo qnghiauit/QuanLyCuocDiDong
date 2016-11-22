@@ -21,7 +21,7 @@ import com.uit.nst95.quanlycuocdidong.customview.FocusBoxUtils;
 
 public class BitmapTool {
     /**
-     * private constructor for enforcing non nstantiability
+     * private constructor for enforcing non instantiability
      */
     private BitmapTool() {
     }
@@ -197,8 +197,8 @@ public class BitmapTool {
         int X = (int) (k * CW);
         int Y = (int) (k * CH);
 
-        Bitmap unscaledBitmap = BitmapTool.decodeByteArray(data, X, Y, BitmapTool.ScalingLogic.CROP);
-        Bitmap bmp = BitmapTool.createScaledBitmap(unscaledBitmap, X, Y, BitmapTool.ScalingLogic.CROP);
+        Bitmap unscaledBitmap = BitmapTool.decodeByteArray(data, X, Y, BitmapTool.ScalingLogic.FIT);
+        Bitmap bmp = BitmapTool.createScaledBitmap(unscaledBitmap, X, Y, BitmapTool.ScalingLogic.FIT);
         unscaledBitmap.recycle();
 
         if (CW > CH)
@@ -208,7 +208,7 @@ public class BitmapTool {
         int BH = bmp.getHeight();
 
         int RBL = (int) (RSL * BW);
-        int RBT = (int) (RST * BH);
+        int RBT = (int) (RST * (BH - 1));
 
         int RBW = (int) (RSW * BW);
         int RBH = (int) (RSH * BH);

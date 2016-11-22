@@ -63,7 +63,7 @@ public class FocusBoxView extends View {
                     : height < MIN_FOCUS_BOX_HEIGHT ? MIN_FOCUS_BOX_HEIGHT : height;
 
             int left = (ScrRes.x - width) / 2;
-            int top = (ScrRes.y - height) / 2;
+            int top = (ScrRes.y - height) / 4;
 
             box = new Rect(left, top, left + width, top + height);
         }
@@ -87,7 +87,7 @@ public class FocusBoxView extends View {
 
         int leftOffset = (ScrRes.x - newWidth) / 2;
 
-        int topOffset = (ScrRes.y - newHeight) / 2;
+        int topOffset = (ScrRes.y - newHeight) / 4;
 
         if (newWidth < MIN_FOCUS_BOX_WIDTH || newHeight < MIN_FOCUS_BOX_HEIGHT)
             return;

@@ -103,10 +103,10 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback, 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case CAMERA_PERMISSION_REQUEST:
-                // if user denine permission, finish this activity
+                // if user deny permission, finish this activity
                 if ((grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    this.onCreateView(this.inflater, this.viewGroup, this.savedInstanceState);
+                    this.inflateView();
                 } else {
                     Activity activity = getActivity();
                     activity.finish();

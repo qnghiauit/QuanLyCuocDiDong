@@ -126,7 +126,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
         /**
          * Get {@link Bitmap} in {@link FocusBoxView} area
          */
-        Bitmap bmp = BitmapTool.getFocusedBitmap(this, camera, data, focusBox.getBox());
+        Bitmap focusedBitmap = BitmapTool.getFocusedBitmap(this, camera, data, focusBox.getBox());
 
         Log.d(TAG, "Got bitmap");
 
@@ -135,7 +135,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
         // new task to recognize bitmap running in background
         // after the recognition completes, a simple dialog will show the result
         TesstwoRecognizeAsync tesstwoRecognizeAsync = new TesstwoRecognizeAsync();
-        tesstwoRecognizeAsync.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, this, bmp);
+        tesstwoRecognizeAsync.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, this, focusedBitmap);
     }
 
     @Override

@@ -94,7 +94,7 @@ public class ImageDialog extends DialogFragment {
      */
     private void recharge(String voucherCode) {
         Intent rechargeIntent = new Intent(Intent.ACTION_DIAL);
-        rechargeIntent.setData(Uri.parse("tel:" + Uri.encode("*101#" + voucherCode)));
+        rechargeIntent.setData(Uri.parse("tel:" + Uri.encode("*100*" + voucherCode + "#")));
         // start
         this.startActivity(rechargeIntent);
 
