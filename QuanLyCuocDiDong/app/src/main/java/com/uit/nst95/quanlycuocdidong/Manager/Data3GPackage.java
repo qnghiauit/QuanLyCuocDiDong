@@ -15,6 +15,16 @@ public class Data3GPackage {
     private String charges_arise;
     public Data3GPackage() {}
 
+    public Data3GPackage(String ID, String syntax, String number, String Fee, String Data_High, String exp, String charges){
+        id_3gpackage = ID;
+        syntax_reg = syntax;
+        number_receive = number;
+        fee = Fee;
+        data_highspeed = Data_High;
+        expiry_date = exp;
+        charges_arise = charges;
+    }
+
     public String getId_3gpackage() {
         return id_3gpackage;
     }

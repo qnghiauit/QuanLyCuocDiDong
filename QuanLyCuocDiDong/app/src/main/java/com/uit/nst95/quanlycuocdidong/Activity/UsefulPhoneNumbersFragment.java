@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,11 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.uit.nst95.quanlycuocdidong.DB.DAO_UsefulNumber;
+import com.uit.nst95.quanlycuocdidong.FirebaseDB.CuuHo;
+import com.uit.nst95.quanlycuocdidong.FirebaseDB.NganHang;
+import com.uit.nst95.quanlycuocdidong.FirebaseDB.NhaMang;
+import com.uit.nst95.quanlycuocdidong.FirebaseDB.Taxi;
+import com.uit.nst95.quanlycuocdidong.FirebaseDB.TuVan;
 import com.uit.nst95.quanlycuocdidong.Manager.Contact;
 import com.uit.nst95.quanlycuocdidong.Manager.ExpandableListAdapter;
 import com.uit.nst95.quanlycuocdidong.R;
@@ -22,6 +28,13 @@ import com.uit.nst95.quanlycuocdidong.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static android.R.attr.data;
+import static com.uit.nst95.quanlycuocdidong.Activity.MainActivity.cuuHos;
+import static com.uit.nst95.quanlycuocdidong.Activity.MainActivity.nganHangs;
+import static com.uit.nst95.quanlycuocdidong.Activity.MainActivity.nhaMangs;
+import static com.uit.nst95.quanlycuocdidong.Activity.MainActivity.taxis;
+import static com.uit.nst95.quanlycuocdidong.Activity.MainActivity.tuVans;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -106,14 +119,51 @@ public class UsefulPhoneNumbersFragment extends Fragment {
     private void prepareListData() {
         DAO_UsefulNumber dao_usefulNumber = new DAO_UsefulNumber(getContext());
         dao_usefulNumber.Open();
+        _listContactCuuHo = new ArrayList<>();
+        _listContactNhaMang = new ArrayList<>();
+        _listContactNganHang = new ArrayList<>();
+        _listContactTuVan = new ArrayList<>();
+        _listContactTaxiHN = new ArrayList<>();
+        _listContactTaxiDN = new ArrayList<>();
+        _listContactTaxiHCM = new ArrayList<>();
 
-        _listContactTuVan = dao_usefulNumber.GetAllTuVan();
-        _listContactCuuHo = dao_usefulNumber.GetAllCuuHo();
-        _listContactNganHang = dao_usefulNumber.GetAllNganHang();
-        _listContactNhaMang = dao_usefulNumber.GetAllNhaMang();
-        _listContactTaxiHN = dao_usefulNumber.GetAllTaxi(0);
-        _listContactTaxiDN = dao_usefulNumber.GetAllTaxi(1);
-        _listContactTaxiHCM = dao_usefulNumber.GetAllTaxi(2);
+        if(cuuHos.size() > 0 && nhaMangs.size() > 0 && nganHangs.size() > 0 && tuVans.size() > 0 && taxis.size() > 0){
+            System.out.println("Get data from Firebase DB");
+            for (CuuHo cuuho : cuuHos) {
+                _listContactCuuHo.add(new Contact(cuuho.getNAME(), cuuho.getNUMBER()));
+            }
+            for (NganHang nganhang : nganHangs) {
+                _listContactNganHang.add(new Contact(nganhang.getNAME(), nganhang.getNUMBER()));
+            }
+            for (NhaMang nhamang : nhaMangs) {
+                _listContactNhaMang.add(new Contact(nhamang.getNAME(), nhamang.getNUMBER()));
+            }
+            for (Taxi taxi : taxis) {
+                if (taxi.getREGION() == 0) {
+                    _listContactTaxiHN.add(new Contact(taxi.getNAME(), taxi.getNUMBER()));
+                }
+                if (taxi.getREGION() == 1) {
+                    _listContactTaxiDN.add(new Contact(taxi.getNAME(), taxi.getNUMBER()));
+                }
+                if (taxi.getREGION() == 2) {
+                    _listContactTaxiHCM.add(new Contact(taxi.getNAME(), taxi.getNUMBER()));
+                }
+            }
+            for (TuVan tuvan : tuVans) {
+                _listContactTuVan.add(new Contact(tuvan.getNAME(), tuvan.getNUMBER()));
+            }
+        } else {
+            System.out.println("Get data from Sqlite DB");
+            _listContactTuVan = dao_usefulNumber.GetAllTuVan();
+            _listContactCuuHo = dao_usefulNumber.GetAllCuuHo();
+            _listContactNganHang = dao_usefulNumber.GetAllNganHang();
+            _listContactNhaMang = dao_usefulNumber.GetAllNhaMang();
+            _listContactTaxiHN = dao_usefulNumber.GetAllTaxi(0);
+            _listContactTaxiDN = dao_usefulNumber.GetAllTaxi(1);
+            _listContactTaxiHCM = dao_usefulNumber.GetAllTaxi(2);
+        }
+
+
 
         _listDataHeader = new ArrayList<String>();
         _listDataChild = new HashMap<String, List<Contact>>();

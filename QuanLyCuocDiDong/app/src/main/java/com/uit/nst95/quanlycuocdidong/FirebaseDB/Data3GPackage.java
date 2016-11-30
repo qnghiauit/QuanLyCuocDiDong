@@ -11,18 +11,18 @@ public class Data3GPackage {
     private String id_3gpackage;
     private String data_highspeed;
     private String charges_arise;
-    private String expery_date;
+    private String expiry_date;
     private String fee;
     private String syntax_reg;
     public Data3GPackage(){}
-    public Data3GPackage(Integer id, Integer id_provider, Integer number_receive, String id_3gpackage, String data_highspeed, String charges_arise, String expery_date, String fee, String syntax_reg) {
+    public Data3GPackage(Integer id, Integer id_provider, Integer number_receive, String id_3gpackage, String data_highspeed, String charges_arise, String expiry_date, String fee, String syntax_reg) {
         this.id = id;
         this.id_provider = id_provider;
         this.number_receive = number_receive;
         this.id_3gpackage = id_3gpackage;
         this.data_highspeed = data_highspeed;
         this.charges_arise = charges_arise;
-        this.expery_date = expery_date;
+        this.expiry_date = expiry_date;
         this.fee = fee;
         this.syntax_reg = syntax_reg;
     }
@@ -75,12 +75,12 @@ public class Data3GPackage {
         this.charges_arise = charges_arise;
     }
 
-    public String getExpery_date() {
-        return expery_date;
+    public String getExpiry_date() {
+        return expiry_date;
     }
 
-    public void setExpery_date(String expery_date) {
-        this.expery_date = expery_date;
+    public void setExpiry_date(String expery_date) {
+        this.expiry_date = expery_date;
     }
 
     public String getFee() {

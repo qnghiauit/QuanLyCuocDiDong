@@ -28,7 +28,8 @@
                 android:id="@+id/textViewv"
                 android:layout_gravity="center_vertical"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="#303F9F" />
+                android:textColor="#303F9F"
+                android:layout_marginStart="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -320,7 +321,6 @@
                         android:id="@android:id/tabs"
                         android:layout_width="match_parent"
                         android:layout_marginTop="5dp"
-                        android:background="#303F9F"
                         android:layout_height="40dp"></TabWidget>
 
                     <FrameLayout

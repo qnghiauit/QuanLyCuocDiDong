@@ -139,12 +139,12 @@ public class CheckByDayFragment extends Fragment implements CalendarDatePickerDi
         final int height = 90;
         tab.getTabWidget().getChildAt(0).getLayoutParams().height = height;
         tab.getTabWidget().getChildAt(1).getLayoutParams().height = height;
-        for(int i=0;i<tab.getTabWidget().getChildCount();i++)
-        {
-            TextView tv = (TextView) tab.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
-            tv.setTextColor(Color.parseColor("#ffffff"));
-        }
-
+//        for(int i=0;i<tab.getTabWidget().getChildCount();i++)
+//        {
+//            TextView tv = (TextView) tab.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+//            tv.setTextColor(Color.parseColor("#ffffff"));
+//        }
+//#303F9F
     }
     private void addEvent()
     {
@@ -256,8 +256,8 @@ public class CheckByDayFragment extends Fragment implements CalendarDatePickerDi
         textViewSoSmsNgoaiMang.setText(String.valueOf(dayFee.getNumber_outerMess()) + " tin nhắn");
         textViewTienSmsNgoaiMang.setText(formatter.format(dayFee.getFee_outerMess()) + currency);
 
-        textViewTongTien.setText(String.valueOf(dayFee.getFee_innerCall() + dayFee.getFee_outerCall()
-                + dayFee.getFee_innerMess() + dayFee.getFee_outerMess()) + currency);
+        textViewTongTien.setText(String.valueOf(formatter.format(dayFee.getFee_innerCall() + dayFee.getFee_outerCall()
+                + dayFee.getFee_innerMess() + dayFee.getFee_outerMess())) + currency);
 
 
         calllogAdapter = new CalllogArrayAdapter(getActivity(),R.layout.custom_item_tab_call_message_log,callLogList);

@@ -19,13 +19,13 @@ import com.uit.nst95.quanlycuocdidong.R;
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.uit.nst95.quanlycuocdidong.Activity.MainActivity.data3GPackages;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DataServicesFragment extends Fragment {
 
-    private ArrayList<PackageNetwork> arrayListPackage = new ArrayList<PackageNetwork>();
     private Data3GArrayAdapter adapter = null;
     private ListView lstView3GPackage;
     public DataServicesFragment() {
@@ -49,29 +49,72 @@ public class DataServicesFragment extends Fragment {
 
         DAO_UsefulNumber dao_usefulNumber = new DAO_UsefulNumber(getContext());
         dao_usefulNumber.Open();
-        ArrayList<Data3GPackage> myArrayData3G = null;
+        ArrayList<Data3GPackage> myArrayData3G = new ArrayList<>();
 
-
-        switch (mangDiDong)
-        {
-            case DefinedConstant.MOBIFONE: {
-                myArrayData3G = dao_usefulNumber.GetAll3GPackage(2);
-                break;
+        if(data3GPackages.size() > 0){
+            System.out.println("Get data from Firebase DB");
+            switch (mangDiDong)
+            {
+                case DefinedConstant.MOBIFONE: {
+                    for (com.uit.nst95.quanlycuocdidong.FirebaseDB.Data3GPackage data: data3GPackages) {
+                        if(data.getId_provider() == 2){
+                            myArrayData3G.add(new com.uit.nst95.quanlycuocdidong.Manager.Data3GPackage(data.getId_3gpackage(),data.getSyntax_reg(),data.getNumber_receive().toString(),data.getFee(),data.getData_highspeed(),data.getExpiry_date(),data.getCharges_arise()));
+                        }
+                    }
+                    break;
+                }
+                case DefinedConstant.VINAPHONE: {
+                    for (com.uit.nst95.quanlycuocdidong.FirebaseDB.Data3GPackage data: data3GPackages) {
+                        if(data.getId_provider() == 1){
+                            myArrayData3G.add(new com.uit.nst95.quanlycuocdidong.Manager.Data3GPackage(data.getId_3gpackage(),data.getSyntax_reg(),data.getNumber_receive().toString(),data.getFee(),data.getData_highspeed(),data.getExpiry_date(),data.getCharges_arise()));
+                        }
+                    }
+                    break;
+                }
+                case DefinedConstant.VIETTEL: {
+                    for (com.uit.nst95.quanlycuocdidong.FirebaseDB.Data3GPackage data: data3GPackages) {
+                        if(data.getId_provider() == 3){
+                            myArrayData3G.add(new com.uit.nst95.quanlycuocdidong.Manager.Data3GPackage(data.getId_3gpackage(),data.getSyntax_reg(),data.getNumber_receive().toString(),data.getFee(),data.getData_highspeed(),data.getExpiry_date(),data.getCharges_arise()));
+                        }
+                    }
+                    break;
+                }
+                case DefinedConstant.GMOBILE: { //khong co dich vu nay
+                    myArrayData3G = null;
+                    break;
+                }
+                case DefinedConstant.VIETNAMOBILE: {
+                    for (com.uit.nst95.quanlycuocdidong.FirebaseDB.Data3GPackage data: data3GPackages) {
+                        if(data.getId_provider() == 4){
+                            myArrayData3G.add(new com.uit.nst95.quanlycuocdidong.Manager.Data3GPackage(data.getId_3gpackage(),data.getSyntax_reg(),data.getNumber_receive().toString(),data.getFee(),data.getData_highspeed(),data.getExpiry_date(),data.getCharges_arise()));
+                        }
+                    }
+                    break;
+                }
             }
-            case DefinedConstant.VINAPHONE: {
-                myArrayData3G = dao_usefulNumber.GetAll3GPackage(1);
-                break;
-            }
-            case DefinedConstant.VIETTEL: {
-                myArrayData3G = dao_usefulNumber.GetAll3GPackage(3);
-                break;
-            }
-            case DefinedConstant.GMOBILE: { //khong co dich vu nay
-                break;
-            }
-            case DefinedConstant.VIETNAMOBILE: {
-                myArrayData3G = dao_usefulNumber.GetAll3GPackage(4);
-                break;
+        } else {
+            System.out.println("Get data from Sqlite DB");
+            switch (mangDiDong) {
+                case DefinedConstant.MOBIFONE: {
+                    myArrayData3G = dao_usefulNumber.GetAll3GPackage(2);
+                    break;
+                }
+                case DefinedConstant.VINAPHONE: {
+                    myArrayData3G = dao_usefulNumber.GetAll3GPackage(1);
+                    break;
+                }
+                case DefinedConstant.VIETTEL: {
+                    myArrayData3G = dao_usefulNumber.GetAll3GPackage(3);
+                    break;
+                }
+                case DefinedConstant.GMOBILE: { //khong co dich vu nay
+                    myArrayData3G = null;
+                    break;
+                }
+                case DefinedConstant.VIETNAMOBILE: {
+                    myArrayData3G = dao_usefulNumber.GetAll3GPackage(4);
+                    break;
+                }
             }
         }
         if (myArrayData3G == null) {
