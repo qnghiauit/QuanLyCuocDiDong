@@ -39,12 +39,6 @@ public class TesstwoRecognizeAsync extends AsyncTask<Object, Void, String> {
         // get bitmap from parameter
         this.bitmap = (Bitmap) params[1];
 
-        // make sure all values are valid
-//        if (this.context == null || this.bitmap == null) {
-//            Log.e(TAG, "Error passed null parameter to execute(context, bitmap)");
-//            return null;
-//        }
-
         int rotate = 0;
 
         if (params.length == 3 && params[2] != null && params[2] instanceof Integer) {
@@ -57,6 +51,7 @@ public class TesstwoRecognizeAsync extends AsyncTask<Object, Void, String> {
         }
 
         this.bitmap = this.bitmap.copy(Bitmap.Config.ARGB_8888, true);
+        // convert bitmap to number in String
         String result = TessTwoORCFactory.convert(this.context, this.bitmap);
         // log the result
         Log.d(TAG, "Recognized result : " + result);

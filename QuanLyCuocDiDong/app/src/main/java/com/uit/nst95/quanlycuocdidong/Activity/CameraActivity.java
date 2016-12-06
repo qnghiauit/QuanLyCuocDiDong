@@ -21,7 +21,8 @@ import com.uit.nst95.quanlycuocdidong.tools.CameraEngine;
  * Created by Truong Ngoc Son on 10/25/2016.
  */
 
-public class CameraActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener, Camera.PictureCallback, Camera.ShutterCallback {
+public class CameraActivity extends Activity implements SurfaceHolder.Callback,
+        View.OnClickListener, Camera.PictureCallback, Camera.ShutterCallback {
     static final String TAG = "DBG_" + MainActivity.class.getName();
 
     Button shutterButton;
@@ -127,11 +128,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
          * Get {@link Bitmap} in {@link FocusBoxView} area
          */
         Bitmap focusedBitmap = BitmapTool.getFocusedBitmap(this, camera, data, focusBox.getBox());
-
-        Log.d(TAG, "Got bitmap");
-
-        Log.d(TAG, "Initialization of TessBaseApi");
-
         // new task to recognize bitmap running in background
         // after the recognition completes, a simple dialog will show the result
         TesstwoRecognizeAsync tesstwoRecognizeAsync = new TesstwoRecognizeAsync();

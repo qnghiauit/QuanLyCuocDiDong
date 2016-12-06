@@ -14,7 +14,8 @@ import com.uit.nst95.quanlycuocdidong.customview.FocusBoxUtils;
 
 /**
  * Created by Truong Ngoc Son on 10/22/2016.
- * Utility class with methods that relate to process {@link Bitmap} for best fit. Such as : {@link BitmapTool#calculateSampleSize(int, int, int, int, ScalingLogic)} ...
+ * Utility class with methods that relate to process {@link Bitmap} for best fit.
+ * Such as : {@link BitmapTool#calculateSampleSize(int, int, int, int, ScalingLogic)} ...
  * Reference link : http://www.codeproject.com/Tips/840623/Android-Character-Recognition
  * Reference link android developer site : https://developer.android.com/training/displaying-bitmaps/load-bitmap.html
  */
@@ -43,7 +44,7 @@ public class BitmapTool {
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, false);
     }
 
-    public static enum ScalingLogic {
+    private enum ScalingLogic {
         CROP, FIT
     }
 
@@ -189,7 +190,7 @@ public class BitmapTool {
         float RSL = (float) (RL * Math.pow(SW, -1));
         float RST = (float) (RT * Math.pow(SH, -1));
 
-        float k = 0.5f;
+        float k = 0.5f; // value of zooming the bitmap
 
         int CW = CamRes.x;
         int CH = CamRes.y;
@@ -197,8 +198,8 @@ public class BitmapTool {
         int X = (int) (k * CW);
         int Y = (int) (k * CH);
 
-        Bitmap unscaledBitmap = BitmapTool.decodeByteArray(data, X, Y, BitmapTool.ScalingLogic.FIT);
-        Bitmap bmp = BitmapTool.createScaledBitmap(unscaledBitmap, X, Y, BitmapTool.ScalingLogic.FIT);
+        Bitmap unscaledBitmap = BitmapTool.decodeByteArray(data, X, Y, ScalingLogic.CROP);
+        Bitmap bmp = BitmapTool.createScaledBitmap(unscaledBitmap, X, Y, ScalingLogic.CROP);
         unscaledBitmap.recycle();
 
         if (CW > CH)
@@ -208,7 +209,7 @@ public class BitmapTool {
         int BH = bmp.getHeight();
 
         int RBL = (int) (RSL * BW);
-        int RBT = (int) (RST * (BH - 1));
+        int RBT = (int) (RST * BH);
 
         int RBW = (int) (RSW * BW);
         int RBH = (int) (RSH * BH);

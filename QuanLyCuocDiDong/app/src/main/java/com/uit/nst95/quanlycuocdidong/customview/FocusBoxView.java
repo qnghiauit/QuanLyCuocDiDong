@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -18,6 +19,8 @@ import com.uit.nst95.quanlycuocdidong.R;
  * This class is referenced from : http://www.codeproject.com/Tips/840623/Android-Character-Recognition. Click to see more
  */
 public class FocusBoxView extends View {
+
+    private static final String TAG = FocusBoxView.class.getSimpleName();
 
     private static final int MIN_FOCUS_BOX_WIDTH = 50;
     private static final int MIN_FOCUS_BOX_HEIGHT = 20;
@@ -75,6 +78,12 @@ public class FocusBoxView extends View {
         return box;
     }
 
+    /**
+     * Update the Box size when user interact with the box while showing the device's camera.
+     *
+     * @param dW : the updated width
+     * @param dH : the updated height
+     */
     private void updateBoxRect(int dW, int dH) {
 
         int newWidth = (box.width() + dW > ScrRes.x - 4 || box.width() + dW < MIN_FOCUS_BOX_WIDTH)
@@ -208,6 +217,7 @@ public class FocusBoxView extends View {
                                     }
                                 }
                             } catch (NullPointerException e) {
+                                Log.e(TAG, e.getMessage());
                             }
                             v.invalidate();
                             lastX = currentX;

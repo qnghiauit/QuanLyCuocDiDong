@@ -3,11 +3,11 @@ package com.uit.nst95.quanlycuocdidong.customview;
 import android.content.Context;
 import android.graphics.Point;
 import android.hardware.Camera;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -39,10 +39,11 @@ public class FocusBoxUtils {
     public static Point getScreenResolution(Context context) {
 
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = manager.getDefaultDisplay();
-
-        int width = display.getWidth();
-        int height = display.getHeight();
+        //Display display = manager.getDefaultDisplay();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(displayMetrics); // get Metrics
+        int width = displayMetrics.widthPixels;
+        int height = displayMetrics.heightPixels;
 
         return new Point(width, height);
 

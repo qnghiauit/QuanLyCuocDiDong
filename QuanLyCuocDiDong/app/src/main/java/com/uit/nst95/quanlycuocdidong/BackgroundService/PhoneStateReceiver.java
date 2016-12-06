@@ -30,8 +30,11 @@ import com.uit.nst95.quanlycuocdidong.NetworkPackage.NumberHeaderManager;
 import com.uit.nst95.quanlycuocdidong.NetworkPackage.PackageFee;
 import com.uit.nst95.quanlycuocdidong.R;
 import com.uit.nst95.quanlycuocdidong.NetworkPackage.*;
+
 import java.util.Date;
+
 import com.uit.nst95.quanlycuocdidong.Manager.*;
+
 /**
  * Created by QNghia on 9/26/2016.
  */
@@ -204,7 +207,8 @@ public class PhoneStateReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals("android.intent.action.PHONE_STATE") || intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
-            _context = context;
+            Log.d(TAG, "On Received !!");
+            this._context = context;
 //            _callAdapter = new DAO_CallLog(context);
 //            _statisticTableAdapter = new DAO_Statistic(context);
 //            _callAdapter.Open();
@@ -213,7 +217,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
             this.InitPackage();
             _isOutGoingCallEnd = false;
             //Sua loi tao ra nhieu PhoneStateListener trong chuong trinh  gay trung Notify
-             telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             if (customPhoneStateListener == null) {
                 customPhoneStateListener = new CustomPhoneStateListener(_context);//,_myPackageFee);
                 telephonyManager.listen(customPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
@@ -290,11 +294,11 @@ public class PhoneStateReceiver extends BroadcastReceiver {
              * Khi 1 cuoi goi vua ket thua, show {@link android.app.Notification} de nguoi dung biet duoc thong tin goi goi cuoc cua cuoc goi do
              */
             if (_isOutGoingCallEnd == true && _isOutGoing == true) {
-                CallLog lastCall = getNewCallLog();
-                //Loi version cua log qua ky tu (Thang)
+                CallLog lastCall = getNewCallLog(); // lay thong tin cua cuoc goi gan nhat trong database
+//                //Loi version cua log qua ky tu (Thang)
                 // Log.d(TAG,"Last call");
                 if (lastCall == null || lastCall.get_callDuration() == 0) {
-                    //Log.e(TAG,"Last call is null");
+//                    //Log.e(TAG,"Last call is null");
                 } else {
                     //Loi version cua log qua ky tu (Thang)
                     //Log.d(TAG,"Last call is NOT null");
@@ -307,7 +311,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 //                if (lastCall != null && lastCall.get_callDuration() > 0 && _isOutGoing == true && _isAllowPopUp == true) {
 //                    try {
 //                        final AlertDialog alertDialog = new AlertDialog.Builder(_context, AlertDialog.THEME_HOLO_LIGHT).create();
-//                        //final AlertDialog alertDialog = new AlertDialog.Builder(new ContextThemeWrapper(_context,android.R.style.Theme_Material_Light_Dialog)).create();
+//                        //final AlertDialog alertDlialog = new AlertDialog.Builder(new ContextThemeWrapper(_context,android.R.style.Theme_Material_Light_Dialog)).create();
 //                        alertDialog.setTitle("Call Information");
 //                        alertDialog.setMessage("Duration: " + lastCall.get_callDuration() + "secs" + "\nCost: " + lastCall.get_callFee() + " VND");
 //
@@ -360,7 +364,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
         // check version at runtime to check whether version is 6 , higher or not
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(this._context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG , "Permission Read call log from user");
+                Log.d(TAG, "Permission Read call log from user");
                 // user deny permission for reading call log, return null to disable notification after a call
                 return null;
             }
