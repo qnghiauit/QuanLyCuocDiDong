@@ -10,6 +10,9 @@
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="true" />
+
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -53,7 +56,6 @@
         <!-- Register receivers  -->
         <receiver android:name=".BackgroundService.PhoneStateReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE" />
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
         </receiver>

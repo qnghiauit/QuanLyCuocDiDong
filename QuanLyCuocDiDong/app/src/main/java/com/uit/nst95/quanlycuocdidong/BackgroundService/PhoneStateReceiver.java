@@ -19,6 +19,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.uit.nst95.quanlycuocdidong.Activity.MainActivity;
 import com.uit.nst95.quanlycuocdidong.DB.CallLog;
@@ -71,159 +72,157 @@ public class PhoneStateReceiver extends BroadcastReceiver {
         String _package = setting.getString("GoiCuoc", "Unknown");
         _isAllowPopUp = setting.getBoolean("AllowPopup", false);
 
-//        _myPackageFee = new MobiCard(); // code for TESTING !!!
-//        _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone); // code for TESTING !!
-        switch (_package) {
-            case DefinedConstant.MOBICARD: {
-                _myPackageFee = new MobiCard();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
-                break;
-            }
-            case DefinedConstant.MOBIGOLD: {
-                _myPackageFee = new MobiGold();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
-                break;
-            }
-            case DefinedConstant.MOBIQ: {
-                _myPackageFee = new MobiQ();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
-                break;
-            }
-            case DefinedConstant.QSTUDENT: {
-                _myPackageFee = new QStudent();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
-                break;
-            }
-            case DefinedConstant.QTEEN: {
-                _myPackageFee = new QTeen();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
-                break;
-            }
-            case DefinedConstant.QKIDS: {
-                _myPackageFee = new Qkids();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
-                break;
-            }
-            case DefinedConstant.VINACARD: {
-                _myPackageFee = new VinaCard();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
-                break;
-            }
-            case DefinedConstant.VINAXTRA: {
-                _myPackageFee = new VinaXtra();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
-                break;
-            }
-            case DefinedConstant.TALKSTUDENT: {
-                _myPackageFee = new TalkStudent();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
-                break;
-            }
-            case DefinedConstant.TALKTEEN: {
-                _myPackageFee = new TalkTeen();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
-                break;
-            }
-            case DefinedConstant.ECONOMY: {
-                _myPackageFee = new Economy();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
-                break;
-            }
-            case DefinedConstant.TOMATO: {
-                _myPackageFee = new Tomato();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
-                break;
-            }
-            case DefinedConstant.STUDENT: {
-                _myPackageFee = new Student();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
-                break;
-            }
-            case DefinedConstant.SEA: {
-                _myPackageFee = new SeaPlus();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
-                break;
-            }
-            case DefinedConstant.HISCHOOL: {
-                _myPackageFee = new HiSchool();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
-                break;
-            }
-            case DefinedConstant.SEVENCOLOR: {
-                _myPackageFee = new SevenColor();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
-                break;
-            }
-            case DefinedConstant.BUONLANG: {
-                _myPackageFee = new TomatoBL();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
-                break;
-            }
-            case DefinedConstant.BIGSAVE: {
-                _myPackageFee = new BigSave();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
-                break;
-            }
-            case DefinedConstant.BIGKOOL: {
-                _myPackageFee = new BigKool();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
-                break;
-            }
-            case DefinedConstant.TIPHU2: {
-                _myPackageFee = new BillionareTwo();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
-                break;
-            }
-            case DefinedConstant.TIPHU3: {
-                _myPackageFee = new BillionareThree();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
-                break;
-            }
-            case DefinedConstant.TIPHU5: {
-                _myPackageFee = new BillionareFive();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
-                break;
-            }
-            case DefinedConstant.VMONE: {
-                _myPackageFee = new VMOne();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
-                break;
-            }
-            case DefinedConstant.VMAX: {
-                _myPackageFee = new VMax();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
-                break;
-            }
-            case DefinedConstant.SV2014: {
-                _myPackageFee = new SV2014();
-                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
-                break;
-            }
-        }
+        _myPackageFee = new MobiCard(); // code for TESTING !!!
+        _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone); // code for TESTING !!
+//        switch (_package) {
+//            case DefinedConstant.MOBICARD: {
+//                _myPackageFee = new MobiCard();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+//                break;
+//            }
+//            case DefinedConstant.MOBIGOLD: {
+//                _myPackageFee = new MobiGold();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+//                break;
+//            }
+//            case DefinedConstant.MOBIQ: {
+//                _myPackageFee = new MobiQ();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+//                break;
+//            }
+//            case DefinedConstant.QSTUDENT: {
+//                _myPackageFee = new QStudent();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+//                break;
+//            }
+//            case DefinedConstant.QTEEN: {
+//                _myPackageFee = new QTeen();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+//                break;
+//            }
+//            case DefinedConstant.QKIDS: {
+//                _myPackageFee = new Qkids();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+//                break;
+//            }
+//            case DefinedConstant.VINACARD: {
+//                _myPackageFee = new VinaCard();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
+//                break;
+//            }
+//            case DefinedConstant.VINAXTRA: {
+//                _myPackageFee = new VinaXtra();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
+//                break;
+//            }
+//            case DefinedConstant.TALKSTUDENT: {
+//                _myPackageFee = new TalkStudent();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
+//                break;
+//            }
+//            case DefinedConstant.TALKTEEN: {
+//                _myPackageFee = new TalkTeen();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
+//                break;
+//            }
+//            case DefinedConstant.ECONOMY: {
+//                _myPackageFee = new Economy();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+//                break;
+//            }
+//            case DefinedConstant.TOMATO: {
+//                _myPackageFee = new Tomato();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+//                break;
+//            }
+//            case DefinedConstant.STUDENT: {
+//                _myPackageFee = new Student();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+//                break;
+//            }
+//            case DefinedConstant.SEA: {
+//                _myPackageFee = new SeaPlus();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+//                break;
+//            }
+//            case DefinedConstant.HISCHOOL: {
+//                _myPackageFee = new HiSchool();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+//                break;
+//            }
+//            case DefinedConstant.SEVENCOLOR: {
+//                _myPackageFee = new SevenColor();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+//                break;
+//            }
+//            case DefinedConstant.BUONLANG: {
+//                _myPackageFee = new TomatoBL();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+//                break;
+//            }
+//            case DefinedConstant.BIGSAVE: {
+//                _myPackageFee = new BigSave();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+//                break;
+//            }
+//            case DefinedConstant.BIGKOOL: {
+//                _myPackageFee = new BigKool();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+//                break;
+//            }
+//            case DefinedConstant.TIPHU2: {
+//                _myPackageFee = new BillionareTwo();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+//                break;
+//            }
+//            case DefinedConstant.TIPHU3: {
+//                _myPackageFee = new BillionareThree();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+//                break;
+//            }
+//            case DefinedConstant.TIPHU5: {
+//                _myPackageFee = new BillionareFive();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+//                break;
+//            }
+//            case DefinedConstant.VMONE: {
+//                _myPackageFee = new VMOne();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
+//                break;
+//            }
+//            case DefinedConstant.VMAX: {
+//                _myPackageFee = new VMax();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
+//                break;
+//            }
+//            case DefinedConstant.SV2014: {
+//                _myPackageFee = new SV2014();
+//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
+//                break;
+//            }
+//        }
 
     }
 
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals("android.intent.action.PHONE_STATE") || intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
-            Log.d(TAG, "On Received !!");
-            this._context = context;
+        Log.d(TAG, "Out  !!");
+        this._context = context;
 //            _callAdapter = new DAO_CallLog(context);
 //            _statisticTableAdapter = new DAO_Statistic(context);
 //            _callAdapter.Open();
 //            _statisticTableAdapter.Open();
 //            _phoneCallLog = new PhoneLogManager(_context, _myPackageFee);
-            this.InitPackage();
-            _isOutGoingCallEnd = false;
-            //Sua loi tao ra nhieu PhoneStateListener trong chuong trinh  gay trung Notify
-            telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            if (customPhoneStateListener == null) {
-                customPhoneStateListener = new CustomPhoneStateListener(_context);//,_myPackageFee);
-                telephonyManager.listen(customPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
-            }
-            // Toast.makeText(this._context, "Starts Receivers", Toast.LENGTH_LONG).show();
+        this.InitPackage();
+        _isOutGoingCallEnd = false;
+        //Sua loi tao ra nhieu PhoneStateListener trong chuong trinh  gay trung Notify
+        telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        if (customPhoneStateListener == null) {
+            customPhoneStateListener = new CustomPhoneStateListener(_context);//,_myPackageFee);
         }
+        telephonyManager.listen(customPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
+        // Toast.makeText(this._context, "Starts Receivers", Toast.LENGTH_LONG).show()
 
     }
 
@@ -231,6 +230,9 @@ public class PhoneStateReceiver extends BroadcastReceiver {
         telephonyManager.listen(null, PhoneStateListener.LISTEN_NONE);
     }
 
+    /**
+     *
+     */
     public class CustomPhoneStateListener extends PhoneStateListener {
         boolean _isOutGoing = false;
 
@@ -254,114 +256,95 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 
         @Override
         public void onCallStateChanged(int state, String incomingNumber) {
+            Log.d(TAG, "onCallStateChanged");
             if (incomingNumber != null && incomingNumber.length() > 0) {
                 _incomingNumber = incomingNumber;
             }
-            //Toast.makeText(_context, incomingNumber, Toast.LENGTH_SHORT).show();
             _isReceivingCall = false;
-            // if(incomingNumber == null || incomingNumber == "" || incomingNumber.isEmpty() )
-            // {
-            //    Toast.makeText(_context, "It's outgoing call!!!", Toast.LENGTH_SHORT).show();
-            //}
             switch (state) {
                 case TelephonyManager.CALL_STATE_RINGING: {
+                    Log.d(TAG, "User ends call CALL_STATE_RINGING");
                     _prev_state = state;
                     _isReceivingCall = true;
                     break;
                 }
                 case TelephonyManager.CALL_STATE_OFFHOOK: {
-                    if (incomingNumber == null || incomingNumber.isEmpty() || incomingNumber.equals("")) {
-                        _isOutGoing = true;
-                    } else {
-                        _isOutGoing = false;
-                    }
+                    Log.d(TAG, "User ends call CALL_STATE_OFFHOOK");
+//                    if (incomingNumber == null || incomingNumber.isEmpty() || incomingNumber.equals("")) {
+//                        _isOutGoing = true;
+//                    } else {
+//                        _isOutGoing = false;
+//                    }
+                    _isOutGoing = true;
                     _prev_state = state;
                     break;
                 }
                 case TelephonyManager.CALL_STATE_IDLE: {
-                    if (_prev_state == TelephonyManager.CALL_STATE_OFFHOOK && _isReceivingCall == false) {
-                        _prev_state = state;
-                        _isOutGoingCallEnd = true;
+                    Log.d(TAG, "User ends call CALL_STATE_IDLE");
+                    // _isOutGoingCallEnd = true;
+                    if (_prev_state == TelephonyManager.CALL_STATE_IDLE) {
+                        try {
+                            Thread.sleep(1500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        CallLog lastCall = getNewCallLog(); // lay thong tin cua cuoc goi gan nhat trong database
+                        if (lastCall == null || lastCall.get_callDuration() == 0) {
+                            Log.e(TAG, "Last call is null");
+                        } else {
+                            showLastCallInformationNotification(lastCall); // start to show notification
+                        }
 
+                        /**
+                         * SHOW NOTIFICATION
+                         */
+                        //  showLastCallInformationNotification(lastCall);
                     }
-                    if (_prev_state == TelephonyManager.CALL_STATE_RINGING) {
-                        _prev_state = state;
-                    }
-                    break;
+                    _isOutGoing = false;
+                    //_isOutGoingCallEnd = false;
+                    // _isReceivingCall = false;
                 }
+                if (_prev_state == TelephonyManager.CALL_STATE_RINGING) {
+                    _prev_state = state;
+                }
+                _prev_state = state;
+                break;
             }
+
             /**
              * Khi 1 cuoi goi vua ket thua, show {@link android.app.Notification} de nguoi dung biet duoc thong tin goi goi cuoc cua cuoc goi do
              */
-            if (_isOutGoingCallEnd == true && _isOutGoing == true) {
-                CallLog lastCall = getNewCallLog(); // lay thong tin cua cuoc goi gan nhat trong database
-//                //Loi version cua log qua ky tu (Thang)
-                // Log.d(TAG,"Last call");
-                if (lastCall == null || lastCall.get_callDuration() == 0) {
-//                    //Log.e(TAG,"Last call is null");
-                } else {
-                    //Loi version cua log qua ky tu (Thang)
-                    //Log.d(TAG,"Last call is NOT null");
-                    showLastCallInformationNotification(lastCall); // start to show notification
-                    _isOutGoingCallEnd = false;
-                }
-
-                /** Dong if nay KHONG hoat dong duoc !!!!!!!!!!!!!!!!!!!! */
-
-//                if (lastCall != null && lastCall.get_callDuration() > 0 && _isOutGoing == true && _isAllowPopUp == true) {
-//                    try {
-//                        final AlertDialog alertDialog = new AlertDialog.Builder(_context, AlertDialog.THEME_HOLO_LIGHT).create();
-//                        //final AlertDialog alertDlialog = new AlertDialog.Builder(new ContextThemeWrapper(_context,android.R.style.Theme_Material_Light_Dialog)).create();
-//                        alertDialog.setTitle("Call Information");
-//                        alertDialog.setMessage("Duration: " + lastCall.get_callDuration() + "secs" + "\nCost: " + lastCall.get_callFee() + " VND");
+//            if (_isOutGoingCallEnd) {
+//                CallLog lastCall = getNewCallLog(); // lay thong tin cua cuoc goi gan nhat trong database
+//                if (lastCall == null || lastCall.get_callDuration() == 0) {
+//                    Log.e(TAG, "Last call is null");
+//                } else {
+//                    showLastCallInformationNotification(lastCall); // start to show notification
+//                    _isOutGoingCallEnd = false;
+//                }
 //
-//                        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                alertDialog.dismiss();
-//                            }
-//                        });
-//                        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-//                        layoutParams.gravity = Gravity.TOP;
-//                        layoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-//                        layoutParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-//                        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//                        layoutParams.alpha = 1.0f;
-//                        layoutParams.buttonBrightness = 1.0f;
-//                        layoutParams.windowAnimations = android.R.style.Theme_Material_Light_Dialog_Alert;
-//
-//
-//                        //alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-//                        alertDialog.getWindow().setAttributes(layoutParams);
-//                        alertDialog.show();
-//                        _isOutGoing = false;
-//                        _isOutGoingCallEnd = false;
-//                        _isReceivingCall = false;
-//
-//                    } catch (Exception e) {
-//                        e.getLocalizedMessage();
-//                    }
+//                /**
+//                 * SHOW NOTIFICATION
+//                 */
+//                //  showLastCallInformationNotification(lastCall);
+//            }
+            //_isOutGoingCallEnd = false;
+            // _isReceivingCall = false;
 
-
-                /**
-                 * SHOW NOTIFICATION
-                 */
-                //  showLastCallInformationNotification(lastCall);
-            }
-            _isOutGoingCallEnd = false;
-            _isReceivingCall = false;
         }
     }
 
 
     /**
      * Method to get information of the last call of the device.
-     * Note : when the code run android 6 and higher, we need to gain permission from runtime for all dangerous permissions which include READ_CALL_LOG.
+     * Note : when the code run android 6 and higher, we need to gain permission from runtime
+     * for all dangerous permissions which include READ_CALL_LOG.
      *
      * @return : {@link CallLog} of the last call
      */
     public CallLog getNewCallLog() {
         CallLog _newCall = new CallLog();
-        // check version at runtime to check whether version is 6 , higher or not
+        // check version at runtime to check READ_CALL_LOG permission whether version is 6 , higher or not
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(this._context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "Permission Read call log from user");
@@ -418,16 +401,14 @@ public class PhoneStateReceiver extends BroadcastReceiver {
      */
     private void showLastCallInformationNotification(CallLog lastCallLog) {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this._context);
-        notificationBuilder.setSmallIcon(R.drawable.calllog_icon);
+        notificationBuilder.setSmallIcon(R.drawable.ic_call_blue_24dp);
         notificationBuilder.setContentTitle(this._context.getString(R.string.calllog_notification_title));
         // if current android version is 4.1, we show information via InboxStyle
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-            inboxStyle.setBigContentTitle("Thoại với " + lastCallLog.get_callNumber());
             String[] callLogStrings = new String[]{
                     this._context.getString(R.string.call_duration) + lastCallLog.get_callDuration() + " giây",
                     this._context.getString(R.string.call_fee) + lastCallLog.get_callFee() + " đồng",
-                    this._context.getString(R.string.call_date) + lastCallLog.get_callDate(),
             };
             // add all lines into InboxStyle
             for (String line :
@@ -438,8 +419,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 
         } else { // otherwise, if the version is lower
             String content = this._context.getString(R.string.call_duration) + lastCallLog.get_callDuration() + " giây" + "\n" +
-                    this._context.getString(R.string.call_fee) + lastCallLog.get_callDuration() + " đồng" + "\n"
-                    + this._context.getString(R.string.call_date) + lastCallLog.get_callDuration();
+                    this._context.getString(R.string.call_fee) + lastCallLog.get_callDuration() + " đồng" + "\n";
 
             notificationBuilder.setContentText(content);
         }
