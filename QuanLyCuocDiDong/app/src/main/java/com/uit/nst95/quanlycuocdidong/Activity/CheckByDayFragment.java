@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -123,27 +124,26 @@ public class CheckByDayFragment extends Fragment implements CalendarDatePickerDi
 
         final TabHost tab = (TabHost) view.findViewById(R.id.tabLog);
         tab.setup();
-        TabHost.TabSpec spec;
         //Tạo tab1
-        spec = tab.newTabSpec("t1");
-        spec.setContent(R.id.tab1);
-        spec.setIndicator("Cuộc gọi");
-        tab.addTab(spec);
+        TabHost.TabSpec spec1 = tab.newTabSpec("t1");
+        spec1.setContent(R.id.tab1);
+        spec1.setIndicator("Cuộc gọi");
+        tab.addTab(spec1);
         //Tạo tab2
-        spec = tab.newTabSpec("t2");
-        spec.setContent(R.id.tab2);
-        spec.setIndicator("Tin nhắn");
-        tab.addTab(spec);
+        TabHost.TabSpec spec2 = tab.newTabSpec("t2");
+        spec2.setContent(R.id.tab2);
+        spec2.setIndicator("Tin nhắn");
+        tab.addTab(spec2);
         //Thiết lập tab mặc định được chọn ban đầu là tab 0
         tab.setCurrentTab(0);
-        final int height = 90;
+        final int height = 140;
         tab.getTabWidget().getChildAt(0).getLayoutParams().height = height;
         tab.getTabWidget().getChildAt(1).getLayoutParams().height = height;
-//        for(int i=0;i<tab.getTabWidget().getChildCount();i++)
-//        {
-//            TextView tv = (TextView) tab.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
-//            tv.setTextColor(Color.parseColor("#ffffff"));
-//        }
+        for(int i=0;i<tab.getTabWidget().getChildCount();i++)
+        {
+            TextView tv = (TextView) tab.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+            tv.setTextColor(Color.parseColor("#ffffff"));
+        }
 //#303F9F
     }
     private void addEvent()

@@ -155,8 +155,8 @@ public class DateTimeManager {
     }*/
     public String convertToMinutesAndSec( long sec, boolean shortType)
     {
-        String minString = shortType ? "p" : "phút";
-        String secString = shortType ? "s" : "giây";
+        String minString = shortType ? "p" : " phút";
+        String secString = shortType ? "s" : " giây";
         int minutes = 0;
         if(sec > 60)
         {

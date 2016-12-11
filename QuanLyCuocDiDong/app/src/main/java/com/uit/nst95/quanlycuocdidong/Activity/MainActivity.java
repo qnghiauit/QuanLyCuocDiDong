@@ -411,6 +411,7 @@ public class MainActivity extends AppCompatActivity {
             case READ_SMS_PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // run asynchronous to run database service
+                    _progressBar.setVisibility(View.GONE);
 
                 } else {
                     Toast.makeText(this, R.string.permission_not_granted_message, Toast.LENGTH_LONG).show();
@@ -789,6 +790,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
+            _progressBar.setVisibility(View.INVISIBLE);
             _progressBar.setVisibility(View.GONE);
             saveSharedPreferences();
         }

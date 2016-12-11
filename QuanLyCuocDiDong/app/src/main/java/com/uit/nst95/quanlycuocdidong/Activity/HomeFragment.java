@@ -54,11 +54,11 @@ public class HomeFragment extends Fragment {
         // make sure data for current time is not null
         if (monthStatistics != null) {
 
-            textViewTongTienThang.setText(formatter.format(monthStatistics.get_totalCost()) + "đ");
-            textViewTienGoiNoiMang.setText(formatter.format(monthStatistics.get_innerCallFee()) + "đ cho " + DateTimeManager.get_instance().convertToMinutesAndSec(monthStatistics.get_innerCallDuration(), false) + " gọi nội mạng");
-            textViewTienGoiNgoaiMang.setText(formatter.format(monthStatistics.get_outerCallFee()) + "đ cho " + DateTimeManager.get_instance().convertToMinutesAndSec(monthStatistics.get_outerCallDuration(), false) + " gọi ngoại mạng");
-            textViewNhanTinNoiMang.setText(formatter.format(monthStatistics.get_innerMessageFee()) + "đ cho " + monthStatistics.get_innerMessageCount() + " tin nhắn nội mạng");
-            textViewNhanTinNgoaiMang.setText(formatter.format(monthStatistics.get_outerMessageFee()) + "đ cho " + monthStatistics.get_outerMessageCount() + " tin nhắn ngoại mạng");
+            textViewTongTienThang.setText(formatter.format(monthStatistics.get_totalCost()) + " VNĐ");
+            textViewTienGoiNoiMang.setText(formatter.format(monthStatistics.get_innerCallFee()) + " đ cho " + DateTimeManager.get_instance().convertToMinutesAndSec(monthStatistics.get_innerCallDuration(), false) + " gọi nội mạng");
+            textViewTienGoiNgoaiMang.setText(formatter.format(monthStatistics.get_outerCallFee()) + " đ cho " + DateTimeManager.get_instance().convertToMinutesAndSec(monthStatistics.get_outerCallDuration(), false) + " gọi ngoại mạng");
+            textViewNhanTinNoiMang.setText(formatter.format(monthStatistics.get_innerMessageFee()) + " đ cho " + monthStatistics.get_innerMessageCount() + " tin nhắn nội mạng");
+            textViewNhanTinNgoaiMang.setText(formatter.format(monthStatistics.get_outerMessageFee()) + " đ cho " + monthStatistics.get_outerMessageCount() + " tin nhắn ngoại mạng");
         }
 
         ImageButton buttonSetting = (ImageButton) view.findViewById(R.id.imageButtonCaiDat);
