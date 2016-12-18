@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +34,10 @@ import com.uit.nst95.quanlycuocdidong.R;
 
 import org.joda.time.DateTime;
 
+import java.io.Console;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static android.R.id.tabhost;
 

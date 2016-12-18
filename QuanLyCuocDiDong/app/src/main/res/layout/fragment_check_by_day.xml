@@ -326,7 +326,7 @@
                         android:id="@android:id/tabs"
                         android:layout_width="match_parent"
                         android:layout_marginTop="5dp"
-                        android:background="#2196F3"
+                        android:background="#5C6BC0"
                         android:layout_height="40dp"></TabWidget>
 
                     <FrameLayout
