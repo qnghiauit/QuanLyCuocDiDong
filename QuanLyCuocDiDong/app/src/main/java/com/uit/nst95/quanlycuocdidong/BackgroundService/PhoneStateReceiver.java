@@ -71,136 +71,134 @@ public class PhoneStateReceiver extends BroadcastReceiver {
         SharedPreferences setting = _context.getSharedPreferences(DefinedConstant.PREFS_NAME, Context.MODE_PRIVATE);
         String _package = setting.getString(DefinedConstant.KEY_PACKAGE, "Unknown");
         _isAllowPopUp = setting.getBoolean(DefinedConstant.KEY_ALLOWPOPUP, false);
-
-        _myPackageFee = new MobiCard(); // code for TESTING !!!
-        _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone); // code for TESTING !!
-//        switch (_package) {
-//            case DefinedConstant.MOBICARD: {
-//                _myPackageFee = new MobiCard();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
-//                break;
-//            }
-//            case DefinedConstant.MOBIGOLD: {
-//                _myPackageFee = new MobiGold();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
-//                break;
-//            }
-//            case DefinedConstant.MOBIQ: {
-//                _myPackageFee = new MobiQ();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
-//                break;
-//            }
-//            case DefinedConstant.QSTUDENT: {
-//                _myPackageFee = new QStudent();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
-//                break;
-//            }
-//            case DefinedConstant.QTEEN: {
-//                _myPackageFee = new QTeen();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
-//                break;
-//            }
-//            case DefinedConstant.QKIDS: {
-//                _myPackageFee = new Qkids();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
-//                break;
-//            }
-//            case DefinedConstant.VINACARD: {
-//                _myPackageFee = new VinaCard();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
-//                break;
-//            }
-//            case DefinedConstant.VINAXTRA: {
-//                _myPackageFee = new VinaXtra();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
-//                break;
-//            }
-//            case DefinedConstant.TALKSTUDENT: {
-//                _myPackageFee = new TalkStudent();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
-//                break;
-//            }
-//            case DefinedConstant.TALKTEEN: {
-//                _myPackageFee = new TalkTeen();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
-//                break;
-//            }
-//            case DefinedConstant.ECONOMY: {
-//                _myPackageFee = new Economy();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
-//                break;
-//            }
-//            case DefinedConstant.TOMATO: {
-//                _myPackageFee = new Tomato();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
-//                break;
-//            }
-//            case DefinedConstant.STUDENT: {
-//                _myPackageFee = new Student();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
-//                break;
-//            }
-//            case DefinedConstant.SEA: {
-//                _myPackageFee = new SeaPlus();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
-//                break;
-//            }
-//            case DefinedConstant.HISCHOOL: {
-//                _myPackageFee = new HiSchool();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
-//                break;
-//            }
-//            case DefinedConstant.SEVENCOLOR: {
-//                _myPackageFee = new SevenColor();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
-//                break;
-//            }
-//            case DefinedConstant.BUONLANG: {
-//                _myPackageFee = new TomatoBL();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
-//                break;
-//            }
-//            case DefinedConstant.BIGSAVE: {
-//                _myPackageFee = new BigSave();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
-//                break;
-//            }
-//            case DefinedConstant.BIGKOOL: {
-//                _myPackageFee = new BigKool();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
-//                break;
-//            }
-//            case DefinedConstant.TIPHU2: {
-//                _myPackageFee = new BillionareTwo();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
-//                break;
-//            }
-//            case DefinedConstant.TIPHU3: {
-//                _myPackageFee = new BillionareThree();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
-//                break;
-//            }
-//            case DefinedConstant.TIPHU5: {
-//                _myPackageFee = new BillionareFive();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
-//                break;
-//            }
-//            case DefinedConstant.VMONE: {
-//                _myPackageFee = new VMOne();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
-//                break;
-//            }
-//            case DefinedConstant.VMAX: {
-//                _myPackageFee = new VMax();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
-//                break;
-//            }
-//            case DefinedConstant.SV2014: {
-//                _myPackageFee = new SV2014();
-//                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
-//                break;
-//            }
-//        }
+        
+        switch (_package) {
+            case DefinedConstant.MOBICARD: {
+                _myPackageFee = new MobiCard();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+                break;
+            }
+            case DefinedConstant.MOBIGOLD: {
+                _myPackageFee = new MobiGold();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+                break;
+            }
+            case DefinedConstant.MOBIQ: {
+                _myPackageFee = new MobiQ();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+                break;
+            }
+            case DefinedConstant.QSTUDENT: {
+                _myPackageFee = new QStudent();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+                break;
+            }
+            case DefinedConstant.QTEEN: {
+                _myPackageFee = new QTeen();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+                break;
+            }
+            case DefinedConstant.QKIDS: {
+                _myPackageFee = new Qkids();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone);
+                break;
+            }
+            case DefinedConstant.VINACARD: {
+                _myPackageFee = new VinaCard();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
+                break;
+            }
+            case DefinedConstant.VINAXTRA: {
+                _myPackageFee = new VinaXtra();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
+                break;
+            }
+            case DefinedConstant.TALKSTUDENT: {
+                _myPackageFee = new TalkStudent();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
+                break;
+            }
+            case DefinedConstant.TALKTEEN: {
+                _myPackageFee = new TalkTeen();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vinaphone);
+                break;
+            }
+            case DefinedConstant.ECONOMY: {
+                _myPackageFee = new Economy();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+                break;
+            }
+            case DefinedConstant.TOMATO: {
+                _myPackageFee = new Tomato();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+                break;
+            }
+            case DefinedConstant.STUDENT: {
+                _myPackageFee = new Student();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+                break;
+            }
+            case DefinedConstant.SEA: {
+                _myPackageFee = new SeaPlus();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+                break;
+            }
+            case DefinedConstant.HISCHOOL: {
+                _myPackageFee = new HiSchool();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+                break;
+            }
+            case DefinedConstant.SEVENCOLOR: {
+                _myPackageFee = new SevenColor();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+                break;
+            }
+            case DefinedConstant.BUONLANG: {
+                _myPackageFee = new TomatoBL();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.viettel);
+                break;
+            }
+            case DefinedConstant.BIGSAVE: {
+                _myPackageFee = new BigSave();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+                break;
+            }
+            case DefinedConstant.BIGKOOL: {
+                _myPackageFee = new BigKool();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+                break;
+            }
+            case DefinedConstant.TIPHU2: {
+                _myPackageFee = new BillionareTwo();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+                break;
+            }
+            case DefinedConstant.TIPHU3: {
+                _myPackageFee = new BillionareThree();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+                break;
+            }
+            case DefinedConstant.TIPHU5: {
+                _myPackageFee = new BillionareFive();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.Gmobile);
+                break;
+            }
+            case DefinedConstant.VMONE: {
+                _myPackageFee = new VMOne();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
+                break;
+            }
+            case DefinedConstant.VMAX: {
+                _myPackageFee = new VMax();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
+                break;
+            }
+            case DefinedConstant.SV2014: {
+                _myPackageFee = new SV2014();
+                _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.vietnamobile);
+                break;
+            }
+        }
 
     }
 
