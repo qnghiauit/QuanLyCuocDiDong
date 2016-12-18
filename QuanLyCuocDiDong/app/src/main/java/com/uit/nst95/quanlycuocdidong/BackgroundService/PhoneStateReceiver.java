@@ -68,9 +68,9 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 
 
     public void InitPackage() {
-        SharedPreferences setting = _context.getSharedPreferences("MySetting", Context.MODE_PRIVATE);
-        String _package = setting.getString("GoiCuoc", "Unknown");
-        _isAllowPopUp = setting.getBoolean("AllowPopup", false);
+        SharedPreferences setting = _context.getSharedPreferences(DefinedConstant.PREFS_NAME, Context.MODE_PRIVATE);
+        String _package = setting.getString(DefinedConstant.KEY_PACKAGE, "Unknown");
+        _isAllowPopUp = setting.getBoolean(DefinedConstant.KEY_ALLOWPOPUP, false);
 
         _myPackageFee = new MobiCard(); // code for TESTING !!!
         _myPackageFee.set_myNetwork(NumberHeaderManager.networkName.mobifone); // code for TESTING !!
