@@ -71,7 +71,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
         SharedPreferences setting = _context.getSharedPreferences(DefinedConstant.PREFS_NAME, Context.MODE_PRIVATE);
         String _package = setting.getString(DefinedConstant.KEY_PACKAGE, "Unknown");
         _isAllowPopUp = setting.getBoolean(DefinedConstant.KEY_ALLOWPOPUP, false);
-        
+
         switch (_package) {
             case DefinedConstant.MOBICARD: {
                 _myPackageFee = new MobiCard();
