@@ -47,7 +47,7 @@ public class SplashActivity extends Activity {
 
                     @Override
                     protected void onPostExecute(String s) {
-                        Toast.makeText(SplashActivity.this, "Created trained data files", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(SplashActivity.this, "Created trained data files", Toast.LENGTH_LONG).show();
                         Log.d(TAG, "Trained data file created");
                         super.onPostExecute(s);
                     }

@@ -45,6 +45,7 @@
             android:theme="@style/MaterialDrawerTheme.Light.DarkToolbar" />
         <activity
             android:name=".Activity.CameraActivity"
+            android:hardwareAccelerated="false"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
         <activity
             android:name=".Activity.ChooseNetworkProviderActivity"
@@ -68,6 +69,15 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.REBOOT" />
             </intent-filter>
+        </receiver>
+
+        <receiver android:name=".BackgroundService.CameraWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_infor" />
         </receiver>
 
         <!-- service declarations -->

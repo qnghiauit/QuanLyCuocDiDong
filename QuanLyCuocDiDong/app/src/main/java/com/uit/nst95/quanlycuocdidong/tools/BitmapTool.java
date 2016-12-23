@@ -12,6 +12,15 @@ import android.hardware.Camera;
 
 import com.uit.nst95.quanlycuocdidong.customview.FocusBoxUtils;
 
+import org.opencv.android.Utils;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Truong Ngoc Son on 10/22/2016.
  * Utility class with methods that relate to process {@link Bitmap} for best fit.
@@ -32,7 +41,7 @@ public class BitmapTool {
      * @param angle
      * @return
      */
-    public static Bitmap rotateBitmap(Bitmap source, float angle) {
+    private static Bitmap rotateBitmap(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
@@ -56,8 +65,8 @@ public class BitmapTool {
      * @param scalingLogic
      * @return
      */
-    public static int calculateSampleSize(int srcWidth, int srcHeight, int dstWidth, int dstHeight,
-                                          ScalingLogic scalingLogic) {
+    private static int calculateSampleSize(int srcWidth, int srcHeight, int dstWidth, int dstHeight,
+                                           ScalingLogic scalingLogic) {
         if (scalingLogic == ScalingLogic.FIT) {
             final float srcAspect = (float) srcWidth / (float) srcHeight;
             final float dstAspect = (float) dstWidth / (float) dstHeight;
@@ -86,8 +95,8 @@ public class BitmapTool {
      * @param scalingLogic
      * @return
      */
-    public static Bitmap decodeByteArray(byte[] bytes, int dstWidth, int dstHeight,
-                                         ScalingLogic scalingLogic) {
+    private static Bitmap decodeByteArray(byte[] bytes, int dstWidth, int dstHeight,
+                                          ScalingLogic scalingLogic) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
@@ -107,8 +116,8 @@ public class BitmapTool {
      * @param scalingLogic
      * @return
      */
-    public static Rect calculateSrcRect(int srcWidth, int srcHeight, int dstWidth, int dstHeight,
-                                        ScalingLogic scalingLogic) {
+    private static Rect calculateSrcRect(int srcWidth, int srcHeight, int dstWidth, int dstHeight,
+                                         ScalingLogic scalingLogic) {
         if (scalingLogic == ScalingLogic.CROP) {
             final float srcAspect = (float) srcWidth / (float) srcHeight;
             final float dstAspect = (float) dstWidth / (float) dstHeight;
@@ -135,8 +144,8 @@ public class BitmapTool {
      * @param scalingLogic
      * @return
      */
-    public static Rect calculateDstRect(int srcWidth, int srcHeight, int dstWidth, int dstHeight,
-                                        ScalingLogic scalingLogic) {
+    private static Rect calculateDstRect(int srcWidth, int srcHeight, int dstWidth, int dstHeight,
+                                         ScalingLogic scalingLogic) {
         if (scalingLogic == ScalingLogic.FIT) {
             final float srcAspect = (float) srcWidth / (float) srcHeight;
             final float dstAspect = (float) dstWidth / (float) dstHeight;
@@ -151,8 +160,8 @@ public class BitmapTool {
         }
     }
 
-    public static Bitmap createScaledBitmap(Bitmap unscaledBitmap, int dstWidth, int dstHeight,
-                                            ScalingLogic scalingLogic) {
+    private static Bitmap createScaledBitmap(Bitmap unscaledBitmap, int dstWidth, int dstHeight,
+                                             ScalingLogic scalingLogic) {
         Rect srcRect = calculateSrcRect(unscaledBitmap.getWidth(), unscaledBitmap.getHeight(),
                 dstWidth, dstHeight, scalingLogic);
         Rect dstRect = calculateDstRect(unscaledBitmap.getWidth(), unscaledBitmap.getHeight(),
@@ -199,7 +208,9 @@ public class BitmapTool {
         int Y = (int) (k * CH);
 
         Bitmap unscaledBitmap = BitmapTool.decodeByteArray(data, X, Y, ScalingLogic.CROP);
+
         Bitmap bmp = BitmapTool.createScaledBitmap(unscaledBitmap, X, Y, ScalingLogic.CROP);
+        bmp = removeBackground(bmp); // make background transparent
         unscaledBitmap.recycle();
 
         if (CW > CH)
@@ -215,9 +226,50 @@ public class BitmapTool {
         int RBH = (int) (RSH * BH);
 
         Bitmap res = Bitmap.createBitmap(bmp, RBL, RBT, RBW, RBH);
+        // change to white background
         bmp.recycle();
 
         return res;
     }
+
+
+    /**
+     * For the result from converting Image to text, the bitmap ground should be transparent.
+     * This method is to change background of a {@link Bitmap} to transparent by using Open source OpenCV project.
+     *
+     * @param originalBitmap : The {@link Bitmap} to be changed background
+     */
+    private static Bitmap removeBackground(Bitmap originalBitmap) {
+        // convert image to matrix
+        Mat src = new Mat(originalBitmap.getHeight(), originalBitmap.getWidth(), CvType.CV_8UC4);
+        Utils.bitmapToMat(originalBitmap, src);
+
+        // init new matrices
+        Mat dst = new Mat(originalBitmap.getHeight(), originalBitmap.getWidth(), CvType.CV_8UC4);
+        Mat tmp = new Mat(originalBitmap.getHeight(), originalBitmap.getWidth(), CvType.CV_8U);
+        Mat alpha = new Mat(originalBitmap.getHeight(), originalBitmap.getWidth(), CvType.CV_8U);
+
+        // convert image to grayscale
+        Imgproc.cvtColor(src, tmp, Imgproc.COLOR_BGR2GRAY);
+
+        // threshold the image to create alpha channel with complete transparency in black background region and zero transparency in foreground object region.
+        Imgproc.threshold(tmp, alpha, 100, 255, Imgproc.THRESH_BINARY_INV);
+
+        // split the original image into three single channel.
+        List<Mat> bgra = new ArrayList<Mat>(4);
+        Core.split(src, bgra);
+
+        // Create the final result by merging three single channel and alpha(BGRA order)
+        bgra.remove(3);
+        bgra.add(alpha);
+        Core.merge(bgra, dst);
+
+        // convert matrix to output bitmap
+        Bitmap output = Bitmap.createBitmap(originalBitmap.getWidth(), originalBitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(dst, output);
+
+        return output;
+    }
+
 
 }

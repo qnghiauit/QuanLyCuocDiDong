@@ -3,6 +3,7 @@ package com.uit.nst95.quanlycuocdidong.BackgroundService;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.util.Base64;
 import android.util.Log;
 
@@ -32,7 +33,7 @@ public class FetchCloudPromotionDataAsyncTask extends AsyncTask<Void, Void, Prom
     public static final String PROMOTION_SHARED_PREFERENCE_KEY = "promotion_shared_preference_key";
     public static final String PROMOTION_PERCENTAGE_PREFERENCE_KEY = "promotion_percentage_preference_key";
     public static final String PROMOTION_TIME_PREFERENCE_KEY = "promotion_time_preference_key";
-    public static final String PROMOTION_DEFAULT_VALUE = "promotion_default_value";
+    public static final String PROMOTION_DEFAULT_VALUE = "+ 50%"; // default percentage value
 
     private String providerName;
     private Context context;
@@ -69,6 +70,7 @@ public class FetchCloudPromotionDataAsyncTask extends AsyncTask<Void, Void, Prom
                     editor.putString(PROMOTION_PERCENTAGE_PREFERENCE_KEY, detailInformation.getPercentage());
                     editor.putString(PROMOTION_TIME_PREFERENCE_KEY, detailInformation.getTime());
                     editor.apply();
+                    SystemClock.sleep(500);
                     // release lock after work is done
                     AlarmReceiver.releaseLock();
                     // exit the function

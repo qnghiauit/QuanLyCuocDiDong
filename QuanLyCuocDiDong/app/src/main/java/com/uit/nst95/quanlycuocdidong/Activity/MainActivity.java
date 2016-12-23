@@ -18,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
+import com.uit.nst95.quanlycuocdidong.BackgroundService.CameraWidget;
 import com.uit.nst95.quanlycuocdidong.FirebaseDB.*;
 import com.uit.nst95.quanlycuocdidong.FirebaseDB.Data3GPackage;
 import com.uit.nst95.quanlycuocdidong.Manager.DateTimeManager;
@@ -48,10 +50,19 @@ import java.util.List;
 
 import com.uit.nst95.quanlycuocdidong.DB.*;
 import com.uit.nst95.quanlycuocdidong.NetworkPackage.*;
+import com.uit.nst95.quanlycuocdidong.tools.CameraEngine;
+
+import org.opencv.android.OpenCVLoader;
 
 import static com.uit.nst95.quanlycuocdidong.Manager.DefinedConstant.*;
 
 public class MainActivity extends AppCompatActivity {
+
+    static {
+        if (!OpenCVLoader.initDebug()) {
+            // Handle initialization error
+        }
+    }
 
     private static final String TAG = MainActivity.class.getSimpleName(); // tag
     // permission request codes
@@ -81,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private DataManager<CuuHo> cuuHoDataManager;
-    private DataManager<NganHang>  nganHangDataManager;
+    private DataManager<NganHang> nganHangDataManager;
     private DataManager<com.uit.nst95.quanlycuocdidong.FirebaseDB.Data3GPackage> data3GPackageDataManager;
     private DataManager<NhaMang> nhaMangDataManager;
     private DataManager<Taxi> taxiDataManager;
@@ -93,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<NhaMang> nhaMangs;
     public static ArrayList<Taxi> taxis;
     public static ArrayList<TuVan> tuVans;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,14 +168,17 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, homeFragment).commit();
         //Them progress bar + cho chay Asynctask
         _progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        if (this._progressBar.isShown()) {
+            this._progressBar.setVisibility(View.GONE);
+        }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             new DatabaseExecuteTask(_lastCallUpdate, _lastMessageUpdate).execute();
         }
 
-
         /**
          * The application need to read permission in dangerous permission group PHONE.
-         * So we need to check that if the current device's version is Android M or higher. If so, we need to request permission at runtime
+         * So we need to check that if the current device's version is Android M or higher.
+         * If so, we need to request permission at runtime
          */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
@@ -176,11 +191,28 @@ public class MainActivity extends AppCompatActivity {
                     new ReadPhoneStatePermissionConfirmDialog().show(this.getSupportFragmentManager(), TAG);
                 } else {
                     // no explanation needed , we can request permission
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS}, READ_PHONESTATE_PERMISSON_REQUEST_CODE);
+                    ActivityCompat.requestPermissions(this, new String[]{
+                                    Manifest.permission.READ_PHONE_STATE, // grant[0]
+                                    Manifest.permission.READ_CALL_LOG, //  grant[1]
+                                    Manifest.permission.READ_CONTACTS, //  grant[2]
+                                    Manifest.permission.READ_SMS}, //  grant[3]
+                            READ_PHONESTATE_PERMISSON_REQUEST_CODE);
                 }
 
+            } else { // if permission granted, update phone calls and messages data
+                new DatabaseExecuteTask(_lastCallUpdate, _lastMessageUpdate).execute();
             }
 
+        }
+
+        // get intent from widget
+        Intent intent = this.getIntent();
+        // make sure we have valid intent
+        if (intent != null) {
+            if (intent.getAction() != null && intent.getAction().equals(CameraWidget.TAG)) {
+                CameraFragment cameraFragment = (CameraFragment) CameraFragment.newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, cameraFragment).commit();
+            }
         }
     }
 
@@ -399,24 +431,31 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
 
             case READ_PHONESTATE_PERMISSON_REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0) {
                     //
                     // do some thing related to read phone state
                     //
-                    new DatabaseExecuteTask(_lastCallUpdate, _lastMessageUpdate).execute();
-                } else {
-                    Toast.makeText(this, R.string.permission_not_granted_message, Toast.LENGTH_LONG).show();
-                }
-                break;
-            case READ_SMS_PERMISSION_REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // run asynchronous to run database service
+                    //  new DatabaseExecuteTask(_lastCallUpdate, _lastMessageUpdate).execute();
+                    boolean isReadCallLogPermissionGranted = grantResults[1] == PackageManager.PERMISSION_GRANTED; // grant[1] is result for requesting read call log permission
+                    boolean isReadMessagePermissionGranted = grantResults[3] == PackageManager.PERMISSION_GRANTED;
+                    if (isReadCallLogPermissionGranted && isReadMessagePermissionGranted) {
+                        Log.d(TAG, "start to execute database in background");
+                        new DatabaseExecuteTask(_lastCallUpdate, _lastMessageUpdate).execute();
+                    }
                     _progressBar.setVisibility(View.GONE);
 
                 } else {
                     Toast.makeText(this, R.string.permission_not_granted_message, Toast.LENGTH_LONG).show();
                 }
                 break;
+//            case READ_SMS_PERMISSION_REQUEST_CODE:
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    // run asynchronous to run database service
+//
+//                } else {
+//                    Toast.makeText(this, R.string.permission_not_granted_message, Toast.LENGTH_LONG).show();
+//                }
+//                break;
             default:
                 break;
 
@@ -446,37 +485,6 @@ public class MainActivity extends AppCompatActivity {
                             requestPermissions(
                                     new String[]{Manifest.permission.READ_PHONE_STATE},
                                     READ_PHONESTATE_PERMISSON_REQUEST_CODE);
-                        }
-                    })
-                    .setNegativeButton(android.R.string.cancel,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // finish activity if user deny permission
-                                    dialog.dismiss();
-                                }
-                            })
-                    .create();
-        }
-    }
-
-    /**
-     * Dialog for explaining read sms permission
-     */
-    public static class ReadSMSPermissionConfirmDialog extends DialogFragment {
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // final Fragment parent = getParentFragment();
-            return new AlertDialog.Builder(getActivity())
-                    .setMessage(R.string.read_sms_request_permission)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            requestPermissions(
-                                    new String[]{Manifest.permission.READ_SMS},
-                                    READ_SMS_PERMISSION_REQUEST_CODE);
                         }
                     })
                     .setNegativeButton(android.R.string.cancel,
@@ -536,14 +544,18 @@ public class MainActivity extends AppCompatActivity {
                 _messageLogTableAdapter.CreateMessageLogRow(i);
                 String messageDate = _dateTimeManager.convertToDMYHms(i.get_messageDate());
                 int messageFee = i.get_messageFee();
-                if (_statisticTableAdapter.FindStatisticByMonthYear(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate)) == null) {
-                    _statisticTableAdapter.CreateStatisticRow(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate));
+                if (_statisticTableAdapter.FindStatisticByMonthYear(_dateTimeManager.getMonth(messageDate)
+                        , _dateTimeManager.getYear(messageDate)) == null) {
+                    _statisticTableAdapter.CreateStatisticRow(_dateTimeManager.getMonth(messageDate)
+                            , _dateTimeManager.getYear(messageDate));
 
                 }
                 if (i.get_messageType() == 0) {
-                    _statisticTableAdapter.UpdateInnerMessageInfo(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate), messageFee);
+                    _statisticTableAdapter.UpdateInnerMessageInfo(_dateTimeManager.getMonth(messageDate)
+                            , _dateTimeManager.getYear(messageDate), messageFee);
                 } else if (i.get_messageType() == 1) {
-                    _statisticTableAdapter.UpdateOuterMessageInfo(_dateTimeManager.getMonth(messageDate), _dateTimeManager.getYear(messageDate), messageFee);
+                    _statisticTableAdapter.UpdateOuterMessageInfo(_dateTimeManager.getMonth(messageDate)
+                            , _dateTimeManager.getYear(messageDate), messageFee);
                 }
             }
         }
@@ -759,8 +771,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected void onPreExecute() {
 
+            super.onPreExecute();
+            if (_progressBar != null) {
+                _progressBar.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
             if (_lastCallUpdate == 0) {
                 _callLogTableAdapter.DeleteAllData();
                 _statisticTableAdapter.ResetCallData();
@@ -779,7 +799,7 @@ public class MainActivity extends AppCompatActivity {
                 RenewMessageData(_lastMessageUpdate);
                 saveSharedPreferences();
             }
-             saveSharedPreferences();
+            saveSharedPreferences();
             return null;
         }
 
@@ -793,6 +813,9 @@ public class MainActivity extends AppCompatActivity {
             _progressBar.setVisibility(View.INVISIBLE);
             _progressBar.setVisibility(View.GONE);
             saveSharedPreferences();
+            // reload home fragment
+            HomeFragment homeFragment = HomeFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, homeFragment).commit();
         }
     }
 
@@ -835,7 +858,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(DefinedConstant.KEY_PACKAGE, "");
         editor.putString(DefinedConstant.KEY_PROVIDER, "");
-        editor.commit();
+        editor.apply();
         Intent myIntent = new Intent(MainActivity.this, ChooseNetworkProviderActivity.class);
         myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(myIntent);

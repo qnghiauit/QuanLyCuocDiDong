@@ -2,6 +2,7 @@ package com.uit.nst95.quanlycuocdidong.Activity;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,12 +11,18 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.uit.nst95.quanlycuocdidong.R;
 import com.uit.nst95.quanlycuocdidong.customview.FocusBoxView;
 import com.uit.nst95.quanlycuocdidong.tesstwo.TesstwoRecognizeAsync;
 import com.uit.nst95.quanlycuocdidong.tools.BitmapTool;
 import com.uit.nst95.quanlycuocdidong.tools.CameraEngine;
+
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.CameraBridgeViewBase;
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.OpenCVLoader;
 
 /**
  * Created by Truong Ngoc Son on 10/25/2016.
@@ -123,16 +130,17 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback,
             Log.d(TAG, "Got null data");
             return;
         }
-
         /**
          * Get {@link Bitmap} in {@link FocusBoxView} area
          */
-        Bitmap focusedBitmap = BitmapTool.getFocusedBitmap(this, camera, data, focusBox.getBox());
+        Bitmap focusedBitmap = BitmapTool.getFocusedBitmap(CameraActivity.this, camera, data, focusBox.getBox());
+        //Bitmap bitmap =  BitmapFactory.decodeResource(getResources(), R.drawable.appicon);
         // new task to recognize bitmap running in background
         // after the recognition completes, a simple dialog will show the result
         TesstwoRecognizeAsync tesstwoRecognizeAsync = new TesstwoRecognizeAsync();
         tesstwoRecognizeAsync.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, this, focusedBitmap);
     }
+
 
     @Override
     public void onShutter() {

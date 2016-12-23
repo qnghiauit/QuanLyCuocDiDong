@@ -18,7 +18,14 @@ android {
     }
     productFlavors {
     }
-    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+            jni.srcDirs = ['src/main/jni', 'src/main/jniLibs/']
+            // 'src/main/jni', 'src/main/jniLibs/'
+            //jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {
@@ -32,12 +39,13 @@ dependencies {
     compile 'com.mikepenz:fontawesome-typeface:4.6.0.3@aar'
     compile 'com.mikepenz:google-material-typeface:2.2.0.1@aar'
     compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.rmtheis:tess-two:6.0.2' // tess-two open source Library
+    compile 'com.rmtheis:tess-two:6.0.2'
+    // tess-two open source Library
     compile 'com.code-troopers.betterpickers:library:2.2.1'
     compile 'joda-time:joda-time:2.1'
-
     testCompile 'junit:junit:4.12'
     compile 'com.google.firebase:firebase-core:9.4.0'
     compile 'com.google.firebase:firebase-database:9.4.0'
+    compile project(':openCVLibrary310')
 }
 apply plugin: 'com.google.gms.google-services'

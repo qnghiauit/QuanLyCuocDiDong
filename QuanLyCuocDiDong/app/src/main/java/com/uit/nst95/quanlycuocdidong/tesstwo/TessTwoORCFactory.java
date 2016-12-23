@@ -26,7 +26,8 @@ public class TessTwoORCFactory {
 
     /**
      * Convert {@link Bitmap} to {@link String}
-     * Note: make sure that we had trained data file (in this case eng.traninedata) already in device's storage (actually , in assets file of your project)
+     * Note: make sure that we had trained data file (in this case eng.traninedata)
+     * already in device's storage (actually , in assets file of your project)
      *
      * @param bitmap : the {@link Bitmap} to be converted
      * @return
@@ -47,9 +48,11 @@ public class TessTwoORCFactory {
         // resource directory,
         tessBaseAPI.init(context.getExternalFilesDir(Environment.MEDIA_MOUNTED).toString(), "eng");
         tessBaseAPI.setImage(bitmap);
-        tessBaseAPI.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST, "1234567890"); // we simply need to convert to number
-        tessBaseAPI.setVariable(TessBaseAPI.VAR_CHAR_BLACKLIST, "!@#$%^&*()_+=-qwertyuiop[]}{POIU" +
-                "YTREWQasdASDfghFGHjklJKLl;L:'\"\\|~`xcvXCVbnmBNM,./<>?"); // the rest of characters we don't bother anymore
+        tessBaseAPI.setVariable(TessBaseAPI.VAR_CHAR_WHITELIST
+                , "1234567890"); // we simply need to convert to number
+        tessBaseAPI.setVariable(TessBaseAPI.VAR_CHAR_BLACKLIST
+                , "!@#$%^&*()_+=-qwertyuiop[]}{POIU" +
+                        "YTREWQasdASDfghFGHjklJKLl;L:'\"\\|~`xcvXCVbnmBNM,./<>?"); // the rest of characters we don't bother anymore
         tessBaseAPI.setPageSegMode(TessBaseAPI.OEM_TESSERACT_CUBE_COMBINED); // set mode for the process
         String recognizedText = tessBaseAPI.getUTF8Text();
         // end the tess api

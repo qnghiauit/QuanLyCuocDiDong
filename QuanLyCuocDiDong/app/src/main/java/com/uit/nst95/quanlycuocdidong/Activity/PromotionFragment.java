@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -60,7 +61,9 @@ public class PromotionFragment extends Fragment {
             final TextView promotionTimeTextView = (TextView) getView().findViewById(R.id.textViewThoiGian);
             promotionTimeTextView.setText(preferences.getString(PROMOTION_TIME_PREFERENCE_KEY, PROMOTION_DEFAULT_VALUE));
             final TextView promotionPercentageTextView = (TextView) getView().findViewById(R.id.textViewNoiDung);
-            promotionPercentageTextView.setText(preferences.getString(PROMOTION_PERCENTAGE_PREFERENCE_KEY + "% giá trị các thẻ nạp", PROMOTION_DEFAULT_VALUE));
+            promotionPercentageTextView.setText(preferences.getString(
+                    PROMOTION_PERCENTAGE_PREFERENCE_KEY + "% giá trị các thẻ nạp"
+                    , PROMOTION_DEFAULT_VALUE));
 
 
         }
@@ -119,10 +122,17 @@ public class PromotionFragment extends Fragment {
          If shared preference's value is default, we start a task to manually get data from cloud server.
          Additionally, We have a service run in background to update data from server every 5 minutes.
          */
-        SharedPreferences preferences = this.getContext().getSharedPreferences(FetchCloudPromotionDataAsyncTask.PROMOTION_SHARED_PREFERENCE_KEY, Context.MODE_PRIVATE);
-        String promotionPercentage = preferences.getString(FetchCloudPromotionDataAsyncTask.PROMOTION_PERCENTAGE_PREFERENCE_KEY, FetchCloudPromotionDataAsyncTask.PROMOTION_DEFAULT_VALUE);
-        String promotionTime = preferences.getString(FetchCloudPromotionDataAsyncTask.PROMOTION_TIME_PREFERENCE_KEY, FetchCloudPromotionDataAsyncTask.PROMOTION_DEFAULT_VALUE);
-        if (promotionPercentage.equals(FetchCloudPromotionDataAsyncTask.PROMOTION_DEFAULT_VALUE) || promotionTime.equals(FetchCloudPromotionDataAsyncTask.PROMOTION_DEFAULT_VALUE)) {
+        SharedPreferences preferences = this.getContext().getSharedPreferences(
+                FetchCloudPromotionDataAsyncTask.PROMOTION_SHARED_PREFERENCE_KEY
+                , Context.MODE_PRIVATE);
+        String promotionPercentage = preferences.getString(
+                FetchCloudPromotionDataAsyncTask.PROMOTION_PERCENTAGE_PREFERENCE_KEY
+                , FetchCloudPromotionDataAsyncTask.PROMOTION_DEFAULT_VALUE);
+        String promotionTime = preferences.getString(
+                FetchCloudPromotionDataAsyncTask.PROMOTION_TIME_PREFERENCE_KEY
+                , FetchCloudPromotionDataAsyncTask.PROMOTION_DEFAULT_VALUE);
+        if (promotionPercentage.equals(FetchCloudPromotionDataAsyncTask.PROMOTION_DEFAULT_VALUE)
+                || promotionTime.equals(FetchCloudPromotionDataAsyncTask.PROMOTION_DEFAULT_VALUE)) {
 
             // at first, we need check internet connection before fetching
             if (NetworkChecker.isInternetConnectionAvailable(this.getContext())) {
@@ -155,6 +165,15 @@ public class PromotionFragment extends Fragment {
 
         switchNhanTB = (Switch) view.findViewById(R.id.switchNhanTB);
         switchNhanTB.setChecked(settings.getBoolean(DefinedConstant.KEY_ALLOWRECEIVE, false));
+        // register checked change listener
+        switchNhanTB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    new FetchCloudPromotionDataAsyncTaskCustom(nhaMang, getContext()).execute();
+                }
+            }
+        });
 
         return view;
     }
