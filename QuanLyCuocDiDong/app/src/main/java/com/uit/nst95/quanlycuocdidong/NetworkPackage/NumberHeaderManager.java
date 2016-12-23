@@ -69,6 +69,7 @@ public class NumberHeaderManager implements Serializable {
     {
         String result = number;
         result = result.trim();
+        result = result.replaceAll("\\s+", "");
         if(number.contains("-"))
         {
             result = number.replaceAll("-","");
