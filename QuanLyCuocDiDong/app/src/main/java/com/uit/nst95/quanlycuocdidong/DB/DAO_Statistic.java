@@ -346,4 +346,14 @@ public class DAO_Statistic {
         int rowAffect = _database.update(_dbHelper.STATISTIC_TABLE,values,whereClause,selectionArgs);
         cursor.close();
     }
+    public boolean IsTableEmpty()
+    {
+        Cursor cursor = _database.rawQuery("SELECT COUNT(*) FROM STATISTIC",null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        if(count >0)
+            return true;
+        else
+            return false;
+    }
 }

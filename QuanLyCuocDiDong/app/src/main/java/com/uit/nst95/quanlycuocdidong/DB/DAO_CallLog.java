@@ -177,4 +177,15 @@ public class DAO_CallLog {
         cursor.close();
         return 0;
     }
+    public boolean IsTableEmpty()
+    {
+        Cursor cursor = _database.rawQuery("SELECT COUNT(*) FROM CALLLOG",null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        if(count >0)
+            return true;
+        else
+            return false;
+    }
+
 }

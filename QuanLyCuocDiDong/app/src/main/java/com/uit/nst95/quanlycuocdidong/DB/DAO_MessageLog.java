@@ -163,4 +163,14 @@ public class DAO_MessageLog {
         cursor.close();
         return 0;
     }
+    public boolean IsTableEmpty()
+    {
+        Cursor cursor = _database.rawQuery("SELECT COUNT(*) FROM MESSAGELOG",null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        if(count >0)
+            return true;
+        else
+            return false;
+    }
 }
